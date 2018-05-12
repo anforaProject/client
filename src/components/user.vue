@@ -1,0 +1,49 @@
+<template id="userView">
+  <div class="loading" v-if="loading">
+      Loading...
+  </div>
+
+  <div v-else-if='user' class="user-info">
+    <h1>{{user.preferredUsername}}</h1>
+    <p>Followers: {{user.followers_count}}</p>
+    <p>Following: {{user.following_count}}</p>
+  </div>
+</template>
+
+<script type="text/javascript">
+  import axios from 'axios'
+
+  export default {
+    name: 'UserProfile',
+    data(){
+      return{
+        loading: true,
+        errors: [],
+        user: null
+      }
+    },
+    created(){
+      this.retriveUser()
+    },
+    watch:{
+      '$route': 'retriveUser'
+    },
+    methods:{
+      retriveUser(){
+        axios.get('http://localhost:8000/@test')
+        .then(response =>{
+          // JSON responses are automatically parsed.
+          this.user = response.data
+          console.log(response.data)
+          this.loading = false
+        })
+        .catch(e => {
+          console.log(e)
+          this.errors.push(e)
+        })
+      }
+
+
+    }
+  }
+</script>
