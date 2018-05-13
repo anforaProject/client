@@ -1,20 +1,26 @@
 <template id="userView">
-  <div class="loading" v-if="loading">
-      Loading...
-  </div>
+  <Layout>
+    <div class="loading" v-if="loading">
+        Loading...
+    </div>
 
-  <div v-else-if='user' class="user-info">
-    <h1>{{user.preferredUsername}}</h1>
-    <p>Followers: {{user.followers_count}}</p>
-    <p>Following: {{user.following_count}}</p>
-  </div>
+    <div v-else-if='user' class="user-info">
+      <h1>{{user.preferredUsername}}</h1>
+      <p>Followers: {{user.followers_count}}</p>
+      <p>Following: {{user.following_count}}</p>
+    </div>
+  </Layout>
 </template>
 
 <script type="text/javascript">
+
+  import Layout from './Layout.vue'
+
   import axios from 'axios'
 
   export default {
     name: 'UserProfile',
+    components: {Layout},
     data(){
       return{
         loading: true,
