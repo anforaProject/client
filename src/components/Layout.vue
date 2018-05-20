@@ -7,11 +7,15 @@
     <div class="page-content">
       <div id="side-bar">
         <h1 class="title">Zinat</h1>
-        <nav v-if="userLogged" id="menu">
+        <nav v-show="isLoggedIn()" id="menu">
             <router-link  class="menu-element" to="/" exact-active-class="active">Home Feed</router-link>
             <router-link  class="menu-element" to="/explore" exact-active-class="active">Explore</router-link>
             <router-link  class="menu-element" to="/notifications" exact-active-class="active" >Notifications</router-link>
             <router-link  class="menu-element" :to="'/@'+currentUser.uri" exact-active-class="active">Profile</router-link>
+            <a href="#" class="menu-element" @click="logout()">Logout</a>
+        </nav>
+        <nav v-show="!isLoggedIn()" id="menu">
+            <a href="#" class="menu-element" @click="login()">Login</a>
         </nav>
       </div>
       <div id="main-content">
@@ -23,7 +27,12 @@
 </template>
 
 <script>
+
+  //Components
   import Navigation from './Navigation.vue';
+
+  //methods
+  import { isLoggedIn, logout} from '../utils/auth';
 
   export default {
     name: 'Layout',
@@ -32,15 +41,34 @@
     },
     data() {
       return{
-        userLogged: true,
         currentUser: {"uri":"test"}
       }
+    },
+    methods:{
+      isLoggedIn() {
+        return isLoggedIn();
+      },
+      logout(){
+        return logout();
+      },
+
+      login(){
+        this.$router.push({name:'login', query: { redirect: this.$router.path }})
+      }
+
     }
   }
 </script>
 
 <style media="screen">
+
+  @font-face {
+  font-family: "Roboto";
+  src: url("/assets/fonts/Roboto-Black.ttf") format("ttf");
+  }
+
   html{
+    font-family: "Roboto Vera Serif Bold";
     height: 100%;
   }
   body{
@@ -86,6 +114,8 @@
     max-width: 100%;
 
     background-color: #ffffff;
+    box-shadow: 5px 2px 2px #DEDEDE;
+    z-index: 0;
   }
   #main-content{
 

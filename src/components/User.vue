@@ -36,7 +36,7 @@
     },
     methods:{
       retriveUser(){
-        axios.get('http://localhost:8000/@test')
+        axios.get('http://localhost:8000/@'+this.$route.params.username)
         .then(response =>{
           // JSON responses are automatically parsed.
           this.user = response.data

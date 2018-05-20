@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 import UserProfile from './components/User.vue'
 import About from './components/About.vue'
-
+import Login from './components/Login.vue'
 /*
     Extends Vue to use Vue Router
 */
@@ -25,6 +25,12 @@ export default new VueRouter({
         path: '/about',
         name: 'about',
         component: Vue.component( 'About', About ),
+        meta: { requiresAuth: false }
+      },
+      {
+        path: '/login',
+        name: 'login',
+        component: Vue.component('Login', Login)
       }
     ]
 });
