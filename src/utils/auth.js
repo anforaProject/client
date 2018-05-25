@@ -11,7 +11,7 @@ var router = new Router({
 });
 
 export function login(auth_info) {
-  axios.post(CLIENT_DOMAIN+'api/v1/auth',
+  axios.get(CLIENT_DOMAIN+'/api/v1/auth',
     {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -24,8 +24,7 @@ export function login(auth_info) {
   })
   .then(response =>{
     console.log(response)
-    setAccessToken(response.token)
-    router.push('/')
+    setAccessToken(response.data.token)
   })
   .catch(e => {
     console.log(e)
@@ -37,13 +36,13 @@ export function login(auth_info) {
 
 export function logout() {
   clearAccessToken();
-  router.go('/');
+  router.push('/');
 }
 
 export function requireAuth(to, from, next) {
   if (!isLoggedIn()) {
     next({
-      path: '/',
+      path: '/login',
       query: { redirect: to.fullPath }
     });
   } else {
@@ -57,7 +56,29 @@ export function getAccessToken() {
 }
 
 function clearAccessToken() {
-  localStorage.removeItem(ACCESS_TOKEN_KEY);
+
+  var token = getAccessToken()
+
+  var config = {
+    headers: {'Authorization': "bearer " + token}
+  }
+
+  var bodyParameters = {
+   "token": token
+  }
+
+  axios.post(CLIENT_DOMAIN+'/logout',
+    bodyParameters,
+    config,
+  )
+  .then(response =>{
+    localStorage.removeItem(ACCESS_TOKEN_KEY)
+  })
+  .catch(e => {
+    console.log(e)
+    return false
+  })
+
 }
 
 // Get and store access_token in local storage

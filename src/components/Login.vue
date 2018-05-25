@@ -16,12 +16,13 @@ export default {
     return{
       username: null,
       password: null,
-      callback: this.$route.query.redirect || '/'
-    }  
+      callback: this.$route.query.redirect || '/home'
+    }
   },
   methods:{
     login(){
-      login({username:this.username, password:this.password, callback:this.callback})
+      login({username:this.username, password:this.password})
+      this.$router.push(this.callback)
     }
   }
 }

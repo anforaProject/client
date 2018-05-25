@@ -8,7 +8,7 @@
       <div id="side-bar">
         <h1 class="title">Zinat</h1>
         <nav v-show="isLoggedIn()" id="menu">
-            <router-link  class="menu-element" to="/" exact-active-class="active">Home Feed</router-link>
+            <router-link  class="menu-element" to="/home" exact-active-class="active">Home Feed</router-link>
             <router-link  class="menu-element" to="/explore" exact-active-class="active">Explore</router-link>
             <router-link  class="menu-element" to="/notifications" exact-active-class="active" >Notifications</router-link>
             <router-link  class="menu-element" :to="'/@'+currentUser.uri" exact-active-class="active">Profile</router-link>

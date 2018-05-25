@@ -4,6 +4,10 @@ import VueRouter from 'vue-router'
 import UserProfile from './components/User.vue'
 import About from './components/About.vue'
 import Login from './components/Login.vue'
+import LandingPage from './components/LandingPage.vue'
+import Home from './components/Home.vue'
+
+import {requireAuth} from './utils/auth'
 /*
     Extends Vue to use Vue Router
 */
@@ -31,6 +35,17 @@ export default new VueRouter({
         path: '/login',
         name: 'login',
         component: Vue.component('Login', Login)
+      },
+      {
+        path: '/',
+        name: 'landing',
+        component: Vue.component('Landing', LandingPage)
+      },
+      {
+        path: '/home',
+        name: 'home',
+        component: Vue.component('Home', Home),
+        beforeEnter: requireAuth
       }
     ]
 });
