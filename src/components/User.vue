@@ -14,7 +14,7 @@
 
 <script type="text/javascript">
 
-  import Layout from './Layout.vue'
+  import Layout from './layouts/mainLayout.vue'
 
   import axios from 'axios'
 

@@ -72,7 +72,9 @@ function clearAccessToken() {
     config,
   )
   .then(response =>{
-    localStorage.removeItem(ACCESS_TOKEN_KEY)
+    if(response){
+      localStorage.removeItem(ACCESS_TOKEN_KEY)
+    }    
   })
   .catch(e => {
     console.log(e)
