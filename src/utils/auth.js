@@ -11,20 +11,21 @@ var router = new Router({
 });
 
 export function login(auth_info) {
-  axios.get(CLIENT_DOMAIN+'/api/v1/auth',
-    {
+  axios({
+    url: CLIENT_DOMAIN+'/api/v1/auth',
+    method: 'get',
+    auth:{
+      username: auth_info.username,
+      password: auth_info.password
+    },
+    headers:{
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-    },
-    {
-      auth:{
-        username: auth_info.username,
-        password: auth_info.password
-      }
+    }
   })
   .then(response =>{
-    console.log(response)
-    setAccessToken(response.data.token)
+      setAccessToken(response.data.token)
+      return true
   })
   .catch(e => {
     console.log(e)
@@ -74,7 +75,7 @@ function clearAccessToken() {
   .then(response =>{
     if(response){
       localStorage.removeItem(ACCESS_TOKEN_KEY)
-    }    
+    }
   })
   .catch(e => {
     console.log(e)
