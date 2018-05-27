@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import UserProfile from './components/User.vue'
+import UserBase from './components/userProfile/UserBase.vue'
+import UserPhotos from './components/userProfile/UserPhotos.vue'
+
 import About from './components/About.vue'
 import Login from './components/Login.vue'
 import LandingPage from './components/LandingPage.vue'
@@ -23,7 +25,13 @@ export default new VueRouter({
       {
         path: '/@:username',
         name: 'username',
-        component: Vue.component( 'UserProfile', UserProfile ),
+        component: UserBase,
+        children:[{
+          path: '',
+          component: UserPhotos,
+          name:'userProfile'
+        }
+        ]
       },
       {
         path: '/about',

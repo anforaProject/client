@@ -9,6 +9,7 @@
 
     </div>
     <div id="user">
+      <a href="/settings" class="menu-element">Settings</a>
       <a href="#" class="menu-element" @click="logout()">Logout</a>
     </div>
   </nav>
@@ -98,8 +99,16 @@ export default {
 
   .menu-element{
     grid-column-start: span 1;
-    padding-top: 1em;
+    grid-row-start: 1;
+
     text-decoration:none;
+    color: #c4c4c4;
+    max-height: 100%;
+    text-align: center;
+
+    display: grid;
+    align-items: center;
+    height: 100%;
   }
 
   #links{
