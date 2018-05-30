@@ -24,12 +24,11 @@ export default new VueRouter({
   routes: [
       {
         path: '/@:username',
-        name: 'username',
         component: UserBase,
         children:[{
           path: '',
           component: UserPhotos,
-          name:'userProfile'
+          name:'username'
         }
       ]
       },
