@@ -1,8 +1,9 @@
 <template id="mainView">
   <Layout>
 
-    <div id="upload form">
+
       <picture-input
+      id="upload"
       width="600"
       height="200"
       margin="16"
@@ -12,12 +13,23 @@
       }"
       ></picture-input>
 
-      <textarea name="description" rows="8" cols="60"></textarea>
-      
-      <input type="checkbox" id="checkbox" v-model="location">
-      <label for="checkbox" v-if="checked">Clean location</label>
-      <label for="checkbox" v-else>Share location</label>
-    </div>
+      <div id="upload-form">
+
+        <textarea name="description" id="description" rows="8" cols="60"></textarea>
+
+        <div id="location">
+          <input type="checkbox" id="checkbox" v-model="location">
+          <label for="checkbox" v-if="location">Location will be shared if present</label>
+          <label for="checkbox" v-else>Location will be removed</label>
+
+          <input type="checkbox" id="checkbox" v-model="cw">
+          <label for="checkbox" v-if="cw">Content is safe</label>
+          <label for="checkbox" v-else>Content may not be sfw</label>
+        </div>
+
+        <button id="send" type="button" name="button" @click="perform-post">Post</button>
+
+      </div>
   </Layout>
 </template>
 
@@ -33,7 +45,8 @@ export default {
   },
   data(){
     return{
-      location:false
+      location:false,
+      cw:true
     }
   }
 }
@@ -41,5 +54,55 @@ export default {
 
 <style media="screen">
 
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+#upload-form{
+  margin-top: 1em;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 1fr 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+}
+
+#description{
+  width: 600px;
+  margin: auto;
+}
+
+#location{
+  padding-top: 1em;
+  margin: auto;
+}
+
+#send{
+  margin: auto;
+  margin-top: 1em;
+  max-width: 10%;
+}
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
+}
 
 </style>
