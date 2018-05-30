@@ -8,7 +8,7 @@ import About from './components/About.vue'
 import Login from './components/Login.vue'
 import LandingPage from './components/LandingPage.vue'
 import Home from './components/Home.vue'
-
+import Upload from './components/UploadPicture.vue'
 import {requireAuth} from './utils/auth'
 /*
     Extends Vue to use Vue Router
@@ -31,7 +31,7 @@ export default new VueRouter({
           component: UserPhotos,
           name:'userProfile'
         }
-        ]
+      ]
       },
       {
         path: '/about',
@@ -54,6 +54,12 @@ export default new VueRouter({
         name: 'home',
         component: Vue.component('Home', Home),
         beforeEnter: requireAuth
+      },
+      {
+          path:'/upload',
+          name:'upload',
+          component: Upload,
+          beforeEnter: requireAuth
       }
     ]
 });

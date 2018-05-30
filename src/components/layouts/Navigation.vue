@@ -9,6 +9,7 @@
 
     </div>
     <div id="user">
+      <a href="/upload" class="menu-element">Upload</a>
       <a href="/settings" class="menu-element">Settings</a>
       <a href="#" class="menu-element" @click="logout()">Logout</a>
     </div>

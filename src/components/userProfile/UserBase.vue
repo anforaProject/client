@@ -112,6 +112,7 @@
 
   #user-info{
     padding-left: 1em;
+
   }
 
   #preferred-Username{
@@ -123,6 +124,7 @@
     display: grid;
     grid-template-columns: repeat(4, 15%);
     grid-auto-rows:100%;
+    grid-column-gap: 1em;
   }
 
 

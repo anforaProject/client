@@ -6,9 +6,6 @@
 
 <script type="text/javascript">
 
-  import Layout from '../layouts/mainLayout.vue'
-
-  import axios from 'axios'
 
   export default {
     name: 'UserPhotos',
