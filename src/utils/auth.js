@@ -1,28 +1,16 @@
-import axios from 'axios';
 import Router from 'vue-router';
+import zinatAPI from './zinatjs/serverConnection.js'
 
 const ACCESS_TOKEN_KEY = 'auth_token';
-
-const CLIENT_DOMAIN = 'http://localhost:8000';
 //const REDIRECT = 'http://localhost:8000/';
 
 var router = new Router({
    mode: 'history',
 });
 
+
 export function login(auth_info) {
-  axios({
-    url: CLIENT_DOMAIN+'/api/v1/auth',
-    method: 'get',
-    auth:{
-      username: auth_info.username,
-      password: auth_info.password
-    },
-    headers:{
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    }
-  })
+  zinatAPI.getAuthToken(auth_info)
   .then(response =>{
       setAccessToken(response.data.token)
       return true
@@ -33,7 +21,20 @@ export function login(auth_info) {
   })
 }
 
+function clearAccessToken() {
 
+  zinatAPI.logout(getAccessToken())
+  .then(response =>{
+    if(response){
+      localStorage.removeItem(ACCESS_TOKEN_KEY)
+    }
+  })
+  .catch(e => {
+    console.log(e)
+    return false
+  })
+
+}
 
 export function logout() {
   clearAccessToken();
@@ -54,34 +55,6 @@ export function requireAuth(to, from, next) {
 
 export function getAccessToken() {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
-}
-
-function clearAccessToken() {
-
-  var token = getAccessToken()
-
-  var config = {
-    headers: {'Authorization': "bearer " + token}
-  }
-
-  var bodyParameters = {
-   "token": token
-  }
-
-  axios.post(CLIENT_DOMAIN+'/logout',
-    bodyParameters,
-    config,
-  )
-  .then(response =>{
-    if(response){
-      localStorage.removeItem(ACCESS_TOKEN_KEY)
-    }
-  })
-  .catch(e => {
-    console.log(e)
-    return false
-  })
-
 }
 
 // Get and store access_token in local storage
