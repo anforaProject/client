@@ -11,23 +11,32 @@
           upload: '<h1>Bummer!</h1>',
           drag: 'Drag or click to upload a photo 😃'
       }"
+      @change="photoSet"
       ></picture-input>
 
       <div id="upload-form">
 
-        <textarea name="description" id="description" rows="8" cols="60"></textarea>
+        <label for="message">Message:</label>
+        <textarea name="message" id="description" v-model="message" rows="8" cols="60"></textarea>
+
+        <label for="description">Description of the image</label>
+        <textarea name="description" id="description" v-model="description" rows="8" cols="60"></textarea>
 
         <div id="location">
           <input type="checkbox" id="checkbox" v-model="location">
           <label for="checkbox" v-if="location">Location will be shared if present</label>
           <label for="checkbox" v-else>Location will be removed</label>
 
-          <input type="checkbox" id="checkbox" v-model="cw">
-          <label for="checkbox" v-if="cw">Content is safe</label>
+          <input type="checkbox" id="checkbox" v-model="sfw">
+          <label for="checkbox" v-if="sfw">Content is safe</label>
           <label for="checkbox" v-else>Content may not be sfw</label>
+
+          <input type="checkbox" id="checkbox" v-model="publicImage">
+          <label for="checkbox" v-if="publicImage">Image will be public</label>
+          <label for="checkbox" v-else>Only your followers can see this photo</label>
         </div>
 
-        <button id="send" type="button" name="button" @click="perform-post">Post</button>
+        <button id="send" type="button" name="button" @click="performPost">Post</button>
 
       </div>
   </Layout>
@@ -36,6 +45,8 @@
 <script type="text/javascript">
 import Layout from './layouts/mainLayout.vue'
 import PictureInput from 'vue-picture-input'
+import zinatAPI from '../utils/zinatjs/serverConnection.js'
+
 
 export default {
   name: 'Upload',
@@ -46,7 +57,37 @@ export default {
   data(){
     return{
       location:false,
-      cw:true
+      sfw:true,
+      publicImage: true,
+      description: '',
+      message: ''
+    }
+  },
+  methods:{
+    photoSet(image){
+      if(image){
+        this.image = image
+      }
+    },
+
+    performPost(){
+      var data = {
+        "public": this.public,
+        "message": this.message,
+        "description": this.description,
+        "sensitive": this.sfw,
+        "image": this.image
+      }
+
+    zinatAPI.uploadPicture(data)
+    .then(response => {
+      console.log(response)
+      this.$router.push({name:'home'})
+    })
+    .catch(e => {
+      console.log(e)
+    })
+
     }
   }
 }

@@ -1,25 +1,45 @@
 <template id="userView">
   <div id="user-photos">
-    hiu
+    <template v-if="loading">
+      <imageTemplate
+        v-for="image in images"
+        v-bind:key="image.id"
+        v-bind:image="image"
+      ></imageTemplate>
+    </template>
   </div>
 </template>
 
 <script type="text/javascript">
 
+  import zinatAPI from '../../utils/zinatjs/serverConnection.js'
+  import imageTemplate from '../layouts/Image.vue'
 
   export default {
     name: 'UserPhotos',
     data(){
       return{
-        loading: true,
-        errors: [],
-        user: null
+        loading: false,
+        images:[]
       }
     },
-    watch:{
+    components:{
+      imageTemplate
+    },
+    mounted(){
+      this.setImages()
     },
     methods:{
-
+      setImages(){
+        zinatAPI.retriveImages()
+        .then(response=>{
+          this.loading = true
+          this.images = response.data.statuses
+        })
+        .catch(e=>{
+          console.log(e)
+        })
+      }
     }
   }
 </script>
