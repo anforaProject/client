@@ -43,29 +43,34 @@ export default class Zinat{
 
   uploadPicture(data){
 
-    var config = {'Authorization': this.retriveToken()}
-
-    var body = {
-      "public": data.public || true,
-      "message": data.message || '',
-      "description": data.description || '',
-      "sensitive": data.sensitive || false,
-      "image": data.image
-    }
-
-    return axios.post(this.BASE_URL + urls.upload,
-      body,
-      config
-    )
+    return axios({
+        url: this.BASE_URL + urls.upload,
+        method: 'post',
+        headers:{
+          'Accept': 'application/json',
+          'Authorization': this.retriveToken(),
+          'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+        },
+        data:{
+          "public": data.public || true,
+          "message": data.message || '',
+          "description": data.description || '',
+          "sensitive": data.sensitive || false,
+          "image": data.image
+        }
+    })
   }
 
   retriveImages(){
-    var config = {'Authorization': this.retriveToken()}
     console.log(urls.retriveImages('test'))
-    return axios.get(this.BASE_URL + urls.retriveImages('test'),
-      {},
-      config
-    )
+    return axios({
+      url: this.BASE_URL + urls.retriveImages('test'),
+      method: 'get',
+      headers:{
+        'Accept': 'application/json',
+        'Authorization': this.retriveToken(),
+      }
+    })
   }
 
 
