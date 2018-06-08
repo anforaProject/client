@@ -106,7 +106,7 @@
   #user-grid{
     width: 100%;
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 25% 75%;
     grid-auto-rows: 100%;
   }
 

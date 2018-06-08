@@ -82,7 +82,7 @@ export default {
     zinatAPI.uploadPicture(data)
     .then(response => {
       console.log(response)
-      this.$router.push({name:'home'})
+      //this.$router.push({name:'home'})
     })
     .catch(e => {
       console.log(e)

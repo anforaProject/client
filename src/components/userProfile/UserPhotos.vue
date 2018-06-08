@@ -1,11 +1,13 @@
 <template id="userView">
   <div id="user-photos">
-    <template v-if="loading">
-      <imageTemplate
-        v-for="image in images"
-        v-bind:key="image.id"
-        v-bind:image="image"
-      ></imageTemplate>
+    <template v-if="ready">
+      <div id="statuses">
+        <imageMinature
+          v-for="image in images"
+          v-bind:key="image.id"
+          v-bind:image="image"
+        ></imageMinature>
+      </div>
     </template>
   </div>
 </template>
@@ -13,18 +15,18 @@
 <script type="text/javascript">
 
   import zinatAPI from '../../utils/zinatjs/serverConnection.js'
-  import imageTemplate from '../layouts/Image.vue'
+  import imageMinature from '../layouts/Image.vue'
 
   export default {
     name: 'UserPhotos',
     data(){
       return{
-        loading: false,
+        ready: false,
         images:[]
       }
     },
     components:{
-      imageTemplate
+      imageMinature
     },
     mounted(){
       this.setImages()
@@ -33,7 +35,7 @@
       setImages(){
         zinatAPI.retriveImages()
         .then(response=>{
-          this.loading = true
+          this.ready = true
           this.images = response.data.statuses
         })
         .catch(e=>{
@@ -63,7 +65,13 @@
 /* Medium Devices, Desktops */
 @media only screen and (min-width : 992px) {
 
-
+#statuses{
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-column-gap: 1em;
+  grid-row-gap: 1em;
+  width: 80%;
+}
 
 }
 
