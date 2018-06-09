@@ -2,17 +2,7 @@
   <Layout>
 
 
-      <picture-input
-      id="upload"
-      width="600"
-      height="200"
-      margin="16"
-      :custom-strings="{
-          upload: '<h1>Bummer!</h1>',
-          drag: 'Drag or click to upload a photo 😃'
-      }"
-      @change="photoSet"
-      ></picture-input>
+      <input type="file" ref="files" value="" v-on:change="handleFilesUpload()">
 
       <div id="upload-form">
 
@@ -44,7 +34,6 @@
 
 <script type="text/javascript">
 import Layout from './layouts/mainLayout.vue'
-import PictureInput from 'vue-picture-input'
 import zinatAPI from '../utils/zinatjs/serverConnection.js'
 
 
@@ -52,7 +41,6 @@ export default {
   name: 'Upload',
   components: {
     Layout,
-    PictureInput
   },
   data(){
     return{
@@ -60,7 +48,8 @@ export default {
       sfw:true,
       publicImage: true,
       description: '',
-      message: ''
+      message: '',
+      files:[]
     }
   },
   methods:{
@@ -70,14 +59,27 @@ export default {
       }
     },
 
+    handleFilesUpload(){
+      let uploadedFiles = this.$refs.files.files;
+       /*
+         Adds the uploaded file to the files array
+       */
+
+       for( var i = 0; i < uploadedFiles.length; i++ ){
+         this.files.push( uploadedFiles[i] );
+       }
+    },
+
     performPost(){
       var data = {
         "public": this.public,
         "message": this.message,
         "description": this.description,
         "sensitive": this.sfw,
-        "image": this.image
+        "image": this.files[0]
       }
+
+      console.log(this.files[0])
 
     zinatAPI.uploadPicture(data)
     .then(response => {

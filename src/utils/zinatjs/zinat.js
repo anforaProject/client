@@ -43,6 +43,14 @@ export default class Zinat{
 
   uploadPicture(data){
 
+    var f = new FormData()
+
+    f.append('public', data.public || true);
+    f.append('message', data.message || '');
+    f.append('description', data.description || '');
+    f.append('sensitive', data.sensitive || false);
+    f.append('image', data.image);
+
     return axios({
         url: this.BASE_URL + urls.upload,
         method: 'post',
@@ -51,13 +59,7 @@ export default class Zinat{
           'Authorization': this.retriveToken(),
           'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
         },
-        data:{
-          "public": data.public || true,
-          "message": data.message || '',
-          "description": data.description || '',
-          "sensitive": data.sensitive || false,
-          "image": data.image
-        }
+        data:f
     })
   }
 
@@ -68,7 +70,6 @@ export default class Zinat{
       method: 'get',
       headers:{
         'Accept': 'application/json',
-        'Authorization': this.retriveToken(),
       }
     })
   }
