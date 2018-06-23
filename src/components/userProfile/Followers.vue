@@ -7,24 +7,11 @@
             Loading...
         </div>
 
-        <div v-else-if='user'>
-          <p id="preferred-Username">{{user.username}}</p>
-
-          <div id="account-actions">
-            <div class="account-info">
-              Settings
-            </div>
-            <div class="account-info" @click='followersTab()'>
-              <span>Followers</span>
-              <strong>{{user.followers_count}}</strong>
-            </div>
-            <div class="account-info" @click='followingTab()'>
-              <span>Following</span>
-              <strong>{{user.following_count}}</strong>
-            </div>
-
-          </div>
-
+        <div v-else-if='followers'>
+          <p id="preferred-Username">Followers</p>
+          <ul>
+            <li v-for="user in followers">{{user.username}}</li>
+          </ul>
         </div>
 
       </div>
@@ -50,7 +37,7 @@
       return{
         loading: true,
         errors: [],
-        user: null
+        followers: null
       }
     },
     created(){
@@ -61,23 +48,17 @@
     },
     methods:{
       retriveUser(){
-        axios.get('http://localhost:8000/api/v1/accounts/'+this.$route.params.username)
+        axios.get('http://localhost:8000/api/v1/accounts/'+this.$route.params.username+'/followers')
         .then(response =>{
           // JSON responses are automatically parsed.
-          this.user = response.data
+          this.followes = response.data
           this.loading = false
         })
         .catch(e => {
           console.log(e)
           this.errors.push(e)
         })
-      },
-
-      followersTab(){
-        this.$router.push({name:'login', query: { redirect: this.$router.path }})
       }
-
-
     }
   }
 </script>
