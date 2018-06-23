@@ -1,23 +1,48 @@
 <template id="mainView">
   <Layout>
-    <div class="loading" v-if="loading">
-        Loading...
+    <div class="homeTimeline" v-if="ready">
+      <div id="statuses">
+        <imageMinature
+          v-for="image in timeline"
+          v-bind:key="image.id"
+          v-bind:image="image"
+        ></imageMinature>
+      </div>
+    </div>
+    <div class="loading" v-else>
+      Loading...
     </div>
   </Layout>
 </template>
 
 <script type="text/javascript">
 import Layout from './layouts/mainLayout.vue'
-
+import zinatAPI from '../utils/zinatjs/serverConnection.js'
+import imageMinature from './layouts/Image.vue'
 
 export default {
   name: 'Home',
-  components: {Layout},
+  components: {Layout,imageMinature},
   data(){
     return{
-      loading: true,
-      errors: [],
-      user: null
+      ready: false,
+      timeline: [],
+    }
+  },
+  mounted(){
+    this.setHomeTimeline()
+  },
+  methods:{
+    setHomeTimeline(){
+      zinatAPI.getHomeTimeline(this.$route.params.username)
+      .then(response=>{
+        this.ready = true
+        this.timeline = response.data
+        console.log(this.timeline)
+      })
+      .catch(e=>{
+        console.log(e)
+      })
     }
   }
 }

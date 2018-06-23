@@ -33,10 +33,11 @@
     },
     methods:{
       setImages(){
-        zinatAPI.retriveImages()
+        zinatAPI.retriveImages(this.$route.params.username)
         .then(response=>{
           this.ready = true
-          this.images = response.data.statuses
+          this.images = response.data
+          console.log(this.images)
         })
         .catch(e=>{
           console.log(e)

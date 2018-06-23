@@ -8,7 +8,7 @@
         </div>
 
         <div v-else-if='user'>
-          <p id="preferred-Username">{{user.preferredUsername}}</p>
+          <p id="preferred-Username">{{user.username}}</p>
 
           <div id="account-actions">
             <div class="account-info">
