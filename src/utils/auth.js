@@ -13,6 +13,7 @@ export function login(auth_info) {
   zinatAPI.getAuthToken(auth_info)
   .then(response =>{
       setAccessToken(response.data.token)
+      setUsername(auth_info.username)
       return true
   })
   .catch(e => {
@@ -60,6 +61,10 @@ export function getAccessToken() {
 // Get and store access_token in local storage
 export function setAccessToken(accessToken) {
   localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+}
+
+export function setUsername(username){
+  localStorage.setItem("username", username)
 }
 
 export function isLoggedIn() {

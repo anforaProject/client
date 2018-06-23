@@ -1,17 +1,24 @@
 <template lang="html">
-  <nav class="top-nav" v-show="isLoggedIn()">
+  <nav class="top-nav" v-if="isLoggedIn()">
     <a href="#" id="logo">Zinat</a>
     <div id="links">
       <router-link  class="main-menu-element" to="/home" >Home Feed</router-link>
       <router-link  class="main-menu-element" to="/explore" >Explore</router-link>
       <router-link  class="main-menu-element" to="/notifications">Notifications</router-link>
-      <router-link  class="main-menu-element" :to="'/@'+currentUser.uri">Profile</router-link>
+      <router-link  class="main-menu-element" :to="'/@'+currentUser">Profile</router-link>
 
     </div>
     <div id="user">
       <a href="/upload" class="menu-element"><i class="fa fa-upload"></i></a>
       <a href="/settings" class="menu-element">Settings</a>
       <a href="#" class="menu-element" @click="logout()">Logout</a>
+    </div>
+  </nav>
+
+  <nav class="not-logged-menu" v-else>
+    <a href="#" id="logo">Zinat</a>
+    <div>
+      <router-link  class="main-menu-element" :to="{name:'login'}">Login</router-link>
     </div>
   </nav>
 </template>
@@ -25,7 +32,7 @@ export default {
   name: 'Navigation',
   data(){
     return({
-      currentUser:{"uri":"test"}
+      currentUser:localStorage.getItem("username")
     })
   },
   methods:{
@@ -63,19 +70,22 @@ export default {
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width : 992px) {
+
   nav{
     height: 4em;
     width: 100%;
 
     max-width: 100%;
-
-    display: grid;
-    grid-template-columns: 20% 60% 20%;
-    grid-template-rows: 100%;
     background-color: #ffffff;
     box-shadow: 2px 4px 2px #DEDEDE;
 
     margin-bottom: 1em;
+  }
+
+  .top-nav{
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 100%;
   }
 
   .router-link-exact-active{
@@ -127,7 +137,8 @@ export default {
   #logo{
     /*row-start column-start row-end column-end*/
     grid-column-start: span 1;
-    text-align: center;
+    text-align: left;
+    padding-left: 1em;
     font-size: 300%;
     text-decoration: none;
     color: inherit;
@@ -146,6 +157,12 @@ export default {
     width: 60%;
     margin: auto;
     height: 100%;
+  }
+
+  .not-logged-menu{
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 100%;
   }
 
 }

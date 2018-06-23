@@ -63,13 +63,23 @@ export default class Zinat{
     })
   }
 
-  retriveImages(){
-    console.log(urls.retriveImages('test'))
+  retriveImages(username){
     return axios({
-      url: this.BASE_URL + urls.retriveImages('test'),
+      url: this.BASE_URL + urls.retriveImages(username),
       method: 'get',
       headers:{
         'Accept': 'application/json',
+      }
+    })
+  }
+
+  getHomeTimeline(){
+    return axios({
+      url: this.BASE_URL + urls.homeTimeline,
+      method: 'get',
+      headers:{
+        'Accept': 'application/json',
+        'Authorization': this.retriveToken(),
       }
     })
   }
