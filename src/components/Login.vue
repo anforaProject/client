@@ -22,7 +22,14 @@ export default {
   methods:{
     login(){
       login({username:this.username, password:this.password})
-      this.$router.push(this.callback)
+      .then(
+        account =>{
+          console.log(account)
+          this.$router.push('/home')
+        }
+      )
+      
+      
     }
   }
 }

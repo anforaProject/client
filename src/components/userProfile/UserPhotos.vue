@@ -22,22 +22,25 @@
     data(){
       return{
         ready: false,
-        images:[]
+        images:[],
       }
     },
     components:{
       imageMinature
+    },
+    created(){
+      this.user = this.$store.getters['profiles/currentAccount']
     },
     mounted(){
       this.setImages()
     },
     methods:{
       setImages(){
-        zinatAPI.retriveImages(this.$route.params.username)
+        zinatAPI.retriveImages(this.$route.params.id)
         .then(response=>{
           this.ready = true
           this.images = response.data
-          console.log(this.images)
+          console.log(response)
         })
         .catch(e=>{
           console.log(e)

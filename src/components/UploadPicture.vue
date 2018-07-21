@@ -73,7 +73,7 @@ export default {
     performPost(){
       var data = {
         "public": this.public,
-        "message": this.message,
+        "message": this.caption,
         "description": this.description,
         "sensitive": this.sfw,
         "image": this.files[0]

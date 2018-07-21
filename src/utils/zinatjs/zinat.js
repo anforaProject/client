@@ -22,6 +22,7 @@ export default class Zinat{
         headers:{
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+          'Authorization': 'Basic ' + btoa(auth_info.username+':'+auth_info.password)
         }
       })
   }
@@ -46,7 +47,7 @@ export default class Zinat{
     var f = new FormData()
 
     f.append('public', data.public || true);
-    f.append('message', data.message || '');
+    f.append('message', data.caption || '');
     f.append('description', data.description || '');
     f.append('sensitive', data.sensitive || false);
     f.append('image', data.image);
@@ -63,9 +64,9 @@ export default class Zinat{
     })
   }
 
-  retriveImages(username){
+  retriveImages(id){
     return axios({
-      url: this.BASE_URL + urls.retriveImages(username),
+      url: this.BASE_URL + urls.retriveImages(id),
       method: 'get',
       headers:{
         'Accept': 'application/json',
@@ -84,6 +85,15 @@ export default class Zinat{
     })
   }
 
-
+  verifyCredentials(token){
+    return axios({
+      url: this.BASE_URL + urls.verifyCredentials,
+      method: 'get',
+      headers:{
+        'Accept': 'application/json',
+        'Authorization': token,
+      }
+    })
+  }
 
 }

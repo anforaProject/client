@@ -1,15 +1,29 @@
 <template id="mainView">
-  <nav>
-    <ul>
-      <li>Home</li>
-    </ul>
-  </nav>
+  <Layout>
+    <div class="wrap">
+      <div class="info">
+        <ul>
+          <li>Federated image sharing</li>
+          <li>Powered by ActivityPub</li>
+        </ul>
+      </div>
+      <div class="register">
+        <h2>Register</h2>
+
+        <p>or</p>
+
+        <h2> <a href="/login">Sign in</a> </h2>
+      </div>
+    </div>
+  </Layout>
 </template>
 
 <script type="text/javascript">
+  import Layout from './layouts/mainLayout.vue'
 
   export default {
     name: 'LandingPage',
+    components: {Layout},
     data(){
       return{
         loading: true,
@@ -21,18 +35,37 @@
 </script>
 
 <style media="screen">
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
 
-nav { width: 100%; }
-nav ul { list-style: none; padding: 0px; margin: 0px; font-weight: bold; text-align: center; }
-nav ul li { display: inline-block; }
-nav ul li a { display: block; padding: 10px 20px; text-decoration: none; color: #444; }
-nav ul li a:hover { background-color: #888; color: #fff; }
+}
 
-@media (max-width:48.000em){
-  nav ul { width: 100%; font-weight: normal; }
-  nav ul li { width: 50%; float: left; }
-  nav ul li:nth-of-type(odd) a { border-right: 1px solid #ccc; }
-  nav ul li a { padding: 8px 0px; border-bottom: 1px solid #ccc; display: block; }
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+#statuses{
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-column-gap: 1em;
+  grid-row-gap: 1em;
+  width: 80%;
+}
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
 }
 
 </style>

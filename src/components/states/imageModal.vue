@@ -14,7 +14,7 @@
             <div class="modal-body">
               <slot name="body">
                 <img :src="image.media_url" :alt="image.description" class="image">
-                <p>{{image.message}}</p>
+                <p>{{image.caption}}</p>
               </slot>
             </div>
 

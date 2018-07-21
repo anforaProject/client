@@ -1,5 +1,7 @@
 import Router from 'vue-router';
 import zinatAPI from './zinatjs/serverConnection.js'
+import AccountsPersistant from '../store/persistant/persistantStore.js'
+import store from '../store/store.js'
 
 const ACCESS_TOKEN_KEY = 'auth_token';
 //const REDIRECT = 'http://localhost:8000/';
@@ -10,15 +12,27 @@ var router = new Router({
 
 
 export function login(auth_info) {
-  zinatAPI.getAuthToken(auth_info)
-  .then(response =>{
-      setAccessToken(response.data.token)
-      setUsername(auth_info.username)
-      return true
-  })
-  .catch(e => {
-    console.log(e)
-    return false
+  return new Promise(function(resolve, reject){
+    zinatAPI.getAuthToken(auth_info)
+    .then(response =>{
+        
+        //once we get the auth_token
+        let access_token = response.data.token
+        //get auth info
+        zinatAPI.verifyCredentials(access_token).then(response=>{
+          let account = response.data
+          account.token = access_token
+          store.commit('profiles/addAccount', account)
+          AccountsPersistant.addAccount(account)
+          resolve(account)
+        })
+        .catch(e => {
+          console.log(e)
+          reject(e)
+          //Store the token somehow
+        })
+        
+      })
   })
 }
 
@@ -43,31 +57,56 @@ export function logout() {
 }
 
 export function requireAuth(to, from, next) {
-  if (!isLoggedIn()) {
-    next({
-      path: '/login',
-      query: { redirect: to.fullPath }
-    });
-  } else {
-    next();
-  }
+  isLoggedIn().then(
+    value =>{
+      if (!value){
+        next({
+          path: '/login',
+          query: { redirect: to.fullPath }
+        });
+      }else{
+        next()
+      }
+    }
+  )
 }
 
+export function isLoggedIn(){
+  return new Promise(function(resolve, reject){
+    getAccessToken().then(token=>{
+      let empty = token.lenght != 0
+      resolve(empty)
+    }).catch( e=>{
+      reject(e)
+    })
+  })
+}
 
 export function getAccessToken() {
-  return localStorage.getItem(ACCESS_TOKEN_KEY);
+
+  return new Promise(function(resolve, reject){
+
+    //let token = store.getters.currentAccount.token
+    let token = "sadd"
+    if (token != undefined){
+      resolve(token)
+    }
+
+    AccountsPersistant.retriveAccount(0).then(
+      account =>{
+        if(account != undefined){
+          resolve(account.token)
+        }
+        reject("No account found")
+      }
+    )
+  })
 }
 
-// Get and store access_token in local storage
-export function setAccessToken(accessToken) {
-  localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-}
-
-export function setUsername(username){
-  localStorage.setItem("username", username)
-}
-
-export function isLoggedIn() {
-  const idToken = getAccessToken();
-  return !!idToken;
+export function getUser(){
+  return new Promise(function(resolve, reject){
+    let user = AccountsPersistant.retriveAccount(2)
+    resolve(user)
+    reject()
+  })
 }

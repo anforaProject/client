@@ -23,12 +23,12 @@ export default new VueRouter({
   mode: 'history',
   routes: [
       {
-        path: '/@:username',
+        path: '/accounts/:id',
         component: UserBase,
         children:[{
           path: '',
           component: UserPhotos,
-          name:'username'
+          name:'profile'
         }
       ]
       },

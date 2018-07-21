@@ -5,8 +5,7 @@
       <router-link  class="main-menu-element" to="/home" >Home Feed</router-link>
       <router-link  class="main-menu-element" to="/explore" >Explore</router-link>
       <router-link  class="main-menu-element" to="/notifications">Notifications</router-link>
-      <router-link  class="main-menu-element" :to="'/@'+currentUser">Profile</router-link>
-
+      <router-link  class="main-menu-element" v-if="user" :to="{name:'profile', params:{id:user.id}}">Profile</router-link>
     </div>
     <div id="user">
       <a href="/upload" class="menu-element"><i class="fa fa-upload"></i></a>
@@ -27,13 +26,23 @@
 <script>
 
 import { isLoggedIn, logout} from '../../utils/auth';
+ 
 
 export default {
   name: 'Navigation',
   data(){
-    return({
-      currentUser:localStorage.getItem("username")
-    })
+    return{
+      
+    }
+  },
+  computed:{
+    user(){
+      return this.$store.getters['profiles/currentAccount']
+    }
+    
+  },
+  mounted(){
+    
   },
   methods:{
     isLoggedIn() {
@@ -42,7 +51,6 @@ export default {
     logout(){
       return logout();
     },
-
     login(){
       this.$router.push({name:'login', query: { redirect: this.$router.path }})
     }
