@@ -17,7 +17,7 @@
 
 <script type="text/javascript">
 import Layout from './layouts/mainLayout.vue'
-import zinatAPI from '../utils/zinatjs/serverConnection.js'
+//import zinatAPI from '../utils/zinatjs/serverConnection.js'
 import imageMinature from './layouts/Image.vue'
 
 export default {
@@ -34,6 +34,8 @@ export default {
   },
   methods:{
     setHomeTimeline(){
+      this.$store.getters.currentAccount
+      /*
       zinatAPI.getHomeTimeline(this.$route.params.username)
       .then(response=>{
         this.ready = true
@@ -43,6 +45,8 @@ export default {
       .catch(e=>{
         console.log(e)
       })
+    */
+
     }
   }
 }

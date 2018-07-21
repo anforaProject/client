@@ -41,7 +41,7 @@
 
   import Layout from '../layouts/mainLayout.vue'
 
-  import axios from 'axios'
+  //import axios from 'axios'
 
   export default {
     name: 'UserBase',
@@ -61,22 +61,13 @@
     },
     methods:{
       retriveUser(){
-        axios.get('http://localhost:8000/api/v1/accounts/'+this.$route.params.username)
-        .then(response =>{
-          // JSON responses are automatically parsed.
-          this.user = response.data
-          this.loading = false
-        })
-        .catch(e => {
-          console.log(e)
-          this.errors.push(e)
-        })
+        this.user = this.$store.getters['profiles/currentAccount']
       },
-
+      /*
       followersTab(){
         this.$router.push({name:'login', query: { redirect: this.$router.path }})
       }
-
+  */
 
     }
   }
