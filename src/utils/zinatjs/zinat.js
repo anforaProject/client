@@ -74,6 +74,16 @@ export default class Zinat{
     })
   }
 
+  retriveUser(id){
+    return axios({
+      url: this.BASE_URL + urls.retriveUser(id),
+      method: 'get',
+      headers:{
+        'Accept': 'apllication/json'
+      }
+    })
+  }
+
   getHomeTimeline(){
     return axios({
       url: this.BASE_URL + urls.homeTimeline,
