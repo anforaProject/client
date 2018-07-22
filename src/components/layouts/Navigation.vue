@@ -1,23 +1,23 @@
 <template lang="html">
   <nav class="top-nav" v-if="isLoggedIn()">
-    <a href="#" id="logo">Zinat</a>
+    <a href="#" id="logo">Anfora</a>
     <div id="links">
-      <router-link  class="main-menu-element" to="/home" >Home Feed</router-link>
-      <router-link  class="main-menu-element" to="/explore" >Explore</router-link>
-      <router-link  class="main-menu-element" to="/notifications">Notifications</router-link>
-      <router-link  class="main-menu-element" v-if="user" :to="{name:'profile', params:{id:user.id}}">Profile</router-link>
+      <router-link  class="main-menu-element" to="/home" >{{$t("navigation.homeFeed")}}</router-link>
+      <router-link  class="main-menu-element" to="/explore" >{{$t("navigation.explore")}}</router-link>
+      <router-link  class="main-menu-element" to="/notifications">{{$t("navigation.notifications")}}</router-link>
+      <router-link  class="main-menu-element" v-if="user" :to="{name:'profile', params:{id:user.id}}">{{$t("navigation.profile")}}</router-link>
     </div>
     <div id="user">
       <a href="/upload" class="menu-element"><i class="fa fa-upload"></i></a>
-      <a href="/settings" class="menu-element">Settings</a>
-      <a href="#" class="menu-element" @click="logout()">Logout</a>
+      <a href="/settings" class="menu-element">{{$t("navigation.settings")}}</a>
+      <a href="#" class="menu-element" @click="logout()">{{$t("navigation.logout")}}</a>
     </div>
   </nav>
 
   <nav class="not-logged-menu" v-else>
     <a href="#" id="logo">Zinat</a>
     <div>
-      <router-link  class="main-menu-element" :to="{name:'login'}">Login</router-link>
+      <router-link  class="main-menu-element" :to="{name:'login'}">{{$t("navigation.login")}}</router-link>
     </div>
   </nav>
 </template>

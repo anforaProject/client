@@ -40,7 +40,6 @@
         .then(response=>{
           this.ready = true
           this.images = response.data
-          console.log(response)
         })
         .catch(e=>{
           console.log(e)

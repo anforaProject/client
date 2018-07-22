@@ -12,14 +12,15 @@
 
           <div id="account-actions">
             <div class="account-info">
-              Settings
+              <span>{{$t("profiles.posts")}}</span>
+              <strong>{{user.statuses_count}}</strong>
             </div>
             <div class="account-info" @click='followersTab()'>
-              <span>Followers</span>
+              <span>{{$t("profiles.followers")}}</span>
               <strong>{{user.followers_count}}</strong>
             </div>
             <div class="account-info" @click='followingTab()'>
-              <span>Following</span>
+              <span>{{$t("profiles.following")}}</span>
               <strong>{{user.following_count}}</strong>
             </div>
 
@@ -40,7 +41,7 @@
 <script type="text/javascript">
 
   import Layout from '../layouts/mainLayout.vue'
-
+  import zinatAPI from '../../utils/zinatjs/serverConnection.js'
   //import axios from 'axios'
 
   export default {
@@ -53,7 +54,7 @@
         user: null
       }
     },
-    created(){
+    mounted(){
       this.retriveUser()
     },
     watch:{
@@ -61,13 +62,15 @@
     },
     methods:{
       retriveUser(){
-        this.user = this.$store.getters['profiles/currentAccount']
-      },
-      /*
-      followersTab(){
-        this.$router.push({name:'login', query: { redirect: this.$router.path }})
+        zinatAPI.retriveUser(this.$route.params.id)
+        .then(response=>{
+          this.loading = false
+          this.user = response.data
+        })
+        .catch(e=>{
+          console.log(e)
+        })
       }
-  */
 
     }
   }
