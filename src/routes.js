@@ -25,12 +25,7 @@ export default new VueRouter({
       {
         path: '/accounts/:id',
         component: UserBase,
-        children:[{
-          path: '',
-          component: UserPhotos,
-          name:'profile'
-        }
-      ]
+        name: 'profile'
       },
       {
         path: '/about',
