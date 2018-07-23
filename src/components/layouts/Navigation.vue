@@ -5,7 +5,7 @@
       <router-link  class="main-menu-element" to="/home" >{{$t("navigation.homeFeed")}}</router-link>
       <router-link  class="main-menu-element" to="/explore" >{{$t("navigation.explore")}}</router-link>
       <router-link  class="main-menu-element" to="/notifications">{{$t("navigation.notifications")}}</router-link>
-      <router-link  class="main-menu-element" v-if="user" :to="{name:'profile', params:{id:user.id}}">{{$t("navigation.profile")}}</router-link>
+      <router-link  class="main-menu-element" v-if="user" :key="$route.fullPath" :to="{name:'profile', params:{id:user.id}}">{{$t("navigation.profile")}}</router-link>
     </div>
     <div id="user">
       <a href="/upload" class="menu-element"><i class="fa fa-upload"></i></a>

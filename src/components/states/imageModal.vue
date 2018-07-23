@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="">
+  <div  class="cell" >
     <transition name="modal" v-if="showModal">
       <div class="modal-mask">
         <div class="modal-wrapper">
@@ -13,7 +13,7 @@
 
             <div class="modal-body">
               <slot name="body">
-                <img :src="image.media_url" :alt="image.description" class="image">
+                <img :src="image.media_attachments[0].url" :alt="image.description" class="image">
                 <p>{{image.caption}}</p>
               </slot>
             </div>
@@ -30,7 +30,8 @@
         </div>
       </div>
     </transition>
-    <img :src="image.preview_url" alt="" @click="change()" class="preview">
+
+    <img v-bind:style="cardDimensions" :src="image.media_attachments[0].preview_url" alt="" @click="change()" class="preview">
   </div>
 
 </template>
@@ -38,10 +39,15 @@
 <script type="text/javascript">
 export default {
   name: "imageModal",
-  props:['image'],
+  props:['image', 'layaout'],
   data(){
     return({
-      showModal: false
+      showModal: false,
+      cardDimensions: {
+        width: this.layaout.width*4,
+        height: this.layaout.height,
+        marginLeft: this.layaout.left,
+      }
     })
   },
   methods:{
@@ -54,23 +60,36 @@ export default {
 </script>
 
 <style media="screen">
+
+@media only screen and (min-width : 320px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
+}
+
+.cell img{
+  display: block;
+}
+
 .status-card{
-  border: 1px solid;
-  place-self: center;
-}
-
-.preview {
-    max-width:320px;
-    max-height:320px;
-    width:auto;
-    height:auto;
-}
-
-
-.image{
-  max-width: 50%;
-  width: auto;
-  height: auto;
+  max-width: 100%;
 }
 
 .modal-mask {
@@ -91,14 +110,13 @@ export default {
 }
 
 .modal-container {
-  width: 40%;
-  max-height: 90%;
-  height: auto;
+  max-width: 100%;
+  width: 100%;
+  max-height: 100%;
+  height: 100%;
   margin: 0px auto;
-  padding: 20px 30px;
   background-color: #fff;
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
   transition: all .3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
@@ -110,7 +128,7 @@ export default {
 
 .modal-body {
   margin: 20px 0;
-  width: 100%;
+  width: 90%;
 }
 
 .modal-default-button {

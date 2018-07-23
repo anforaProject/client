@@ -1,7 +1,7 @@
 <template lang="html">
   <div id="status">
     <div class="status-card">
-      <imageModal v-bind:image="image"></imageModal>
+      <imageModal v-bind:image="image" v-bind:layaout="layaout"></imageModal>
     </div>
   </div>
 
@@ -15,12 +15,9 @@
 
 
     name: "imageMinature",
-    props:['image'],
+    props:['image', 'layaout'],
     components:{
       imageModal
-    },
-    data(){
-      return({})
     },
     methods:{
       displayModal(){

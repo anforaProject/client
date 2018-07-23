@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "justified-layout": "^2.1.1",
     "nedb": "^1.8.0",
     "nedb-promises": "^3.0.1",
     "request-promise": "^4.2.2",

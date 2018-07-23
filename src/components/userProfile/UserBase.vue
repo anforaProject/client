@@ -29,10 +29,10 @@
         </div>
 
       </div>
-
       <div id="user-posts">
-        <router-view></router-view>
+        <UserPhotos></UserPhotos>
       </div>
+
 
     </div>
   </Layout>
@@ -42,11 +42,12 @@
 
   import Layout from '../layouts/mainLayout.vue'
   import zinatAPI from '../../utils/zinatjs/serverConnection.js'
+  import UserPhotos from './UserPhotos.vue'
   //import axios from 'axios'
 
   export default {
     name: 'UserBase',
-    components: {Layout},
+    components: {Layout, UserPhotos},
     data(){
       return{
         loading: true,
@@ -102,15 +103,11 @@
   }
 
   #user-grid{
-    width: 100%;
-    display: grid;
-    grid-template-columns: 25% 75%;
-    grid-auto-rows: 100%;
   }
 
   #user-info{
     padding-left: 1em;
-
+    margin-bottom: 1em;
   }
 
   #preferred-Username{
