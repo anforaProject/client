@@ -25,7 +25,19 @@ export default new VueRouter({
       {
         path: '/accounts/:id',
         component: UserBase,
-        name: 'profile'
+        name: 'profile',
+        children: [
+          {
+            path: '/accounts/:id/followers',
+            name: 'profile.followers',
+            component: UserBase
+          },
+          {
+            path: '/accounts/:id/following',
+            name: 'profile.following',
+            component: UserBase
+          }
+        ]
       },
       {
         path: '/about',
