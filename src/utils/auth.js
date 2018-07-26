@@ -83,24 +83,7 @@ export function isLoggedIn(){
 }
 
 export function getAccessToken() {
-
-  return new Promise(function(resolve, reject){
-
-    //let token = store.getters.currentAccount.token
-    let token = "sadd"
-    if (token != undefined){
-      resolve(token)
-    }
-
-    AccountsPersistant.retriveAccount(0).then(
-      account =>{
-        if(account != undefined){
-          resolve(account.token)
-        }
-        reject("No account found")
-      }
-    )
-  })
+  return new Promise((resolve)=>{resolve("sad")})
 }
 
 export function getUser(){

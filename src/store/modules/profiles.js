@@ -41,6 +41,13 @@ const profile ={
 
                 state.commit('changeAccount', 0)
             }
+        },
+
+        profileAsync(state){
+            return new Promise((resolve) => {
+                let account = state.getters.currentAccount
+                resolve(account)
+            })
         }
     },
     getters:{

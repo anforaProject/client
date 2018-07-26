@@ -1,6 +1,7 @@
 module.exports = {
     'auth': '/api/v1/auth',
-    'upload': '/api/v1/statuses',
+    'uploadStatus': '/api/v1/statuses',
+    'uploadMedia': '/api/v1/media',
     'retriveImages': (id) => {return '/api/v1/accounts/'+ id + '/statuses'},
     'retriveUser': (id) => {return '/api/v1/accounts/'+id},
     'logout': '/logout',

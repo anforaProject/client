@@ -42,26 +42,41 @@ export default class Zinat{
     )
   }
 
-  uploadPicture(data){
+  uploadStatus(data, token){
 
     var f = new FormData()
 
-    f.append('public', data.public || true);
-    f.append('message', data.caption || '');
-    f.append('description', data.description || '');
+    f.append('public', data.visibility || true);
+    f.append('message', data.status || '');
     f.append('sensitive', data.sensitive || false);
-    f.append('image', data.image);
+    f.append('media_ids', data.media_ids);
 
     return axios({
-        url: this.BASE_URL + urls.upload,
+        url: this.BASE_URL + urls.uploadStatus,
         method: 'post',
         headers:{
           'Accept': 'application/json',
-          'Authorization': this.retriveToken(),
-          'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+          'Authorization': token,
         },
         data:f
     })
+  }
+
+  uploadMedia(data, token){
+    var f = new FormData()
+    f.append('file', data.image)
+    f.append('description', data.description || '')
+
+    return axios({
+          url: this.BASE_URL + urls.uploadMedia,
+          method: 'post',
+          headers:{
+            'Accept': 'application/json',
+            'Authorization': token,
+            'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+          },
+          data:f
+        })
   }
 
   retriveImages(id){
