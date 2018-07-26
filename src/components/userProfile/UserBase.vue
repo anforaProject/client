@@ -1,39 +1,31 @@
 <template id="userView">
   <Layout>
-
-    <div id="user-grid">
-      <div id="user-info">
-        <div class="loading" v-if="loading">
-            Loading...
-        </div>
-
-        <div v-else-if='user'>
-          <p id="preferred-Username">{{user.username}}</p>
-
-          <div id="account-actions">
-            <div class="account-info">
-              <span>{{$t("profiles.posts")}}</span>
-              <strong>{{user.statuses_count}}</strong>
+    
+    <section class="hero is-primary" v-if="user">
+      <div class="hero-body">
+        <div class="columns">
+          <div class="column is-1 is-offset-1">
+            <div class="container content">
+              <img :src="user.avatar" alt="" v-bind:style="{width:100 + 'px', height:100 + 'px'}">
             </div>
-            <div class="account-info" @click='followersTab()'>
-              <span>{{$t("profiles.followers")}}</span>
-              <strong>{{user.followers_count}}</strong>
-            </div>
-            <div class="account-info" @click='followingTab()'>
-              <span>{{$t("profiles.following")}}</span>
-              <strong>{{user.following_count}}</strong>
-            </div>
-
           </div>
-
+          <div class="column is-6">
+            <h1 class="title">{{user.name}}</h1>
+            <h3 class="subtitle">
+              {{user.username}}
+            </h3>
+            <router-link class="button is-primary is-large" :to="{name:'profile.followers',params:{id:user.id}}">{{user.followers_count}} followers</router-link>
+            <router-link class="button is-primary is-large" :to="{name:'profile.following',params:{id:user.id}}">{{user.following_count}} following</router-link>
+          </div>
         </div>
 
+        {{user.note}}
       </div>
+    </section>
+    <div id="user-grid">
       <div id="user-posts">
         <UserPhotos></UserPhotos>
       </div>
-
-
     </div>
   </Layout>
 </template>
@@ -78,57 +70,4 @@
 </script>
 
 <style media="screen">
-/* Custom, iPhone Retina */
-@media only screen and (min-width : 320px) {
-
-}
-
-/* Extra Small Devices, Phones */
-@media only screen and (min-width : 480px) {
-
-}
-
-/* Small Devices, Tablets */
-@media only screen and (min-width : 768px) {
-
-}
-
-/* Medium Devices, Desktops */
-@media only screen and (min-width : 992px) {
-
-  .account-info{
-    display: grid;
-    grid-template-rows: 50% 50%;
-    grid-template-columns: 100%;
-  }
-
-  #user-grid{
-  }
-
-  #user-info{
-    padding-left: 1em;
-    margin-bottom: 1em;
-  }
-
-  #preferred-Username{
-    font-size: 180%;
-  }
-
-  #account-actions{
-    border: 1px;
-    display: grid;
-    grid-template-columns: repeat(4, 15%);
-    grid-auto-rows:100%;
-    grid-column-gap: 1em;
-  }
-
-
-
-}
-
-/* Large Devices, Wide Screens */
-@media only screen and (min-width : 1200px) {
-
-}
-
 </style>

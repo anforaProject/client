@@ -25,6 +25,7 @@ export default {
       .then(
         account =>{
           console.log(account)
+          this.$store.commit('profiles/populateData')
           this.$router.push('/home')
         }
       )

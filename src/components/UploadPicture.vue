@@ -52,44 +52,49 @@ export default {
       files:[]
     }
   },
+  computed:{
+    user(){
+      return this.$store.getters['profiles/currentAccount']
+    }
+  },
   methods:{
-    photoSet(image){
-      if(image){
-        this.image = image
-      }
-    },
-
     handleFilesUpload(){
       let uploadedFiles = this.$refs.files.files;
        /*
          Adds the uploaded file to the files array
        */
-
        for( var i = 0; i < uploadedFiles.length; i++ ){
          this.files.push( uploadedFiles[i] );
        }
     },
 
-    performPost(){
-      var data = {
-        "public": this.public,
-        "message": this.caption,
-        "description": this.description,
-        "sensitive": this.sfw,
-        "image": this.files[0]
+    photoSet(image){
+      if(image){
+        this.image = image
       }
-
-      console.log(this.files[0])
-
-    zinatAPI.uploadPicture(data)
-    .then(response => {
-      console.log(response)
-      //this.$router.push({name:'home'})
-    })
-    .catch(e => {
-      console.log(e)
-    })
-
+    },  
+    performPost(){
+      
+      let data = {image: this.files[0], description: this.description}
+      let token = this.user.token
+      zinatAPI.uploadMedia(data, token).then(
+        response =>{
+          var data = {
+            "visibility": this.public,
+            "status": this.message,
+            "sensitive": this.sfw,
+            "media_ids": response.data.id
+          }
+          zinatAPI.uploadStatus(data, token)
+          .then(response => {
+            console.log(response)
+            //this.$router.push({name:'home'})
+          })
+          .catch(e => {
+            console.log(e)
+          })
+        }
+      )
     }
   }
 }
