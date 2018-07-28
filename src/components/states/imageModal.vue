@@ -1,5 +1,5 @@
 <template lang="html">
-  <div  class="cell" >
+  <div class="cell"  v-bind:style="cardDimensions">
     <transition name="modal" v-if="showModal">
       <div class="modal-mask">
         <div class="modal-wrapper">
@@ -31,7 +31,7 @@
       </div>
     </transition>
 
-    <img :src="image.media_attachments[0].preview_url" alt="" @click="change()">
+    <!--<img class="image" :src="" alt="" @click="change()">-->
   </div>
 
 </template>
@@ -47,7 +47,10 @@ export default {
         display: "block",
         width: this.layaout.width + "px",
         height: this.layaout.height + "px",
-        marginLeft: this.layaout.left + "px",
+        marginTop: 10 + 'px',
+        marginLeft: 10 +'px',
+        backgroundImage: `url('${this.image.media_attachments[0].preview_url}')`,
+        backgroundSize: 100+'% ' +  100 + '%'
       }
     })
   },
@@ -61,5 +64,7 @@ export default {
 </script>
 
 <style media="screen">
-
+.cell{
+  flex-grow: 1;
+}
 </style>

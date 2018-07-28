@@ -1,14 +1,12 @@
 <template id="userView">
-  <div id="user-photos">
+  <div id="user-photos" class="container">
     <template v-if="ready">
-      <div class="grid">
         <imageMinature
           v-for="(image, index) in images"
           v-bind:key="image.id"
           v-bind:image="image"
           v-bind:layaout="display[index]"
         ></imageMinature>
-      </div>
     </template>
   </div>
 </template>
@@ -76,4 +74,8 @@
 </script>
 
 <style>
+#user-photos{
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>

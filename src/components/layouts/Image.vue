@@ -1,11 +1,5 @@
 <template lang="html">
-  <div id="status">
-    <div class="status-card">
       <imageModal v-bind:image="image" v-bind:layaout="layaout"></imageModal>
-    </div>
-  </div>
-
-
 </template>
 
 <script>

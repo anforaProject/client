@@ -9,16 +9,17 @@
 
   <div class="navbar-menu" v-if="isLoggedIn()">
     <div class="navbar-start">
-      <router-link  class="navbar-item" to="/home" >{{$t("navigation.homeFeed")}}</router-link>
-      <router-link  class="navbar-item" to="/explore" >{{$t("navigation.explore")}}</router-link>
-      <router-link  class="navbar-item" to="/notifications">{{$t("navigation.notifications")}}</router-link>
-      <router-link  class="navbar-item" v-if="user" :key="$route.fullPath" :to="{name:'profile', params:{id:user.id}}">{{$t("navigation.profile")}}</router-link>
+      <router-link  class="navbar-item" to="/home" :title='$t("navigation.homeFeed")' ><i class="material-icons">home</i></router-link>
+      <router-link  class="navbar-item" to="/explore" ><i class="material-icons">explore</i></router-link>
+      <router-link  class="navbar-item" v-if="user" :title='$t("navigation.profile")' :key="$route.fullPath" :to="{name:'profile', params:{id:user.id}}"><i class="material-icons">person</i></router-link>
+
     </div>
 
     <div class="navbar-end">
-      <a class="navbar-item" href="/upload"  ><i class="fa fa-upload"></i></a>
-      <a class="navbar-item" href="/settings">{{$t("navigation.settings")}}</a>
-      <a class="navbar-item" href="#" @click="logout()">{{$t("navigation.logout")}}</a>
+      <router-link  class="navbar-item" to="/notifications" :title='$t("navigation.notifications")'><i class="material-icons">notifications</i></router-link>
+      <a class="navbar-item" href="/upload"  ><i class="material-icons">cloud_upload</i></a>
+      <a class="navbar-item" href="/settings" :title='$t("navigation.settings")'><i class="material-icons">settings</i></a>
+      <a class="navbar-item" href="#" :title='$t("navigation.logout")'@click="logout()"><i class="material-icons">power_settings_new</i></a>
     </div>
   </div>
 </nav>
