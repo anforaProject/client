@@ -10,7 +10,6 @@
         <div v-else-if='followers'>
           <p id="preferred-Username">Followers</p>
           <ul>
-            <li v-for="user in followers">{{user.username}}</li>
           </ul>
         </div>
 

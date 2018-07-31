@@ -23,7 +23,6 @@ export function login(auth_info) {
           let account = response.data
           account.token = access_token
           store.commit('profiles/addAccount', account)
-          AccountsPersistant.addAccount(account)
           resolve(account)
         })
         .catch(e => {

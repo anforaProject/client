@@ -2,13 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import UserBase from './components/userProfile/UserBase.vue'
-import UserPhotos from './components/userProfile/UserPhotos.vue'
-
 import About from './components/About.vue'
 import Login from './components/Login.vue'
 import LandingPage from './components/LandingPage.vue'
 import Home from './components/Home.vue'
 import Upload from './components/UploadPicture.vue'
+import Settings from './components/Settings.vue'
 import {requireAuth} from './utils/auth'
 /*
     Extends Vue to use Vue Router
@@ -62,10 +61,15 @@ export default new VueRouter({
         beforeEnter: requireAuth
       },
       {
-          path:'/upload',
-          name:'upload',
-          component: Upload,
-          beforeEnter: requireAuth
+        path:'/upload',
+        name:'upload',
+        component: Upload,
+        beforeEnter: requireAuth
+      },
+      {
+        path: '/settings',
+        name: 'settings',
+        component: Settings,
       }
     ]
 });

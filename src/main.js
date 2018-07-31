@@ -7,6 +7,8 @@ import router from './routes.js'
 //Vuex moduke
 import store from './store/store.js'
 
+import { sync } from 'vuex-router-sync'
+
 //Translations
 import i18n from './translations/i18n.js'
 
@@ -22,6 +24,8 @@ router.beforeEach(function (to, from, next) {
 Vue.config.productionTip = false
 
 Vue.use(Buefy)
+
+sync(store, router) // done. Returns an unsync callback fn
 
 new Vue({
   router,

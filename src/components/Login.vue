@@ -1,17 +1,19 @@
 <template lang="html">
-  <div id="app">
+  <Layout>
     <input type="text" v-model="username" value="">
     <input type="password" v-model="password" value="">
     <button @click="login">Login</button>
-  </div>
+  </Layout>
 
 </template>
 
 <script>
 import {login} from '../utils/auth';
+import Layout from './layouts/mainLayout.vue'
 
 export default {
   name: "app",
+  components: {Layout},
   data(){
     return{
       username: null,
@@ -25,7 +27,7 @@ export default {
       .then(
         account =>{
           console.log(account)
-          this.$store.commit('profiles/populateData')
+          this.$store.dispatch('profiles/populateData')
           this.$router.push('/home')
         }
       )

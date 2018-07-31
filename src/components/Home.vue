@@ -31,6 +31,7 @@ export default {
   },
   mounted(){
     this.setHomeTimeline()
+    console.log(this.$store.getters['profiles/currentAccount'])
   },
   methods:{
     setHomeTimeline(){

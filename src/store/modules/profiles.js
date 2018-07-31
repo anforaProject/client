@@ -4,43 +4,32 @@ const profile ={
     namespaced: true,
     state:{
         accounts:[],
-        activeAccount: null        
+        activeAccount: null,
+        currentAccount: null        
     },
     mutations: {
         addAccount(state, account){
             state.accounts.push(account)
             if(state.activeAccount === null){
                 state.activeAccount = state.accounts.length-1;
+                state.currentAccount = account
             }
         },
         changeAccount(state,index){
             if (index < state.accounts.length && 0 <= index){
                 state.activeAccount = index 
+                state.currentAccount = state.accounts[index]
             }
+        },
+        updateCurrentAccount(state, data){
+            state.accounts[state.activeAccount] = data
+            state.currentAccount = data
+            console.log(state.currentAccount)
         }
     },
     actions:{
         populateData(state){
-            if(state.getters.getAccounts.length === 0){
-                // If there is no accounts try to search in the db
-                AccountsPersistant.numberOfAccounts().then(
-                    number =>{
-                        if (number > 0){
-                            AccountsPersistant.retriveAllAccounts()
-                            .then(
-                                docs =>{
-                                    docs.forEach(element => {
-                                        state.commit('addAccount',element)
-                                    });
-                                }
-                            )
-                            
-                        }
-                    }
-                )
-
-                state.commit('changeAccount', 0)
-            }
+            
         },
 
         profileAsync(state){
@@ -53,7 +42,7 @@ const profile ={
     getters:{
         currentAccount(state){
             if(state.accounts.length !== 0){
-                return state.accounts[state.activeAccount]
+                return state.currentAccount
             }
         },
 

@@ -79,6 +79,37 @@ export default class Zinat{
         })
   }
 
+  updateProfile(data, token){
+    var f = new FormData()
+    if(data.name){
+      f.append('display_name', data.name)
+    }
+
+    if(data.note){
+      f.append('note', data.note)
+    }
+    
+    if(data.avatar){
+      f.append('avatar', data.avatar)
+    }
+
+    if(data.locked){
+      f.append('locked', data.locked)
+    }
+
+
+    return axios({
+      url: this.BASE_URL + urls.updateCredentials,
+      method: 'patch',
+      headers:{
+        'Accept': 'application/json',
+        'Authorization': token,
+        'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+      },
+      data:f
+    })
+  }
+
   retriveImages(id){
     return axios({
       url: this.BASE_URL + urls.retriveImages(id),

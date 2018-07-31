@@ -6,5 +6,6 @@ module.exports = {
     'retriveUser': (id) => {return '/api/v1/accounts/'+id},
     'logout': '/logout',
     'homeTimeline': '/api/v1/timelines/home',
-    'verifyCredentials': '/api/v1/accounts/verify_credentials'
+    'verifyCredentials': '/api/v1/accounts/verify_credentials',
+    'updateCredentials': '/api/v1/accounts/update_credentials'
 }

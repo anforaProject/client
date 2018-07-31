@@ -18,8 +18,8 @@
     <div class="navbar-end">
       <router-link  class="navbar-item" to="/notifications" :title='$t("navigation.notifications")'><i class="material-icons">notifications</i></router-link>
       <a class="navbar-item" href="/upload"  ><i class="material-icons">cloud_upload</i></a>
-      <a class="navbar-item" href="/settings" :title='$t("navigation.settings")'><i class="material-icons">settings</i></a>
-      <a class="navbar-item" href="#" :title='$t("navigation.logout")'@click="logout()"><i class="material-icons">power_settings_new</i></a>
+      <router-link  class="navbar-item" :title='$t("navigation.profile")' :to="{name:'settings'}"><i class="material-icons">settings</i></router-link>
+      <a class="navbar-item" href="#" :title='$t("navigation.logout")' @click="logout()"><i class="material-icons">power_settings_new</i></a>
     </div>
   </div>
 </nav>
@@ -29,7 +29,7 @@
 
 <script>
 
-import { isLoggedIn, logout} from '../../utils/auth';
+import {logout} from '../../utils/auth';
  
 
 export default {
@@ -43,9 +43,6 @@ export default {
     user(){
       return this.$store.getters['profiles/currentAccount']
     }
-    
-  },
-  mounted(){
     
   },
   methods:{
