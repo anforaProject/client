@@ -10,7 +10,7 @@
             </div>
           </div>
           <div class="column is-6">
-            <h1 class="title data">{{user.name}} <small v-if="user.private"><i class="material-icons">lock</i></small></h1>
+            <h1 class="title data">{{user.name}} <small v-if="user.locked"><i class="material-icons">lock</i></small></h1>
             
             <h3 class="subtitle data" v-bind:style="{paddingLeft:1.25 + 'em'}">{{user.username}}</h3>
             <router-link class="button is-primary is-large" :to="{name:'profile.followers',params:{id:user.id}}">{{user.followers_count}} followers</router-link>

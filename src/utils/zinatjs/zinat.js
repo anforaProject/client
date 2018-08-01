@@ -92,12 +92,16 @@ export default class Zinat{
     if(data.avatar){
       f.append('avatar', data.avatar)
     }
-
-    if(data.locked){
+    
+    if(data.locked !== undefined){
       f.append('locked', data.locked)
     }
 
+    if(data.bot !== undefined){
+      f.append('bot', data.bot)
+    }
 
+    console.log(f)
     return axios({
       url: this.BASE_URL + urls.updateCredentials,
       method: 'patch',

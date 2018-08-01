@@ -2,8 +2,7 @@
   <Layout>
     <div class="columns">
       <div class="column is-2 aside hero">
-        <a href="" class="item active">Settings</a>
-
+        <a class="button item active">Profile settings</a>
       </div>
       <div class="column is-3" v-if="user">
         <div class="field">
@@ -39,13 +38,13 @@
 
         <div class="field">
           <label class="checkbox">
-            <input type="checkbox" v-model="user.private">
+            <input type="checkbox" v-model="user.locked">
             Make this account private
           </label>
         </div>
         <div class="field">
           <label class="checkbox">
-            <input type="checkbox">
+            <input type="checkbox" v-model="user.bot">
             This account is a bot
           </label>  
         </div>
@@ -90,7 +89,8 @@ export default {
           avatar: this.avatar,
           name: this.user.name,
           note: this.user.note,
-          locked: this.user.locked
+          locked: this.user.locked,
+          bot: this.user.bot
         }
         this.updating = true
         zinatAPI.updateProfile(data, this.user.token)
@@ -101,10 +101,18 @@ export default {
             let account = response.data
             account.token = this.user.token
             this.$store.commit('profiles/updateCurrentAccount', response.data)
+            this.$toast.open({
+              message: 'Profile updated correctly!',
+              type: 'is-success'
+            })
           }
           
         }).catch(err=>{
           console.log(err)
+          this.$toast.open({
+            message: `oh no! We couldn't update your profile :(`,
+            type: 'is-danger'
+          })
         })
 
         this.updating= false

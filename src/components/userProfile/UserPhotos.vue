@@ -1,5 +1,5 @@
 <template id="userView">
-  <div id="user-photos" class="container">
+  <div id="user-photos" class="container" >
     <template v-if="ready">
         <imageMinature
           v-for="(image, index) in images"
@@ -77,5 +77,7 @@
 #user-photos{
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
+  max-width: 100%;
 }
 </style>

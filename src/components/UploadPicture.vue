@@ -12,9 +12,17 @@
 
       </div>
       <div class="column is-10 aside is-fullheight upload-column">
-          <input type="file" ref="files" value="" v-on:change="handleFilesUpload()">
+          
+          <div class="field">
+            <label class="label">Image</label>
+            <div class="file has-name">
+              <label class="file-label">
+                <input type="file" ref="files" value="" v-on:change="handleFilesUpload()">
+               
+              </label>
+            </div>
+           </div>
 
-          <div id="upload-form">
             <div class="field">
               <label class="label">Message</label>
               <div class="control">
@@ -29,31 +37,28 @@
               </div>
             </div>
 
-            <div id="location">
-              <input type="checkbox" id="checkbox" v-model="location">
-              <label for="checkbox" v-if="location">Location will be shared if present</label>
-              <label for="checkbox" v-else>Location will be removed</label>
-
-              <input type="checkbox" id="checkbox" v-model="sfw">
-              <label for="checkbox" v-if="sfw">Content is safe</label>
-              <label for="checkbox" v-else>Content may not be sfw</label>
-
-              <input type="checkbox" id="checkbox" v-model="publicImage">
-              <label for="checkbox" v-if="publicImage">Image will be public</label>
-              <label for="checkbox" v-else>Only your followers can see this photo</label>
+            <div class="field">
+              <label class="checkbox">
+                <input type="checkbox" id="checkbox" v-model="location">
+                Share location
+              </label>  
             </div>
 
             <div class="field">
-              <div class="control">
-                <label class="checkbox">
-                  <input type="checkbox">
-                  I agree to the <a href="#">terms and conditions</a>
-                </label>
-              </div>
+              <label class="checkbox">
+                <input type="checkbox" id="checkbox" v-model="nsfw">
+                NSFW content
+              </label>  
+            </div>
+
+            <div class="field">
+              <label class="checkbox">
+                <input type="checkbox" id="checkbox" v-model="publicImage">
+                Make public
+              </label>  
             </div>
 
 
-          </div>
       </div>
     </section>
   </Layout>
@@ -72,7 +77,7 @@ export default {
   data(){
     return{
       location:false,
-      sfw:true,
+      nsfw:false,
       publicImage: true,
       description: '',
       message: '',
@@ -109,16 +114,26 @@ export default {
           var data = {
             "visibility": this.public,
             "status": this.message,
-            "sensitive": this.sfw,
+            "sensitive": this.nsfw,
             "media_ids": response.data.id
           }
           zinatAPI.uploadStatus(data, token)
           .then(response => {
             console.log(response)
             //this.$router.push({name:'home'})
+            this.$toast.open({
+              message: 'Image uploaded correctly!',
+              type: 'is-success'
+            })
+            
+            this.$router.push("/home")
           })
           .catch(e => {
             console.log(e)
+            this.$toast.open({
+              message: `oh no! We couldn't upload your image :(`,
+              type: 'is-danger'
+            })
           })
         }
       )

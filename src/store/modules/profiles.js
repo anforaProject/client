@@ -24,7 +24,6 @@ const profile ={
         updateCurrentAccount(state, data){
             state.accounts[state.activeAccount] = data
             state.currentAccount = data
-            console.log(state.currentAccount)
         }
     },
     actions:{
