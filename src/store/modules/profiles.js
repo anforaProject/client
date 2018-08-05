@@ -3,9 +3,9 @@ import AccountsPersistant from '../persistant/persistantStore.js'
 const profile ={
     namespaced: true,
     state:{
-        accounts:[],
-        activeAccount: null,
-        currentAccount: null        
+        accounts:[], //Array of accounts
+        activeAccount: null, //index of the account
+        currentAccount: null //account object
     },
     mutations: {
         addAccount(state, account){
@@ -24,6 +24,11 @@ const profile ={
         updateCurrentAccount(state, data){
             state.accounts[state.activeAccount] = data
             state.currentAccount = data
+        },
+        logout(state){
+            state.accounts = []
+            state.currentAccount = null
+            state.activeAccount = null
         }
     },
     actions:{

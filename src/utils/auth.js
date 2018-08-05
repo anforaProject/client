@@ -51,8 +51,7 @@ function clearAccessToken() {
 }
 
 export function logout() {
-  clearAccessToken();
-  router.push('/');
+  store.commit('profiles/logout')
 }
 
 export function requireAuth(to, from, next) {

@@ -5,6 +5,9 @@ Vue.use(VueI18n)
 
 let translations = {
     en: {
+        messages:{
+            homePage: 'Federated image sharing powered by ActivityPub'
+        },
         navigation: {
             profile: 'Profile',
             homeFeed: 'Home',
@@ -12,7 +15,8 @@ let translations = {
             notifications: 'Notifications',
             settings: 'Settings',
             logout: 'Logout',
-            login: 'Login'
+            login: 'Login',
+            singUp: 'Sign Up'
         },
         profiles: {
             posts: 'Posts',
@@ -21,6 +25,9 @@ let translations = {
         }
     },
     es: {
+        messages:{
+            homePage: 'Plataforma federada para compartir imágenes basada en ActivityPub'
+        },
         navigation: {
             profile: 'Perfil',
             homeFeed: 'Inicio',
@@ -28,7 +35,8 @@ let translations = {
             notifications: 'Notificaciones',
             settings: 'Configuración',
             logout: 'Cerrar sesión',
-            login: 'Iniciar Sesión'
+            login: 'Iniciar Sesión',
+            singUp: 'Registrarse'
         },
         profiles: {
             posts: 'Posts',

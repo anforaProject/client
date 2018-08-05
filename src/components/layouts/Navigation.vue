@@ -50,7 +50,8 @@ export default {
       return this.user !== undefined
     },
     logout(){
-      return logout();
+      logout();
+      this.$router.push('/');
     },
     login(){
       this.$router.push({name:'login', query: { redirect: this.$router.path }})

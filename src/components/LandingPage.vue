@@ -1,21 +1,23 @@
 <template id="mainView">
-  <Layout>
-    <div class="wrap">
-      <div class="info">
-        <ul>
-          <li>Federated image sharing</li>
-          <li>Powered by ActivityPub</li>
-        </ul>
-      </div>
-      <div class="register">
-        <h2>Register</h2>
+    <section class="hero is-info is-fullheight">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title centered">
+          Anfora
+        </h1>
+        <h2 class="subtitle">
+          {{$t("messages.homePage")}}
+        </h2>
 
-        <p>or</p>
-
-        <h2> <a href="/login">Sign in</a> </h2>
+        <div class="columns">
+          <div class="column is-3">
+             <router-link  class="button is-success is-pulled-right" to="/login" :title='$t("navigation.singUp")'>{{$t("navigation.singUp")}}</router-link>
+             <router-link  class="button is-outlined" to="/login" :title='$t("navigation.login")'>{{$t("navigation.login")}}</router-link>
+          </div>
+        </div>
       </div>
     </div>
-  </Layout>
+  </section>
 </template>
 
 <script type="text/javascript">
