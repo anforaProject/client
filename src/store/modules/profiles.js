@@ -10,10 +10,8 @@ const profile ={
     mutations: {
         addAccount(state, account){
             state.accounts.push(account)
-            if(state.activeAccount === null){
-                state.activeAccount = state.accounts.length-1;
-                state.currentAccount = account
-            }
+            state.activeAccount = state.accounts.length-1;
+            state.currentAccount = account
         },
         changeAccount(state,index){
             if (index < state.accounts.length && 0 <= index){
