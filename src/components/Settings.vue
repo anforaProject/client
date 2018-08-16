@@ -95,9 +95,7 @@ export default {
         this.updating = true
         zinatAPI.updateProfile(data, this.user.token)
         .then(response=>{
-          console.log(response)
           if(response.status == 200){
-            console.log("updating local data")
             let account = response.data
             account.token = this.user.token
             this.$store.commit('profiles/updateCurrentAccount', response.data)
@@ -107,8 +105,7 @@ export default {
             })
           }
           
-        }).catch(err=>{
-          console.log(err)
+        }).catch(()=>{
           this.$toast.open({
             message: `oh no! We couldn't update your profile :(`,
             type: 'is-danger'

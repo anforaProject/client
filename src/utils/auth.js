@@ -1,15 +1,8 @@
-import Router from 'vue-router';
 import zinatAPI from './zinatjs/serverConnection.js'
 import AccountsPersistant from '../store/persistant/persistantStore.js'
 import store from '../store/store.js'
 
-const ACCESS_TOKEN_KEY = 'auth_token';
 //const REDIRECT = 'http://localhost:8000/';
-
-var router = new Router({
-   mode: 'history',
-});
-
 
 export function login(auth_info) {
   return new Promise(function(resolve, reject){
@@ -33,21 +26,6 @@ export function login(auth_info) {
         
       })
   })
-}
-
-function clearAccessToken() {
-
-  zinatAPI.logout(getAccessToken())
-  .then(response =>{
-    if(response){
-      localStorage.removeItem(ACCESS_TOKEN_KEY)
-    }
-  })
-  .catch(e => {
-    console.log(e)
-    return false
-  })
-
 }
 
 export function logout() {

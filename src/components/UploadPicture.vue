@@ -118,8 +118,8 @@ export default {
             "media_ids": response.data.id
           }
           zinatAPI.uploadStatus(data, token)
-          .then(response => {
-            console.log(response)
+          .then(() => {
+            //console.log(response)
             //this.$router.push({name:'home'})
             this.$toast.open({
               message: 'Image uploaded correctly!',

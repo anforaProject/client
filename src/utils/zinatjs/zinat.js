@@ -38,7 +38,7 @@ export default class Zinat{
 
     return axios.post(this.BASE_URL + urls.logout,
       bodyParameters,
-      config,
+      config
     )
   }
 
@@ -101,7 +101,6 @@ export default class Zinat{
       f.append('bot', data.bot)
     }
 
-    console.log(f)
     return axios({
       url: this.BASE_URL + urls.updateCredentials,
       method: 'patch',

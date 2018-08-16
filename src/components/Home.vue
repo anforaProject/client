@@ -7,19 +7,24 @@
           v-bind:key="image.id"
           v-bind:image="image"
         ></imageMinature>
+        {{messages}}
       </div>
     </div>
     <div class="loading" v-else>
       Loading...
+      {{user.token}}
+      <button @click="ws">WS</button>
     </div>
   </Layout>
 </template>
 
 <script type="text/javascript">
+
 import Layout from './layouts/mainLayout.vue'
 //import zinatAPI from '../utils/zinatjs/serverConnection.js'
 import imageMinature from './layouts/Image.vue'
 
+import {SSE} from 'sse.js'
 export default {
   name: 'Home',
   components: {Layout,imageMinature},
@@ -27,15 +32,22 @@ export default {
     return{
       ready: false,
       timeline: [],
+      messages: []
     }
   },
   mounted(){
-    this.setHomeTimeline()
     console.log(this.$store.getters['profiles/currentAccount'])
+    this.setHomeTimeline()
+
+  },
+  computed:{
+    user(){
+      return this.$store.getters['profiles/currentAccount']
+    }
   },
   methods:{
     setHomeTimeline(){
-      this.$store.getters.currentAccount
+      //this.$store.getters.currentAccount
       /*
       zinatAPI.getHomeTimeline(this.$route.params.username)
       .then(response=>{
@@ -47,7 +59,26 @@ export default {
         console.log(e)
       })
     */
+    },
 
+    ws(){
+      console.log("Starting sse")
+      let eventSource = new SSE('http://localhost:4000/updates', {headers:{"Authorization": this.user.token }});
+      console.log(eventSource)
+      eventSource.addEventListener('connected', (e) => {
+          console.log(e)
+      });
+
+      eventSource.addEventListener('update', (e) => {
+          console.log(e)
+      });
+
+      // listens to all the messages. The only way to catch unnamed events (with no `event` name set)
+      eventSource.onmessage = message => {
+        console.log(message);
+      };
+
+      eventSource.stream()
     }
   }
 }
