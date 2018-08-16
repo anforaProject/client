@@ -1,32 +1,28 @@
 <template id="userView">
   <Layout>
-    
-    <section class="hero is-primary" v-if="user">
-      <div class="hero-body">
+    <div class="section">
+      <div class="container">
         <div class="columns">
-          <div class="column is-1 is-offset-1">
-            <div class="container content">
-              <img :src="user.avatar" class="image-circle is-vertical-center" alt="" v-bind:style="{width:100 + 'px', height:100 + 'px', }">
+          <div class="column is-one-third">
+            <div class="is-hidden-mobile">
+              <profileHeaderNormal :user="user"></profileHeaderNormal>
+            </div>
+            <div class="is-hidden-tablet">
+              <profileHeaderNormal :user="user"></profileHeaderNormal>
             </div>
           </div>
-          <div class="column is-6">
-            <h1 class="title data">{{user.name}} <small v-if="user.locked"><i class="material-icons">lock</i></small></h1>
-            
-            <h3 class="subtitle data" v-bind:style="{paddingLeft:1.25 + 'em'}">{{user.username}}</h3>
-            <router-link class="button is-primary is-large" :to="{name:'profile.followers',params:{id:user.id}}">{{user.followers_count}} followers</router-link>
-            <router-link class="button is-primary is-large" :to="{name:'profile.following',params:{id:user.id}}">{{user.following_count}} following</router-link>
-          </div>
-        </div>
-        <div class="container content columns">
-          <div class="column is-6 is-offset-3">
-            {{user.note}}
+          <div class="column is-two-thirds">
+            <div class="columns">
+              <div class="column level is-mobile">
+                <UserPhotos></UserPhotos>
+              </div>
+            </div>
+            <!--  -->
           </div>
         </div>
       </div>
-    </section>
-    <section class="is-fluid">
-          <UserPhotos></UserPhotos>
-    </section>  
+    </div>
+    
   </Layout>
 </template>
 
@@ -35,11 +31,12 @@
   import Layout from '../layouts/mainLayout.vue'
   import zinatAPI from '../../utils/zinatjs/serverConnection.js'
   import UserPhotos from './UserPhotos.vue'
+  import profileHeaderNormal from './profileHeaderNormal.vue'
   //import axios from 'axios'
 
   export default {
     name: 'UserBase',
-    components: {Layout, UserPhotos},
+    components: {Layout, UserPhotos, profileHeaderNormal},
     data(){
       return{
         loading: true,

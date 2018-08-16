@@ -1,12 +1,13 @@
 <template id="userView">
-  <div id="user-photos" class="container" >
+  <div id="user-photos" class="container">
     <template v-if="ready">
-        <imageMinature
-          v-for="(image, index) in images"
-          v-bind:key="image.id"
-          v-bind:image="image"
-          v-bind:layaout="display[index]"
-        ></imageMinature>
+      <div v-for="image in images" class="column is-one-third" :key="image.id">
+        <div class="panel">
+            <imageMinature
+              v-bind:image="image"
+            ></imageMinature>
+        </div>
+      </div>
     </template>
   </div>
 </template>
@@ -15,7 +16,6 @@
 
   import zinatAPI from '../../utils/zinatjs/serverConnection.js'
   import imageMinature from '../layouts/Image.vue'
-  import layaut from 'justified-layout'
 
   export default {
     name: 'UserPhotos',
@@ -23,7 +23,6 @@
       return{
         ready: false,
         images:[],
-        display:{}
       }
     },
     components:{
@@ -33,21 +32,9 @@
       this.user = this.$store.getters['profiles/currentAccount']
     },
     mounted(){
-      this.setImages(this.$route.params.id).then(
-        //When images are on the client 
-        () => {
-        new Promise((resolve)=>{
-          //Calculate the layaour distribution
-          let resolutions = this.images.map(image => image.media_attachments[0].meta.original.aspect)
-          resolve(resolutions)
-        }).then(
-          resolutions => {
-            this.display = layaut(resolutions).boxes
-            this.ready=true
-          }
-        )
-      }
-      
+      this.setImages(this.$route.params.id)
+      .then( () =>
+        this.ready=true
       )
     },
     methods:{
