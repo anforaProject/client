@@ -7,5 +7,7 @@ module.exports = {
     'logout': '/logout',
     'homeTimeline': '/api/v1/timelines/home',
     'verifyCredentials': '/api/v1/accounts/verify_credentials',
-    'updateCredentials': '/api/v1/accounts/update_credentials'
+    'updateCredentials': '/api/v1/accounts/update_credentials',
+    'followers': (id) => {return '/api/v1/accounts/' + id +'/followers'},
+    'following': (id) => {return '/api/v1/accounts/' + id +'/following'}
 }

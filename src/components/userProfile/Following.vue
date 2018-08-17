@@ -1,8 +1,8 @@
 <template id="userView">
   <div class="profile-collection">
     <div class="columns is-mobile">
-      <div class="column" v-if="followers">
-          <article class="media" v-for="person in followers" :key="person.id">
+      <div class="column" v-if="following">
+          <article class="media" v-for="person in following" :key="person.id">
             <figure class="media-left">
               <p class="image is-64x64 sui-avatar">
                 <img :src="person.avatar" />
@@ -43,7 +43,7 @@
   import zinatAPI from '../../utils/zinatjs/serverConnection.js'
 
   export default {
-    name: 'Followers',
+    name: 'Following',
     components: {Layout},
     props:{
       profile: Object
@@ -52,18 +52,19 @@
       return{
         loading: true,
         errors: [],
-        followers: null
+        following: null
       }
     },
     created(){
-      this.retriveFollowers()
+      this.retriveFollwing()
     },
     methods:{
-      retriveFollowers(){
-        zinatAPI.getFollowers(this.profile.id)
+      retriveFollwing(){
+        zinatAPI.getFollowing(this.profile.id)
         .then(response=>{
           this.loading = false
-          this.followers = response.data
+          this.following = response.data
+          console.log(response)
         })
         .catch(e=>{
           console.log(e)
@@ -74,7 +75,5 @@
 </script>
 
 <style media="css">
-.tag{
-  min-width: 100%;
-}
+
 </style>

@@ -2,19 +2,42 @@
   <Layout>
     <div class="section">
       <div class="container">
-        <div class="columns">
+        <div class="columns" v-if="profile">
           <div class="column is-one-third">
             <div class="is-hidden-mobile">
-              <profileHeaderNormal :user="user"></profileHeaderNormal>
+              <profileHeaderNormal :profile="profile"></profileHeaderNormal>
             </div>
             <div class="is-hidden-tablet">
-              <profileHeaderNormal :user="user"></profileHeaderNormal>
+              <profileHeaderMobile :profile="profile"></profileHeaderMobile>
             </div>
           </div>
           <div class="column is-two-thirds">
+              <div class="columns">
+                <div class="column level is-mobile">
+                  <router-link :to="{ name: 'profile', params: { id: profile.id } }" class="level-item has-text-centered">
+                    <div>
+                      <p>{{ profile.statuses_count }}</p>
+                      <p>Statuses</p>
+                    </div>
+                  </router-link>
+                  <router-link :to="{ name: 'profile/following', params: { id: profile.id } }" class="level-item has-text-centered">
+                    <div>
+                      <p>{{ profile.following_count }}</p>
+                      <p>Following</p>
+                    </div>
+                  </router-link>
+                  <router-link :to="{ name: 'profile/followers', params: { id: profile.id } }" class="level-item has-text-centered">
+                    <div>
+                      <p>{{ profile.followers_count }}</p>
+                      <p>Followers</p>
+                    </div>
+                  </router-link>
+              </div>
+            </div>
+
             <div class="columns">
               <div class="column level is-mobile">
-                <UserPhotos></UserPhotos>
+                <router-view :profile="profile"></router-view>
               </div>
             </div>
             <!--  -->
@@ -32,20 +55,27 @@
   import zinatAPI from '../../utils/zinatjs/serverConnection.js'
   import UserPhotos from './UserPhotos.vue'
   import profileHeaderNormal from './profileHeaderNormal.vue'
+  import profileHeaderMobile from './profileHeaderMobile.vue'
   //import axios from 'axios'
 
   export default {
     name: 'UserBase',
-    components: {Layout, UserPhotos, profileHeaderNormal},
+    components: {Layout, UserPhotos, profileHeaderNormal, profileHeaderMobile},
     data(){
       return{
         loading: true,
         errors: [],
-        user: null
+        profile: null
       }
     },
     mounted(){
       this.retriveUser()
+    },
+    computed:{
+      user(){
+        return this.$store.getters['profiles/currentAccount']
+      }
+
     },
     watch:{
       '$route': 'retriveUser'
@@ -55,7 +85,7 @@
         zinatAPI.retriveUser(this.$route.params.id)
         .then(response=>{
           this.loading = false
-          this.user = response.data
+          this.profile = response.data
         })
         .catch(e=>{
           console.log(e)

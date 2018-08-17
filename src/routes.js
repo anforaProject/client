@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import UserBase from './components/userProfile/UserBase.vue'
+import UserPhotos from './components/userProfile/UserPhotos.vue'
 import About from './components/About.vue'
 import Login from './components/Login.vue'
 import LandingPage from './components/LandingPage.vue'
@@ -9,6 +10,8 @@ import Home from './components/Home.vue'
 import Upload from './components/UploadPicture.vue'
 import Settings from './components/Settings.vue'
 import {requireAuth} from './utils/auth'
+import Followers from './components/userProfile/Followers.vue'
+import Following from './components/userProfile/Following.vue'
 /*
     Extends Vue to use Vue Router
 */
@@ -24,17 +27,22 @@ export default new VueRouter({
       {
         path: '/accounts/:id',
         component: UserBase,
-        name: 'profile',
+        props: true,
         children: [
           {
             path: '/accounts/:id/followers',
-            name: 'profile.followers',
-            component: UserBase
+            name: 'profile/followers',
+            component: Followers
           },
           {
             path: '/accounts/:id/following',
-            name: 'profile.following',
-            component: UserBase
+            name: 'profile/following',
+            component: Following
+          },
+          {
+            path: '',
+            name: 'profile',
+            component: UserPhotos
           }
         ]
       },

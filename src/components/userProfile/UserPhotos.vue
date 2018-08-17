@@ -19,6 +19,9 @@
 
   export default {
     name: 'UserPhotos',
+    props: {
+      profile: Object,
+    },
     data(){
       return{
         ready: false,

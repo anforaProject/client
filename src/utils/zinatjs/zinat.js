@@ -133,6 +133,26 @@ export default class Zinat{
     })
   }
 
+  getFollowers(id){
+    return axios({
+      url: this.BASE_URL + urls.followers(id),
+      method: 'get',
+      headers:{
+        'Accept': 'apllication/json'
+      }
+    })
+  }
+
+  getFollowing(id){
+    return axios({
+      url: this.BASE_URL + urls.following(id),
+      method: 'get',
+      headers:{
+        'Accept': 'apllication/json'
+      }
+    })
+  }
+
   getHomeTimeline(){
     return axios({
       url: this.BASE_URL + urls.homeTimeline,
