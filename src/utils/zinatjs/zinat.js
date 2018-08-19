@@ -47,7 +47,7 @@ export default class Zinat{
     var f = new FormData()
 
     f.append('public', data.visibility || true);
-    f.append('message', data.status || '');
+    f.append('status', data.status || '');
     f.append('sensitive', data.sensitive || false);
     f.append('media_ids', data.media_ids);
 
@@ -153,13 +153,13 @@ export default class Zinat{
     })
   }
 
-  getHomeTimeline(){
+  getHomeTimeline(token){
     return axios({
       url: this.BASE_URL + urls.homeTimeline,
       method: 'get',
       headers:{
         'Accept': 'application/json',
-        'Authorization': this.retriveToken(),
+        'Authorization': token,
       }
     })
   }
