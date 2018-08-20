@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'auth': '/api/v1/auth',
     'uploadStatus': '/api/v1/statuses',
     'uploadMedia': '/api/v1/media',
@@ -9,5 +9,6 @@ module.exports = {
     'verifyCredentials': '/api/v1/accounts/verify_credentials',
     'updateCredentials': '/api/v1/accounts/update_credentials',
     'followers': (id) => {return '/api/v1/accounts/' + id +'/followers'},
-    'following': (id) => {return '/api/v1/accounts/' + id +'/following'}
+    'following': (id) => {return '/api/v1/accounts/' + id +'/following'},
+    'streamingHome': '/api/v1/streaming/user'
 }

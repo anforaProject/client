@@ -1,6 +1,6 @@
 <template lang="html">
 
-<nav class="navbar is-transparent">
+<nav class="navbar is-transparent" v-if="user">
   <div class="navbar-brand">
     <a class="navbar-item" href="https://bulma.io">
       <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
@@ -16,7 +16,7 @@
     </div>
 
     <div class="navbar-end">
-      <router-link  class="navbar-item" to="/notifications" :title='$t("navigation.notifications")'><i class="material-icons">notifications</i></router-link>
+      <router-link  class="navbar-item" to="/notifications"  :title='$t("navigation.notifications")'><i class="material-icons">notifications</i></router-link>
       <a class="navbar-item" href="/upload"  ><i class="material-icons">cloud_upload</i></a>
       <router-link  class="navbar-item" :title='$t("navigation.profile")' :to="{name:'settings'}"><i class="material-icons">settings</i></router-link>
       <a class="navbar-item" href="#" :title='$t("navigation.logout")' @click="logout()"><i class="material-icons">power_settings_new</i></a>
@@ -30,13 +30,16 @@
 <script>
 
 import {logout} from '../../utils/auth';
- 
+import {SSE} from 'sse.js'
+import urls from '../../utils/zinatjs/urlMap.js'
+
 
 export default {
   name: 'Navigation',
   data(){
     return{
-      
+      notifications: 1
+
     }
   },
   computed:{
@@ -44,6 +47,9 @@ export default {
       return this.$store.getters['profiles/currentAccount']
     }
     
+  },
+  mounted(){
+    this.stream();
   },
   methods:{
     isLoggedIn() {
@@ -55,6 +61,16 @@ export default {
     },
     login(){
       this.$router.push({name:'login', query: { redirect: this.$router.path }})
+    },
+
+    stream(){
+      var url = 'https://anfora.test'
+      var source = new SSE(url + urls.streamingHome, {headers: {'Authorization': `${this.user.token}`}});
+      let self = this;
+      source.addEventListener('notification', function(e) {
+        self.notifications += 1;
+      });
+      source.stream();
     }
 
   }

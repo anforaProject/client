@@ -1,5 +1,4 @@
 <template id="userView">
-  <Layout>
     <div class="section">
       <div class="container">
         <div class="columns" v-if="profile">
@@ -45,9 +44,7 @@
         </div>
       </div>
     </div>
-    
-  </Layout>
-</template>
+  </template>
 
 <script type="text/javascript">
 
@@ -104,7 +101,7 @@
 }
 
 .image-circle {
-  border-radius: 50%;
+  border-radius: 4px;
 }
 
 

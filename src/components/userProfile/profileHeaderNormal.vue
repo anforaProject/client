@@ -54,6 +54,6 @@ export default {
 
 <style lang="css">
 .anfora-avatar img{
-    border-radius: 50%;
+    border-radius: 4px;
 }
 </style>

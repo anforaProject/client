@@ -1,5 +1,4 @@
 <template>
-  <Layout>
     <div class="columns">
       <div class="column is-2 aside hero">
         <a class="button item active">Profile settings</a>
@@ -58,7 +57,6 @@
 
       </div>
     </div>
-  </Layout>
 </template>
 
 <script>

@@ -2,7 +2,8 @@
   <div id="app-layout">
     <div class="page-content">
       <Navigation></Navigation>
-      <slot class="b"></slot>
+      <!--<slot class="b"></slot>-->
+      <router-view></router-view>
     </div>
   </div>
 </template>

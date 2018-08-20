@@ -1,33 +1,35 @@
 <template id="mainView">
-  <Layout>
-    <div class="homeTimeline" v-if="ready">
-      <div id="statuses">
-        <imageMinature
-          v-for="image in timeline"
-          v-bind:key="image.id"
-          v-bind:image="image"
-        ></imageMinature>
-        {{messages}}
+    <div class="columns" v-if="ready">
+      <div class="column is-4 is-offset-3">
+          <ImageCard
+            v-for="image in timeline"
+            v-bind:key="image.id"
+            v-bind:image="image"
+            v-bind:user="image.account"
+          ></ImageCard>
+      </div>
+      <div class="column is-3 is-offset 2 body-columns">
+        This will be a cool column with stories and links. For now take this ❤
       </div>
     </div>
     <div class="loading" v-else>
-      Loading...
-      {{user.token}}
-      <button @click="ws">WS</button>
+        Loading...
     </div>
-  </Layout>
 </template>
 
 <script type="text/javascript">
 
 import Layout from './layouts/mainLayout.vue'
-//import zinatAPI from '../utils/zinatjs/serverConnection.js'
-import imageMinature from './layouts/Image.vue'
-
+import zinatAPI from '../utils/zinatjs/serverConnection.js'
+import ImageCard from './layouts/ImageCard.vue'
 import {SSE} from 'sse.js'
+import urls from '../utils/zinatjs/urlMap.js'
+
+
+
 export default {
   name: 'Home',
-  components: {Layout,imageMinature},
+  components: {Layout,ImageCard},
   data(){
     return{
       ready: false,
@@ -36,8 +38,8 @@ export default {
     }
   },
   mounted(){
-    console.log(this.$store.getters['profiles/currentAccount'])
     this.setHomeTimeline()
+    this.stream();
 
   },
   computed:{
@@ -47,56 +49,33 @@ export default {
   },
   methods:{
     setHomeTimeline(){
-      //this.$store.getters.currentAccount
-      /*
-      zinatAPI.getHomeTimeline(this.$route.params.username)
+      zinatAPI.getHomeTimeline(this.user.token)
       .then(response=>{
         this.ready = true
         this.timeline = response.data
-        console.log(this.timeline)
       })
       .catch(e=>{
         console.log(e)
       })
-    */
     },
-
-    ws(){
-      console.log("Starting sse")
-      let eventSource = new SSE('http://localhost:4000/updates', {headers:{"Authorization": this.user.token }});
-      console.log(eventSource)
-      eventSource.addEventListener('connected', (e) => {
-          console.log(e)
+    stream(){
+      var url = 'https://anfora.test'
+      var source = new SSE(url + urls.streamingHome, {headers: {'Authorization': `${this.user.token}`}});
+      let self = this;
+      source.addEventListener('update', function(e) {
+        self.timeline.unshift(JSON.parse(e.data))
       });
-
-      eventSource.addEventListener('update', (e) => {
-          console.log(e)
-      });
-
-      // listens to all the messages. The only way to catch unnamed events (with no `event` name set)
-      eventSource.onmessage = message => {
-        console.log(message);
-      };
-
-      eventSource.stream()
+      source.stream();
     }
   }
 }
 </script>
 
-<style media="screen">
-
-nav { width: 100%; }
-nav ul { list-style: none; padding: 0px; margin: 0px; font-weight: bold; text-align: center; }
-nav ul li { display: inline-block; }
-nav ul li a { display: block; padding: 10px 20px; text-decoration: none; color: #444; }
-nav ul li a:hover { background-color: #888; color: #fff; }
-
-@media (max-width:48.000em){
-  nav ul { width: 100%; font-weight: normal; }
-  nav ul li { width: 50%; float: left; }
-  nav ul li:nth-of-type(odd) a { border-right: 1px solid #ccc; }
-  nav ul li a { padding: 8px 0px; border-bottom: 1px solid #ccc; display: block; }
+<style media="css">
+.body-columns {
+    margin-top: 3vh;
+    float: left;
+    overflow-y: auto;
+    height: 200px;
 }
-
 </style>

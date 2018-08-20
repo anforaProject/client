@@ -1,6 +1,4 @@
 <template id="mainView">
-  <Layout>
-
     <section class="columns is-fluid">
       <div class="column is-2 aside hero is-fullheight upload-column">
 
@@ -61,7 +59,6 @@
 
       </div>
     </section>
-  </Layout>
 </template>
 
 <script type="text/javascript">

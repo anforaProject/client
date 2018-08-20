@@ -7,6 +7,7 @@ import About from './components/About.vue'
 import Login from './components/Login.vue'
 import LandingPage from './components/LandingPage.vue'
 import Home from './components/Home.vue'
+import Main from './components/layouts/mainLayout.vue'
 import Upload from './components/UploadPicture.vue'
 import Settings from './components/Settings.vue'
 import {requireAuth} from './utils/auth'
@@ -24,60 +25,67 @@ Vue.use( VueRouter )
 export default new VueRouter({
   mode: 'history',
   routes: [
-      {
-        path: '/accounts/:id',
-        component: UserBase,
-        props: true,
-        children: [
-          {
-            path: '/accounts/:id/followers',
-            name: 'profile/followers',
-            component: Followers
-          },
-          {
-            path: '/accounts/:id/following',
-            name: 'profile/following',
-            component: Following
-          },
-          {
-            path: '',
-            name: 'profile',
-            component: UserPhotos
-          }
-        ]
-      },
-      {
-        path: '/about',
-        name: 'about',
-        component: Vue.component( 'About', About ),
-        meta: { requiresAuth: false }
-      },
-      {
-        path: '/login',
-        name: 'login',
-        component: Vue.component('Login', Login)
-      },
-      {
-        path: '/',
-        name: 'landing',
-        component: Vue.component('Landing', LandingPage)
-      },
-      {
-        path: '/home',
-        name: 'home',
-        component: Vue.component('Home', Home),
-        beforeEnter: requireAuth
-      },
-      {
-        path:'/upload',
-        name:'upload',
-        component: Upload,
-        beforeEnter: requireAuth
-      },
-      {
-        path: '/settings',
-        name: 'settings',
-        component: Settings,
-      }
-    ]
+    {
+      path: '',
+      component: Main,
+      children: 
+      [
+        {
+          path: '/accounts/:id',
+          component: UserBase,
+          props: true,
+          children: [
+            {
+              path: '/accounts/:id/followers',
+              name: 'profile/followers',
+              component: Followers
+            },
+            {
+              path: '/accounts/:id/following',
+              name: 'profile/following',
+              component: Following
+            },
+            {
+              path: '',
+              name: 'profile',
+              component: UserPhotos
+            }
+          ]
+        },
+        {
+          path: '/about',
+          name: 'about',
+          component: Vue.component( 'About', About ),
+          meta: { requiresAuth: false }
+        },
+        {
+          path: '/login',
+          name: 'login',
+          component: Vue.component('Login', Login)
+        },
+        {
+          path: '/home',
+          name: 'home',
+          component: Vue.component('Home', Home),
+          beforeEnter: requireAuth
+        },
+        {
+          path:'/upload',
+          name:'upload',
+          component: Upload,
+          beforeEnter: requireAuth
+        },
+        {
+          path: '/settings',
+          name: 'settings',
+          component: Settings,
+        },
+        {
+          path: '/',
+          name: 'landing',
+          component: Vue.component('Landing', LandingPage)
+        }
+      ]
+    }
+  ]
 });

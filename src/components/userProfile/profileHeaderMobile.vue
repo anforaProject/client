@@ -3,7 +3,7 @@
   <div v-if="profile">
     <div class="columns is-mobile">
       <div class="column">
-        <div class="image is-1by1 sui-avatar">
+        <div class="image is-1by1 anfora-avatar">
           <img :src="profile.avatar" />
         </div>
       </div>
@@ -53,4 +53,7 @@ export default {
 </script>
 
 <style lang="css">
+.anfora-avatar img{
+    border-radius: 4px;
+}
 </style>
