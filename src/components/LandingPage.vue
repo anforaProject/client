@@ -1,20 +1,26 @@
 <template id="mainView">
-    <section class="hero is-info is-fullheight">
+    <section class="hero is-info is-fullheight" id="hero">
     <div class="hero-body">
-      <div class="container">
-        <h1 class="title centered">
-          Anfora
-        </h1>
-        <h2 class="subtitle">
-          {{$t("messages.homePage")}}
-        </h2>
+      <div class="columns">
 
-        <div class="columns">
-          <div class="column is-3">
-             <router-link  class="button is-success is-pulled-right" to="/login" :title='$t("navigation.singUp")'>{{$t("navigation.singUp")}}</router-link>
-             <router-link  class="button is-outlined" to="/login" :title='$t("navigation.login")'>{{$t("navigation.login")}}</router-link>
+        <div class="column is-6">
+          <div class="container">
+            <h1 class="title centered">
+              Anfora
+            </h1>
+            <h2 class="subtitle">
+              {{$t("messages.homePage")}}
+            </h2>
+
+            <div class="columns">
+              <div class="column is-6">
+                <router-link  class="button is-success is-pulled-right" to="/login" :title='$t("navigation.singUp")'>{{$t("navigation.singUp")}}</router-link>
+                <router-link  class="button is-outlined" to="/login" :title='$t("navigation.login")'>{{$t("navigation.login")}}</router-link>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -37,37 +43,15 @@
 </script>
 
 <style media="screen">
-/* Custom, iPhone Retina */
-@media only screen and (min-width : 320px) {
-
+#hero{
+  background-image: url('/img/guus-baggermans-101965-unsplash.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden; 
+  opacity: 0.9;
 }
 
-/* Extra Small Devices, Phones */
-@media only screen and (min-width : 480px) {
-
+::-webkit-scrollbar { 
+    display: none; 
 }
-
-/* Small Devices, Tablets */
-@media only screen and (min-width : 768px) {
-
-}
-
-/* Medium Devices, Desktops */
-@media only screen and (min-width : 992px) {
-
-#statuses{
-  display: grid;
-  grid-template-columns: 33% 33% 33%;
-  grid-column-gap: 1em;
-  grid-row-gap: 1em;
-  width: 80%;
-}
-
-}
-
-/* Large Devices, Wide Screens */
-@media only screen and (min-width : 1200px) {
-
-}
-
 </style>

@@ -26,6 +26,11 @@ export default new VueRouter({
   mode: 'history',
   routes: [
     {
+      path: '/',
+      name: 'landing',
+      component: Vue.component('Landing', LandingPage)
+    },
+    {
       path: '',
       component: Main,
       children: 
@@ -79,11 +84,6 @@ export default new VueRouter({
           path: '/settings',
           name: 'settings',
           component: Settings,
-        },
-        {
-          path: '/',
-          name: 'landing',
-          component: Vue.component('Landing', LandingPage)
         }
       ]
     }
