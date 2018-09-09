@@ -14,7 +14,7 @@ import i18n from './translations/i18n.js'
 
 //Css Bulma
 import Buefy from 'buefy'
-import 'buefy/lib/buefy.css'
+import 'buefy/lib/buefy.min.css'
 
 router.beforeEach(function (to, from, next) {
     window.scrollTo(0, 0);
