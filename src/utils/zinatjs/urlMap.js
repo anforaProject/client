@@ -1,5 +1,6 @@
 export default {
     'auth': '/api/v1/auth',
+    'registerUser': "/api/v1/register",
     'uploadStatus': '/api/v1/statuses',
     'uploadMedia': '/api/v1/media',
     'retriveImages': (id) => {return '/api/v1/accounts/'+ id + '/statuses'},

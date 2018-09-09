@@ -175,4 +175,22 @@ export default class Zinat{
     })
   }
 
+  registerUser(data, token){
+    var f = new FormData()
+    f.append('username', data.username)
+    f.append('password', data.password)
+    f.append('password_confirmation', data.password_confirmation)
+    f.append('email', data.email)
+
+    return axios({
+          url: this.BASE_URL + urls.registerUser,
+          method: 'post',
+          headers:{
+            'Accept': 'application/json',
+            'Authorization': token,
+          },
+          data:f
+        })
+  }
+
 }
