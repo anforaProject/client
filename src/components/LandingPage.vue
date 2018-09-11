@@ -53,9 +53,10 @@
  
                 <div class="field">
                     <label class="checkbox">
-                    <input type="checkbox">
-                    I accept the Terms and the privacy policy
+                    <input type="checkbox" v-validate="'required'" name="conditions">
+                    I accept the <router-link :to="{name:'terms'}">Terms</router-link> and the <router-link :to="{name:'more'}">instance rules</router-link>.
                     </label>
+                    <p class="help is-danger">{{ errors.first('conditions') }}</p>
                 </div>
                 <button class="button is-block is-info is-large is-fullwidth" @click="register">Register</button>
             </div>
