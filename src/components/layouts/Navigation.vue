@@ -2,7 +2,7 @@
 
 <nav class="navbar is-transparent" v-if="user">
   <div class="navbar-brand">
-    <a class="navbar-item" href="https://bulma.io">
+    <a class="navbar-item" href="/">
       <!--<img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28"> -->
       <svg xmlns="http://www.w3.org/2000/svg" width="112" height="28" viewBox="0 0 1350 340">
         <g fill="none" fill-rule="evenodd">
