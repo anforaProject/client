@@ -13,9 +13,9 @@
                             <p class="title is-4">{{user.name}}</p>
                             <p class="subtitle is-6">{{user.username}}</p>
                         </div>
-                        <div class="column is-half is-vcentered">
-                            <button class="button is-pulled-right " >
-                            <i class="material-icons">more_vert </i>
+                        <div class="column is-half is-vcentered" id="card-button">
+                            <button class="button is-pulled-right">
+                                <i class="material-icons">more_vert </i>
                             </button>
                         </div>
                     </div>
@@ -98,4 +98,6 @@ export default {
     justify-content: center;
 }
 
-</style>
+#card-button{
+    border:none;
+}
