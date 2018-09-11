@@ -24,7 +24,6 @@
       }
     },
     created(){
-      this.$store.dispatch('profiles/populateData')
     },
     methods:{
     }

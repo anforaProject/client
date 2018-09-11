@@ -123,6 +123,28 @@ export default class Zinat{
     })
   }
 
+  likeStatus(id, token){
+    return axios({
+      url: this.BASE_URL + urls.likeStatus(id),
+      method: 'post',
+      headers:{
+        'Accept': 'application/json',
+        'Authorization': token,
+      }
+    })
+  }
+
+  dislikeStatus(id, token){
+    return axios({
+      url: this.BASE_URL + urls.dislikeStatus(id),
+      method: 'post',
+      headers:{
+        'Accept': 'application/json',
+        'Authorization': token,
+      }
+    })
+  }
+
   retriveUser(id){
     return axios({
       url: this.BASE_URL + urls.retriveUser(id),

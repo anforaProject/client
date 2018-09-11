@@ -4,14 +4,14 @@
             <div class="media">
                 <div class="media-left">
                     <figure class="image is-48x48 image-circle">
-                        <img :src="user.avatar" alt="Placeholder image">
+                        <img :src="userProfile.avatar" alt="Placeholder image">
                     </figure>
                 </div>
                 <div class="media-content">
                     <div class="columns">
                         <div class="column is-half">
-                            <p class="title is-4">{{user.name}}</p>
-                            <p class="subtitle is-6">{{user.username}}</p>
+                            <p class="title is-4">{{userProfile.name}}</p>
+                            <p class="subtitle is-6">@{{userProfile.username}}</p>
                         </div>
                         <div class="column is-half is-vcentered" id="card-button">
                             <button class="button is-pulled-right">
@@ -31,7 +31,10 @@
             <div class="level is-mobile">
                 <div class="level-left">
                     <div class="level-item has-text-centered">
-                        <a href="">
+                        <a @click="likeStatus" v-if="image.favourited">
+                            <i class="material-icons">favorite</i>
+                        </a>
+                        <a @click="likeStatus" v-else>
                             <i class="material-icons">favorite_border</i>
                         </a>
                     </div>
@@ -50,7 +53,6 @@
                     <strong>{{image.likes}} Likes</strong>
                 </p>
                 <p>{{image.message}}</p>
-                <time datetime="2018-1-1">{{image.created_at}}</time>
             </div>
         </div>
         <div class="card-footer">
@@ -68,16 +70,48 @@
 </template>
 
 <script type="text/javascript">
+import zinatAPI from '../../utils/zinatjs/serverConnection.js'
+
 export default {
   name: "imageModal",
-  props:['image', "user"],
+  props:['image', "userProfile"],
   data(){
     return({
     })
   },
   computed:{
+    user(){
+      return this.$store.getters['profiles/currentAccount']
+    }
   },
   methods:{
+        likeStatus(){
+          console.log(this.user.token)
+          this.image.favourited = true
+          this.image.likes += 1
+          zinatAPI.likeStatus(this.image.id, this.user.token).catch(e=>{
+            this.$toast.open({
+                message: `oh no! We couldn't like the photo :(`,
+                type: 'is-danger'
+            })
+            this.image.favourited = false
+             this.image.likes -= 1
+          })
+        },
+
+        dislikeStatus(){
+            console.log(this.user.token)
+            this.image.favourited = false
+            this.image.likes -= 1
+            zinatAPI.dislikeStatus(this.image.id, this.user.token).catch(e=>{
+                this.$toast.open({
+                    message: `oh no! We couldn't dislike the photo :(`,
+                    type: 'is-danger'
+                })
+                this.image.favourited = true
+                this.image.likes += 1
+            })
+        }
   }
 }
 
