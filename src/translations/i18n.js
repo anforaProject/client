@@ -47,7 +47,7 @@ let translations = {
 }
 
 const i18n = new VueI18n({
-    locale: 'es',
+    locale: 'en',
     messages: translations 
 })
 
