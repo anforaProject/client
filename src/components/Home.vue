@@ -5,7 +5,7 @@
             v-for="image in timeline"
             v-bind:key="image.id"
             v-bind:image="image"
-            v-bind:user="image.account"
+            v-bind:userProfile="image.account"
           ></ImageCard>
       </div>
       <div class="column is-3 is-offset 2 body-columns">
