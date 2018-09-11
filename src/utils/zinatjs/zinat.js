@@ -175,7 +175,7 @@ export default class Zinat{
     })
   }
 
-  registerUser(data, token){
+  registerUser(data){
     var f = new FormData()
     f.append('username', data.username)
     f.append('password', data.password)
@@ -187,7 +187,6 @@ export default class Zinat{
           method: 'post',
           headers:{
             'Accept': 'application/json',
-            'Authorization': token,
           },
           data:f
         })
