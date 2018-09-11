@@ -16,6 +16,9 @@ import i18n from './translations/i18n.js'
 import Buefy from 'buefy'
 import 'buefy/lib/buefy.min.css'
 
+//Validators
+import VeeValidate from 'vee-validate';
+
 router.beforeEach(function (to, from, next) {
     window.scrollTo(0, 0);
     next();
@@ -26,6 +29,7 @@ Vue.config.productionTip = false
 Vue.use(Buefy)
 
 sync(store, router) // done. Returns an unsync callback fn
+Vue.use(VeeValidate);
 
 new Vue({
   router,

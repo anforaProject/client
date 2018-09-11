@@ -13,6 +13,9 @@ import Settings from './components/Settings.vue'
 import {requireAuth} from './utils/auth'
 import Followers from './components/userProfile/Followers.vue'
 import Following from './components/userProfile/Following.vue'
+import Terms from './components/legal/terms.vue'
+import More from './components/legal/more.vue'
+
 /*
     Extends Vue to use Vue Router
 */
@@ -29,6 +32,16 @@ export default new VueRouter({
       path: '/',
       name: 'landing',
       component: Vue.component('Landing', LandingPage)
+    },
+    {
+      path: '/more',
+      name: 'more',
+      component: Vue.component('More', More)
+    },
+    {
+      path: '/terms',
+      name: 'terms',
+      component: Vue.component('Terms', Terms)
     },
     {
       path: '',
