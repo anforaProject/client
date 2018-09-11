@@ -82,6 +82,7 @@ export default {
       let self = this;
       source.addEventListener('notification', function(e) {
         self.notifications += 1;
+        console.log(e)
       });
       source.stream();
     }

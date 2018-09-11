@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from './store/store.js';
 
 import UserBase from './components/userProfile/UserBase.vue'
 import UserPhotos from './components/userProfile/UserPhotos.vue'
@@ -79,7 +80,12 @@ export default new VueRouter({
         {
           path: '/login',
           name: 'login',
-          component: Vue.component('Login', Login)
+          component: Vue.component('Login', Login),
+          beforeEnter: (to, from, next) => {
+            if(store.getters['profiles/currentAccount'] !== null){
+              next('/home')
+            }
+          }
         },
         {
           path: '/home',

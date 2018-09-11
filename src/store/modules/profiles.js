@@ -1,5 +1,3 @@
-import AccountsPersistant from '../persistant/persistantStore.js'
-
 const profile ={
     namespaced: true,
     state:{
@@ -30,10 +28,6 @@ const profile ={
         }
     },
     actions:{
-        populateData(state){
-            
-        },
-
         profileAsync(state){
             return new Promise((resolve) => {
                 let account = state.getters.currentAccount
@@ -46,6 +40,8 @@ const profile ={
             if(state.accounts.length !== 0){
                 return state.currentAccount
             }
+
+            return null
         },
 
         getAccounts(state){
