@@ -19,12 +19,13 @@ export function login(auth_info) {
           resolve(account)
         })
         .catch(e => {
-          console.log(e)
           reject(e)
-          //Store the token somehow
         })
         
-      })
+    })
+    .catch(e=>{
+      reject(e)
+    })
   })
 }
 
