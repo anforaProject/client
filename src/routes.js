@@ -85,6 +85,7 @@ export default new VueRouter({
             if(store.getters['profiles/currentAccount'] !== null){
               next('/home')
             }
+            next()
           }
         },
         {
