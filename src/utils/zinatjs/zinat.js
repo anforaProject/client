@@ -62,6 +62,26 @@ export default class Zinat{
     })
   }
 
+  uploadComment(data, token){
+    var f = new FormData()
+
+    f.append('public', data.visibility || true);
+    f.append('status', data.status || '');
+    f.append('sensitive', data.sensitive || false);
+    f.append('spoiler_text', data.spoiler_text || '')
+    f.append('in_reply_to_id', data.in_reply_to_id)
+
+    return axios({
+        url: this.BASE_URL + urls.uploadStatus,
+        method: 'post',
+        headers:{
+          'Accept': 'application/json',
+          'Authorization': token,
+        },
+        data:f
+    })
+  }
+
   uploadMedia(data, token){
     var f = new FormData()
     f.append('file', data.image)
@@ -119,6 +139,18 @@ export default class Zinat{
       method: 'get',
       headers:{
         'Accept': 'application/json',
+      }
+    })
+  }
+
+
+  removeStatus(id, token){
+    return axios({
+      url: this.BASE_URL + urls.status(id),
+      method: 'delete',
+      headers:{
+        'Accept': 'application/json',
+        'Authorization': token,
       }
     })
   }
