@@ -8,7 +8,7 @@
                     <div class="box">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-large" type="text" v-model="username" placeholder="Your Email" autofocus="">
+                                <input class="input is-large" type="text" v-model="username" placeholder="Your username" autofocus="">
                             </div>
                         </div>
 
@@ -57,7 +57,21 @@ export default {
         () =>{
           this.$router.push({path:'home'})
         }
-      )
+      ).catch(error =>{
+            console.log(error)
+            if (error.response.status === 401) {
+                this.$toast.open({
+                    message: `The combination of password and username is not valid`,
+                    type: 'is-danger'
+                })
+            }else{
+                this.$toast.open({
+                    message: `Oops! The server returned an error`,
+                    type: 'is-danger'
+                })
+            }
+
+      })
       
       
     }
