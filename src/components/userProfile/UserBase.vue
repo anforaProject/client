@@ -61,7 +61,6 @@
     data(){
       return{
         loading: true,
-        errors: [],
         profile: null
       }
     },

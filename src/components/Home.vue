@@ -1,20 +1,33 @@
 <template id="mainView">
-    <div class="columns" v-if="ready">
-      <div class="column is-4 is-offset-3">
+    <div class="columns" v-if="ready" id="container">
+      <div class="column is-4 is-offset-3  is-hidden-touch">
           <ImageCard
+            v-if="timeline.length > 0"
             v-for="image in timeline"
             v-bind:key="image.id"
             v-bind:image="image"
             v-bind:userProfile="image.account"
           ></ImageCard>
       </div>
-      <div class="column is-3 is-offset 2 body-columns">
+
+      <div class="column is-12 is-hidden-desktop">
+          <ImageCard
+            v-if="timeline.length > 0"
+            v-for="image in timeline"
+            v-bind:key="image.id"
+            v-bind:image="image"
+            v-bind:userProfile="image.account"
+          ></ImageCard>
+      </div>
+
+      <div class="column is-3 is-offset 2 body-columns is-hidden-mobile" id="right">
         This will be a cool column with stories and links. For now take this ❤
       </div>
     </div>
     <div class="loading" v-else>
         Loading...
     </div>
+
 </template>
 
 <script type="text/javascript">
@@ -72,10 +85,4 @@ export default {
 </script>
 
 <style media="css">
-.body-columns {
-    margin-top: 3vh;
-    float: left;
-    overflow-y: auto;
-    height: 200px;
-}
 </style>

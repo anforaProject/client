@@ -1,6 +1,6 @@
 <template lang="html">
-
-<nav class="navbar is-transparent" v-if="user">
+<div>
+<nav class="navbar is-transparent is-hidden-touch" v-if="user">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
       <!--<img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28"> -->
@@ -35,6 +35,16 @@
   </div>
 </nav>
 
+
+  <nav class="navbar is-fixed-bottom is-hidden-desktop tabs is-centered" v-if="user">
+    <router-link  class="navbar-item" to="/home" :title='$t("navigation.homeFeed")' ><i class="material-icons">home</i></router-link>
+    <router-link  class="navbar-item" to="/explore" ><i class="material-icons">explore</i></router-link>
+    <a class="navbar-item" href="/upload"  ><i class="material-icons">cloud_upload</i></a>
+    <router-link  class="nav-item is-tab " to="/notifications"  :title='$t("navigation.notifications")'><i class="material-icons">notifications</i></router-link>
+    <router-link  class="navbar-item" v-if="user" :title='$t("navigation.profile")' :key="$route.fullPath" :to="{name:'profile', params:{id:user.id}}"><i class="material-icons">person</i></router-link>
+
+  </nav>
+</div>
 </template>
 
 
@@ -66,7 +76,7 @@ export default {
   },
   methods:{
     isLoggedIn() {
-      return this.user !== undefined
+      return this.user !== null && this.user !== undefined
     },
     logout(){
       logout();
@@ -91,17 +101,8 @@ export default {
 }
 </script>
 
-<style media="screen">
-
-
-  nav{
-    height: 3em;
-  }
-
-  nav .router-link-exact-active{
-    border-bottom: 4px solid #FF5230;
-    color: #FF5230  !important;
-  }
-
-
+<style media="css">
+nav > a:hover {
+  color: hsl(10, 100%, 59%);
+}
 </style>

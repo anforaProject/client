@@ -13,11 +13,6 @@
                             <p class="title is-4">{{userProfile.name}}</p>
                             <p class="subtitle is-6">@{{userProfile.username}}</p>
                         </div>
-                        <div class="column is-half is-vcentered" id="card-button">
-                            <button class="button is-pulled-right">
-                                <i class="material-icons">more_vert </i>
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -31,12 +26,13 @@
             <div class="level is-mobile">
                 <div class="level-left">
                     <div class="level-item has-text-centered">
-                        <a @click="likeStatus" v-if="image.favourited">
+                        <a @click="dislikeStatus" v-if="image.favourited">
                             <i class="material-icons">favorite</i>
                         </a>
                         <a @click="likeStatus" v-else>
                             <i class="material-icons">favorite_border</i>
                         </a>
+                        <a @click></a>
                     </div>
                     <div class="level-item has-text-centered">
                         <div>
@@ -44,6 +40,13 @@
                                 <i class="material-icons">chat_bubble_outline</i>
                             </a>
                         </div>
+                    </div>
+                </div>
+                <div class="level-right">
+                    <div class="level-item has-text-centered">
+                        <a @click="deleteStatus">
+                            <i class="material-icons">delete</i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -55,18 +58,8 @@
                 <p>{{image.message}}</p>
             </div>
         </div>
-        <div class="card-footer">
-            <div class="columns is-mobile">
-                <div class="column is-12">
-                    <div class="field">
-                        <div class="control">
-                            <input class="input is-medium" type="text" placeholder="Add a comment . . .">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>  
+        
+    </div>
 </template>
 
 <script type="text/javascript">
@@ -86,7 +79,6 @@ export default {
   },
   methods:{
         likeStatus(){
-          console.log(this.user.token)
           this.image.favourited = true
           this.image.likes += 1
           zinatAPI.likeStatus(this.image.id, this.user.token).catch(e=>{
@@ -95,12 +87,11 @@ export default {
                 type: 'is-danger'
             })
             this.image.favourited = false
-             this.image.likes -= 1
+            this.image.likes -= 1
           })
         },
 
         dislikeStatus(){
-            console.log(this.user.token)
             this.image.favourited = false
             this.image.likes -= 1
             zinatAPI.dislikeStatus(this.image.id, this.user.token).catch(e=>{
@@ -111,6 +102,18 @@ export default {
                 this.image.favourited = true
                 this.image.likes += 1
             })
+        },
+
+        deleteStatus(){
+            
+            zinatAPI.removeStatus(this.image.id, this.user.token).then(()=>{
+                this.$parent.timeline = this.$parent.timeline.filter(item => item.id !== this.image.id)
+            }).catch(()=>{
+                this.$toast.open({
+                    message: `Opps! Couldn't remove this post.`,
+                    type: 'is-danger'
+                }) 
+            })
         }
   }
 }
@@ -118,9 +121,6 @@ export default {
 </script>
 
 <style media="screen">
-.home-card {
-    margin-top: 3vh;
-}
 
 .image-circle img{
     border-radius: 4px;
@@ -132,6 +132,5 @@ export default {
     justify-content: center;
 }
 
-#card-button{
-    border:none;
-}
+
+</style>
