@@ -80,10 +80,25 @@
         data: {}
       }
     },
-
     methods:{
       register(){
-        zinatAPI.registerUser(this.data).then(()=>{console.log("success")}).catch(e=>{console.log(e)})
+        this.$validator.validate().then(result => {
+          if (result) {
+            zinatAPI.registerUser(this.data).then(()=>{
+              this.$dialog.alert({
+                title: 'Registration',
+                message: `Your request was sent successfully!<br/>Please check your email to confirm the registration`,
+                type: 'is-info',
+                onConfirm: () => this.$router.push('/login')
+              })
+            }).catch(e=>{
+              this.$toast.open({
+                  message: `Oops! ${e.message}`,
+                  type: 'is-danger'
+              })
+            })
+          }
+        })
       }
     }
   }
