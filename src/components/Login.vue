@@ -58,22 +58,26 @@ export default {
           this.$router.push({path:'home'})
         }
       ).catch(error =>{
-            console.log(error)
+        console.log(error)
+        if (error.response) {
             if (error.response.status === 401) {
                 this.$toast.open({
                     message: `The combination of password and username is not valid`,
                     type: 'is-danger'
                 })
-            }else{
+            } else {
                 this.$toast.open({
                     message: `Oops! The server returned an error`,
                     type: 'is-danger'
                 })
             }
-
+        } else {
+            this.$toast.open({
+                message: `Oops! ${error.message}`,
+                type: 'is-danger'
+            })
+        }
       })
-      
-      
     }
   }
 }
