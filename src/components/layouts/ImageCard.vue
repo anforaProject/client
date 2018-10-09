@@ -18,8 +18,13 @@
             </div>
         </div>
         <div class="card-image">
-            <figure class="image ">
-                <img :src="image.media_attachments[0].url" alt="Placeholder image">
+            <figure class="image" v-if="image.media_attachments[0].type == 'image'">
+                <img :src="image.media_attachments[0].url" alt="Placeholder image">  
+            </figure>
+            <figure v-else>
+                <video ref="video" @click="playVideo()" controls loop>
+                    <source  :src="image.media_attachments[0].url"  type="video/mp4">
+                </video>  
             </figure>
         </div>
         <div class="card-content">
@@ -32,7 +37,6 @@
                         <a @click="likeStatus" v-else>
                             <i class="material-icons">favorite_border</i>
                         </a>
-                        <a @click></a>
                     </div>
                     <div class="level-item has-text-centered">
                         <div>
@@ -70,6 +74,7 @@ export default {
   props:['image', "userProfile"],
   data(){
     return({
+        playing: false
     })
   },
   computed:{
@@ -114,6 +119,17 @@ export default {
                     type: 'is-danger'
                 }) 
             })
+        },
+
+        playVideo(){
+            console.log(this.$refs)
+            if(this.playing){
+                this.$refs.video.play();
+            }else{
+                this.$refs.video.pause();
+            }
+
+            this.playing = !this.playing
         }
   }
 }
