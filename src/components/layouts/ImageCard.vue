@@ -1,68 +1,136 @@
 <template lang="html">
-    <div class="card home-card">
-        <div class="header">
-            <div class="media">
-                <div class="media-left">
-                    <figure class="image is-48x48 image-circle">
-                        <img :src="userProfile.avatar" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="media-content">
-                    <div class="columns">
-                        <div class="column is-half">
-                            <p class="title is-4">{{userProfile.name}}</p>
-                            <p class="subtitle is-6">@{{userProfile.username}}</p>
+    <div>
+        <div class="card home-card is-hidden-mobile">
+            <div class="header">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-48x48 image-circle">
+                            <img :src="userProfile.avatar" alt="Placeholder image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="columns">
+                            <div class="column is-half">
+                                <p class="title is-4">{{userProfile.name}}</p>
+                                <p class="subtitle is-6">@{{userProfile.username}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-image">
-            <figure class="image" v-if="image.media_attachments[0].type == 'image'">
-                <img :src="image.media_attachments[0].url" alt="Placeholder image">  
-            </figure>
-            <figure v-else>
-                <video ref="video" @click="playVideo()" controls loop>
-                    <source  :src="image.media_attachments[0].url"  type="video/mp4">
-                </video>  
-            </figure>
-        </div>
-        <div class="card-content">
-            <div class="level is-mobile">
-                <div class="level-left">
-                    <div class="level-item has-text-centered">
-                        <a @click="dislikeStatus" v-if="image.favourited">
-                            <i class="material-icons">favorite</i>
-                        </a>
-                        <a @click="likeStatus" v-else>
-                            <i class="material-icons">favorite_border</i>
-                        </a>
+            <div class="card-image">
+                <figure class="image" v-if="image.media_attachments[0].type == 'image'">
+                    <img :src="image.media_attachments[0].url" alt="Placeholder image">  
+                </figure>
+                <figure v-else>
+                    <video ref="video" @click="playVideo()" controls loop>
+                        <source  :src="image.media_attachments[0].url"  type="video/mp4">
+                    </video>  
+                </figure>
+            </div>
+            <div class="card-content">
+                <div class="level is-mobile">
+                    <div class="level-left">
+                        <div class="level-item has-text-centered">
+                            <a @click="dislikeStatus" v-if="image.favourited">
+                                <i class="material-icons">favorite</i>
+                            </a>
+                            <a @click="likeStatus" v-else>
+                                <i class="material-icons">favorite_border</i>
+                            </a>
+                        </div>
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <a href="">
+                                    <i class="material-icons">chat_bubble_outline</i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="level-item has-text-centered">
-                        <div>
-                            <a href="">
-                                <i class="material-icons">chat_bubble_outline</i>
+                    <div class="level-right">
+                        <div class="level-item has-text-centered">
+                            <a @click="deleteStatus">
+                                <i class="material-icons">delete</i>
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="level-right">
-                    <div class="level-item has-text-centered">
-                        <a @click="deleteStatus">
-                            <i class="material-icons">delete</i>
-                        </a>
+
+                <div class="content">
+                    <p>
+                        <strong>{{image.likes}} Likes</strong>
+                    </p>
+                    <p>{{image.message}}</p>
+                </div>
+            </div>
+            
+        </div>
+        <br>
+        <div class="home-card is-hidden-desktop">
+            <div class="header">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-48x48 image-circle">
+                            <img :src="userProfile.avatar" alt="Placeholder image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="columns">
+                            <div class="column is-half">
+                                <p class="title is-4">{{userProfile.name}}</p>
+                                <p class="subtitle is-6">@{{userProfile.username}}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="content">
-                <p>
-                    <strong>{{image.likes}} Likes</strong>
-                </p>
-                <p>{{image.message}}</p>
+            <div class="card-image ">
+                <figure class="image" v-if="image.media_attachments[0].type == 'image'">
+                    <img :src="image.media_attachments[0].url" alt="Placeholder image">  
+                </figure>
+                <figure v-else>
+                    <video ref="video" @click="playVideo()" controls loop>
+                        <source  :src="image.media_attachments[0].url"  type="video/mp4">
+                    </video>  
+                </figure>
             </div>
+            <div class="card-content">
+                <div class="level is-mobile">
+                    <div class="level-left">
+                        <div class="level-item has-text-centered">
+                            <a @click="dislikeStatus" v-if="image.favourited">
+                                <i class="material-icons">favorite</i>
+                            </a>
+                            <a @click="likeStatus" v-else>
+                                <i class="material-icons">favorite_border</i>
+                            </a>
+                        </div>
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <a href="">
+                                    <i class="material-icons">chat_bubble_outline</i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="level-right">
+                        <div class="level-item has-text-centered">
+                            <a @click="deleteStatus">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <p>
+                        <strong>{{image.likes}} Likes</strong>
+                    </p>
+                    <p>{{image.message}}</p>
+                </div>
         </div>
         
+    </div>
     </div>
 </template>
 
