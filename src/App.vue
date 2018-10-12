@@ -18,4 +18,13 @@ export default {
 
   @import "~bulma";
   @import "~buefy/src/scss/buefy";
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
 </style>

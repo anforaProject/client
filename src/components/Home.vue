@@ -1,6 +1,6 @@
 <template id="mainView">
     <div class="columns" v-if="ready" id="container">
-      <div class="column is-4 is-offset-3  is-hidden-touch">
+      <div class="column is-4 is-offset-3  is-hidden-mobile">
           <ImageCard
             v-if="timeline.length > 0"
             v-for="image in timeline"
@@ -85,4 +85,7 @@ export default {
 </script>
 
 <style media="css">
+  ::-webkit-scrollbar {
+    display: none;
+  }
 </style>
