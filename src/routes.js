@@ -17,6 +17,7 @@ import Followers from './components/userProfile/Followers.vue'
 import Following from './components/userProfile/Following.vue'
 import Terms from './components/legal/terms.vue'
 import More from './components/legal/more.vue'
+import PasswordReset from './components/PasswordReset.vue'
 
 /*
     Extends Vue to use Vue Router
@@ -111,6 +112,11 @@ export default new VueRouter({
           path: '/explore',
           name: 'explore',
           component: Explore,
+        },
+        {          
+          path: '/reset/:token',
+          name: 'reset',
+          component: PasswordReset,
         }
       ]
     }

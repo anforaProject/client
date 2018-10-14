@@ -15,5 +15,6 @@ export default {
     'streamingHome': '/api/v1/streaming/user',
     'likeStatus': (id) => {return '/api/v1/statuses/' + id + '/favourite'},
     'dislikeStatus': (id) => {return '/api/v1/statuses/' + id + '/unfavourite'},
-    'explore': '/api/v1/explore'
+    'explore': '/api/v1/explore',
+    'passwordReset': '/api/v1/reset-password'
 }

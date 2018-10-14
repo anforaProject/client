@@ -246,6 +246,22 @@ export default class Zinat{
         })
   }
 
+  passwordReset(data){
+    
+    let f = new FormData()
+    f.append('password', data.password)
+    f.append('password_confirmation', data.password_confirmation)
+    f.append('token', data.token)
+    return axios({
+      url: this.BASE_URL + urls.passwordReset,
+      method: 'post',
+      headers:{
+        'Accept': 'application/json'
+      },
+      data:f
+    })
+  }
+
   explore(){
     return axios({
       url: this.BASE_URL + urls.explore,
@@ -255,5 +271,7 @@ export default class Zinat{
       }
     })
   }
+
+
 
 }
