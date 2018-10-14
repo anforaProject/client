@@ -54,7 +54,6 @@ import {logout, isLoggedIn} from '../../utils/auth';
 import {SSE} from 'sse.js'
 import urls from '../../utils/zinatjs/urlMap.js'
 
-
 export default {
   name: 'Navigation',
   data(){
@@ -87,7 +86,7 @@ export default {
     },
 
     stream(){
-      var url = 'https://anfora.test'
+      var url = 'https://anfora.social'
       var source = new SSE(url + urls.streamingHome, {headers: {'Authorization': `${this.user.token}`}});
       let self = this;
       source.addEventListener('notification', function(e) {
