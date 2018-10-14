@@ -11,6 +11,7 @@ import Home from './components/Home.vue'
 import Main from './components/layouts/mainLayout.vue'
 import Upload from './components/UploadPicture.vue'
 import Settings from './components/Settings.vue'
+import Explore from './components/Explore.vue'
 import {requireAuth} from './utils/auth'
 import Followers from './components/userProfile/Followers.vue'
 import Following from './components/userProfile/Following.vue'
@@ -104,6 +105,12 @@ export default new VueRouter({
           path: '/settings',
           name: 'settings',
           component: Settings,
+          beforeEnter: requireAuth
+        },
+        {          
+          path: '/explore',
+          name: 'explore',
+          component: Explore,
         }
       ]
     }

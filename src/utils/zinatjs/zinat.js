@@ -246,4 +246,14 @@ export default class Zinat{
         })
   }
 
+  explore(){
+    return axios({
+      url: this.BASE_URL + urls.explore,
+      method: 'get',
+      headers:{
+        'Accept': 'application/json'
+      }
+    })
+  }
+
 }
