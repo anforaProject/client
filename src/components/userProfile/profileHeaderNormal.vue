@@ -12,8 +12,8 @@
           {{ profile.name }}
         </h1>
         <p v-if="!isMe(profile)">
-          <button class="button is-outlined is-fullwidth" v-if="user.isFollowed" @click="unfollowuser(user)">following</button>
-          <button class="button is-primary is-fullwidth" v-else @click="followuser(user)">follow</button>
+          <button class="button is-primary is-fullwidth" v-if="profile.isFollowed" @click="unFollowuser(profile)">following</button>
+          <button class="button is-primary is-fullwidth" v-else @click="followuser(profile)">follow</button>
         </p>
       </div>
     </div>
@@ -30,26 +30,48 @@
 </template>
 
 <script>
-export default {
-  props: {
-    profile: Object,
-  },
-  computed:{
-    user(){
-      return this.$store.getters['profiles/currentAccount']
-    }
+  import zinatAPI from '../../utils/zinatjs/serverConnection.js'
 
-  },
-  data() {
-    return {
-    };
-  },
-  methods: {
-    isMe(account){
-      return account.id == this.user.id
-    }
-  },
-};
+  export default {
+    props: {
+      profile: Object,
+    },
+    computed:{
+      user(){
+        return this.$store.getters['profiles/currentAccount']
+      }
+
+    },
+    data() {
+      return {
+      };
+    },
+    methods: {
+      isMe(account){
+        return account.id == this.user.id
+      },
+
+      followuser(user){
+        zinatAPI.followUser(this.user.token, user.id)
+        .then(response=>{
+          this.profile.isFollowed = true
+        })
+        .catch(e=>{
+          console.log(e)
+        })
+      },
+
+      unFollowuser(user){
+        zinatAPI.unFollowUser(this.user.token, user.id)
+        .then(response=>{
+          this.profile.isFollowed = false
+        })
+        .catch(e=>{
+          console.log(e)
+        })
+      }
+    },
+  };
 </script>
 
 <style lang="css">

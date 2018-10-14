@@ -272,6 +272,27 @@ export default class Zinat{
     })
   }
 
+  followUser(token, id){
+    return axios({
+      url: this.BASE_URL + urls.follow(id),
+      method: 'post',
+      headers:{
+        'Accept': 'application/json',
+        'Authorization': token,
+      }
+    })
+  }
+
+  unFollowUser(token, id){
+    return axios({
+      url: this.BASE_URL + urls.unfollow(id),
+      method: 'post',
+      headers:{
+        'Accept': 'application/json',
+        'Authorization': token,
+      }
+    })
+  }
 
 
 }

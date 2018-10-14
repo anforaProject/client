@@ -16,5 +16,7 @@ export default {
     'likeStatus': (id) => {return '/api/v1/statuses/' + id + '/favourite'},
     'dislikeStatus': (id) => {return '/api/v1/statuses/' + id + '/unfavourite'},
     'explore': '/api/v1/explore',
-    'passwordReset': '/api/v1/reset-password'
+    'passwordReset': '/api/v1/reset-password',
+    'follow': (id) => {return '/api/v1/accounts/' + id + '/follow'},
+    'unfollow': (id) => {return '/api/v1/accounts/' + id + '/unfollow'}
 }

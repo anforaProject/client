@@ -11,7 +11,7 @@
                     <div class="media-content">
                         <div class="columns">
                             <div class="column is-half">
-                                <p class="title is-4">{{userProfile.name}}</p>
+                                <p class="title is-4"><router-link :to="{ name: 'profile', params: { id: userProfile.id }}">{{userProfile.name}}</router-link></p>
                                 <p class="subtitle is-6">@{{userProfile.username}}</p>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="level-right">
+                    <div class="level-right" v-if="">
                         <div class="level-item has-text-centered">
                             <a @click="deleteStatus">
                                 <i class="material-icons">delete</i>
@@ -113,7 +113,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="level-right">
+                    <div class="level-right" v-if="is_owner">
                         <div class="level-item has-text-centered">
                             <a @click="deleteStatus">
                                 <i class="material-icons">delete</i>
@@ -142,12 +142,14 @@ export default {
   props:['image', "userProfile"],
   data(){
     return({
-        playing: false
+        playing: false,
+        is_owner: this.user.id === this.userProfile.id || false
     })
   },
   computed:{
     user(){
-      return this.$store.getters['profiles/currentAccount']
+        return this.$store.getters['profiles/currentAccount']
+      
     }
   },
   methods:{

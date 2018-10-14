@@ -82,6 +82,7 @@
         .then(response=>{
           this.loading = false
           this.profile = response.data
+          this.profile.isFollowed=false
         })
         .catch(e=>{
           console.log(e)

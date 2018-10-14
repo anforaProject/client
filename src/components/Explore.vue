@@ -8,7 +8,8 @@
                             <div class="card-content columns">
                                 <div class="column is-two-third">
                                     <p class="title">
-                                    {{user.name}}
+                                    
+                                    <router-link :to="{ name: 'profile', params: { id: user.id }}">{{user.name}}</router-link>
                                     </p>
                                     <p class="subtitle">
                                     @{{user.username}}
@@ -23,8 +24,8 @@
                             <footer class="card-footer">
                                 <p class="card-footer-item">
                                 <span>
-                                    <button class="button is-outlined is-fullwidth" v-if="profile" @click="unfollowPerson(person)">following</button>
-                                    <button class="button is-primary is-fullwidth" v-else @click="followPerson(person)">follow</button>
+                                    <button class="button is-outlined is-fullwidth" v-if="user" @click="unfollowPerson(user)">following</button>
+                                    <button class="button is-primary is-fullwidth" v-else @click="followPerson(user)">follow</button>
                                 </span>
                                 </p>
                             </footer>

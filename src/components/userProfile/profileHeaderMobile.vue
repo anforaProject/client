@@ -12,8 +12,8 @@
           {{ profile.name }}
         </h1>
         <p v-if="!isMe(profile)">
-          <button class="button is-outlined is-fullwidth" v-if="profile.isFollowed" @click="unfollowPerson(person)">following</button>
-          <button class="button is-primary is-fullwidth" v-else @click="followPerson(person)">follow</button>
+          <button class="button is-outlined is-fullwidth" v-if="profile.isFollowed" @click="unFollowuser(person)">following</button>
+          <button class="button is-primary is-fullwidth" v-else @click="followuser(person)">follow</button>
         </p>
       </div>
     </div>
@@ -47,6 +47,27 @@ export default {
   methods: {
     isMe(account){
       return account.id == this.user.id
+    },
+
+    followuser(user){
+      zinatAPI.followUser(this.user.token, user.id)
+      .then(response=>{
+        this.user.isFollowed = true
+      })
+      .catch(e=>{
+        console.log(e)
+      })
+    },
+
+    unFollowuser(user){
+      alert("Cl")
+      zinatAPI.followUser(this.user.token, user.id)
+      .then(response=>{
+        this.user.isFollowed = false
+      })
+      .catch(e=>{
+        console.log(e)
+      })
     }
   },
 };
