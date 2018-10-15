@@ -106,7 +106,7 @@
 
 <style media="screen">
 #hero{
-  background-image: url('/img/guus-baggermans-101965-unsplash.jpg');
+  background-image: url('/img/bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden; 
