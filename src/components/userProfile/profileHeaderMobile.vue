@@ -26,11 +26,16 @@
         </p>
       </div>
     </div>
+    <div class="columns" v-if="user.id === profile.id">
+      <div class="column">
+        <button class="button is-primary is-fullwidth" :title='$t("navigation.logout")' @click="logout()">Close session</button>  
+      </div>  
+    </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import {logout, isLoggedIn} from '../../utils/auth';
 export default {
   props: {
     profile: Object,
@@ -68,7 +73,11 @@ export default {
       .catch(e=>{
         console.log(e)
       })
-    }
+    },
+    logout(){
+      logout();
+      this.$router.push('/');
+    },
   },
 };
 </script>
