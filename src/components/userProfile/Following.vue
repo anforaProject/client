@@ -51,7 +51,6 @@
     data(){
       return{
         loading: true,
-        errors: [],
         following: null
       }
     },
