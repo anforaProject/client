@@ -32,7 +32,7 @@
       imageMinature
     },
     created(){
-      this.user = this.$store.getters['profiles/currentAccount']
+      this.user = this.$store.getters['profiles/getRelation']
     },
     mounted(){
       this.setImages(this.$route.params.id)

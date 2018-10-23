@@ -1,23 +1,4 @@
 <template lang="html">
-  <!--
-  <div class="cell" v-on:click="displayModal()">
-    <div class="modal modal-full-screen modal-fx-fadeInScale" v-bind:class="cravings">
-      <div class="modal-background"></div>
-      <div class="modal-content is-huge">
-        <header class="modal-card-head">
-            <p class="modal-card-title">Modal title</p>
-            <button class="modal-button-close delete" aria-label="close"></button>
-        </header>
-        <p class="image">
-          <img :src="image.media_attachments[0].url">
-        </p>
-      </div>
-    </div>
-    
-    <div class="image placeholder" v-bind:style="imageHolder"></div>
-    
-  </div>
-  -->
   <div v-on:click="displayModal()">
     <div class="modal modal-full-screen modal-fx-fadeInScale full-image" v-bind:class="cravings">
       <div class="modal-background"></div>
