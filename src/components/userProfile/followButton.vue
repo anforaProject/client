@@ -1,7 +1,7 @@
 <template>
-  <div v-if="rel">
-  <button class="button is-primary is-fullwidth" v-if="this.rel.following" @click="unFollowuser(profile)">following</button>
-  <button class="button is-primary is-fullwidth" v-else @click="followuser(profile)">follow</button>
+  <div v-if="rel && !isMe(profile)">
+  <button class="button is-danger is-fullwidth" v-if="this.rel.following" @click="unFollowuser(profile)">unfollow</button>
+  <button class="button is-link is-fullwidth" v-else @click="followuser(profile)">follow</button>
   </div>
 </template>
 
@@ -42,6 +42,7 @@
         zinatAPI.followUser(this.user.token, user.id)
         .then(response=>{
           this.profile.isFollowed = true
+          this.rel.following=true
         })
         .catch(e=>{
           console.log(e)
@@ -52,11 +53,16 @@
         zinatAPI.unFollowUser(this.user.token, user.id)
         .then(response=>{
           this.profile.isFollowed = false
+          this.rel.following = false
         })
         .catch(e=>{
           console.log(e)
         })
-      }
+      },
+
+      isMe(account){
+        return account && account.id == this.user.id
+      },
     },
   };
 </script>

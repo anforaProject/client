@@ -11,7 +11,7 @@
         <h1 class="title is-bold">
           {{ profile.name }}
         </h1>
-        <p v-if="!isMe(profile)">
+        <p v-if="user">
           <followButton
           v-bind:user="user"
           v-bind:profile="profile">
