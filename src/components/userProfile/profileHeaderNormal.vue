@@ -12,8 +12,10 @@
           {{ profile.name }}
         </h1>
         <p v-if="!isMe(profile)">
-          <button class="button is-primary is-fullwidth" v-if="profile.isFollowed" @click="unFollowuser(profile)">following</button>
-          <button class="button is-primary is-fullwidth" v-else @click="followuser(profile)">follow</button>
+          <followButton
+          v-bind:user="user"
+          v-bind:profile="profile">
+          </followButton>
         </p>
       </div>
     </div>
@@ -31,11 +33,13 @@
 
 <script>
   import zinatAPI from '../../utils/zinatjs/serverConnection.js'
+  import followButton from './followButton.vue'
 
   export default {
     props: {
       profile: Object,
     },
+    components: {followButton},
     computed:{
       user(){
         return this.$store.getters['profiles/currentAccount']
@@ -48,7 +52,7 @@
     },
     methods: {
       isMe(account){
-        return account.id == this.user.id
+        return account && account.id == this.user.id
       },
 
       followuser(user){

@@ -294,5 +294,15 @@ export default class Zinat{
     })
   }
 
+  retriveRelationship(token, userId){
+    return axios({
+      url: this.BASE_URL + urls.relationship + '?id=' + userId,
+      method: 'get',
+      headers:{
+        'Accept': 'application/json',
+        'Authorization': token
+      }
+    })
+  }
 
 }
