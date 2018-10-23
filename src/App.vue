@@ -19,16 +19,4 @@ export default {
   @import "~bulma";
   @import "~buefy/src/scss/buefy";
 
-
-  @media only screen and (max-width : 768px) {
-    html, body {
-      max-width: 100%;
-      overflow-x: hidden;
-    }
-
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
 </style>

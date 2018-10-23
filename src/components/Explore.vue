@@ -1,7 +1,7 @@
 <template lang="html">
     <div >
         <div v-if="ready" >
-            <section class="columns column is-8 is-offset-2" >
+            <section class="container" >
                 <div v-for="user in users" class="column is-one-third" :key="user.id"  v-if="!isMe(user)">
                     <div class="panel is-centered" >
                         <div class="card">
@@ -33,14 +33,14 @@
                     </div>
                 </div>
             </section>
-            <section class="columns column is-8 is-offset-2">
+            <section class="columns">
                 <div v-for="image in images" class="column is-one-third" :key="image.id">
-                    <div class="panel ">
+                    <div class="panel">
                         <imageMinature
                         v-bind:image="image"
                         ></imageMinature>
                     </div>
-                </div>
+      </div>
             </section>  
         </div>
     </div>
