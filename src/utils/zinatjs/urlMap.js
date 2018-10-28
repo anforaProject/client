@@ -19,5 +19,6 @@ export default {
     'passwordReset': '/api/v1/reset-password',
     'follow': (id) => {return '/api/v1/accounts/' + id + '/follow'},
     'unfollow': (id) => {return '/api/v1/accounts/' + id + '/unfollow'},
-    'notifications': '/api/v1/notifications'
+    'notifications': '/api/v1/notifications',
+    'relationship': '/api/v1/accounts/relationships'
 }

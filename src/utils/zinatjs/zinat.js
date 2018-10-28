@@ -303,6 +303,18 @@ export default class Zinat{
         'Authorization': token,
       }
     })
+
+  }
+
+  retriveRelationship(token, userId){
+    return axios({
+      url: this.BASE_URL + urls.relationship + '?id=' + userId,
+      method: 'get',
+      headers:{
+        'Accept': 'application/json',
+        'Authorization': token
+      }
+    })
   }
 
 }

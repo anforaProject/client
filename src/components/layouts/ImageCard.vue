@@ -47,7 +47,11 @@
                             </div>
                         </div>
                     </div>
+<<<<<<< HEAD
                     <div class="level-right">
+=======
+                    <div class="level-right" v-if="is_owner()">
+>>>>>>> 5424ff5e1f718baeb9d30d08b8306337bbdabc4e
                         <div class="level-item has-text-centered">
                             <a @click="deleteStatus">
                                 <i class="material-icons">delete</i>
@@ -143,13 +147,11 @@ export default {
   data(){
     return({
         playing: false,
-        is_owner: this.user.id === this.userProfile.id || false
     })
   },
   computed:{
     user(){
-        return this.$store.getters['profiles/currentAccount']
-      
+        return this.$store.getters['profiles/currentAccount']  
     }
   },
   methods:{
@@ -200,6 +202,10 @@ export default {
             }
 
             this.playing = !this.playing
+        },
+
+        is_owner(){
+            return this.user.id === this.userProfile.id || false
         }
   }
 }

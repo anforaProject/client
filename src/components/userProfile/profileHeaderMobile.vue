@@ -11,9 +11,11 @@
         <h1 class="title is-bold">
           {{ profile.name }}
         </h1>
-        <p v-if="!isMe(profile)">
-          <button class="button is-outlined is-fullwidth" v-if="profile.isFollowed" @click="unFollowuser(person)">following</button>
-          <button class="button is-primary is-fullwidth" v-else @click="followuser(person)">follow</button>
+        <p v-if="user">
+          <followButton
+          v-bind:user="user"
+          v-bind:profile="profile">
+          </followButton>
         </p>
       </div>
     </div>
@@ -36,6 +38,8 @@
 
 <script>
 import {logout, isLoggedIn} from '../../utils/auth';
+import followButton from './followButton.vue'
+
 export default {
   props: {
     profile: Object,
