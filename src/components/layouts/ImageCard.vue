@@ -47,7 +47,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="level-right" v-if="">
+                    <div class="level-right">
                         <div class="level-item has-text-centered">
                             <a @click="deleteStatus">
                                 <i class="material-icons">delete</i>
