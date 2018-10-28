@@ -64,8 +64,8 @@ export default {
     setHomeTimeline(){
       zinatAPI.getHomeTimeline(this.user.token)
       .then(response=>{
-        this.ready = true
         this.timeline = response.data
+        this.ready = true
       })
       .catch(e=>{
         console.log(e)
@@ -75,7 +75,8 @@ export default {
       var url = 'https://anfora.test'
       var source = new SSE(url + urls.streamingHome, {headers: {'Authorization': `${this.user.token}`}});
       let self = this;
-      source.addEventListener('update', function(e) {
+      source.addEventListener('message', function(e) {
+        console.log(e)
         self.timeline.unshift(JSON.parse(e.data))
       });
       source.stream();

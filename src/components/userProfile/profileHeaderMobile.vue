@@ -44,10 +44,11 @@ export default {
   props: {
     profile: Object,
   },
-    computed:{
-        user(){
-        return this.$store.getters['profiles/currentAccount']
-        }
+  components: {followButton},
+  computed:{
+      user(){
+      return this.$store.getters['profiles/currentAccount']
+      }
   },
   data() {
     return {

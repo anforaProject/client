@@ -18,6 +18,7 @@ import Following from './components/userProfile/Following.vue'
 import Terms from './components/legal/terms.vue'
 import More from './components/legal/more.vue'
 import PasswordReset from './components/PasswordReset.vue'
+import Notification from './components/Notifications.vue'
 
 /*
     Extends Vue to use Vue Router
@@ -94,6 +95,12 @@ export default new VueRouter({
           path: '/home',
           name: 'home',
           component: Vue.component('Home', Home),
+          beforeEnter: requireAuth
+        },
+        {
+          path: '/notifications',
+          name: 'Notifications',
+          component: Vue.component('Notificaitons', Notification),
           beforeEnter: requireAuth
         },
         {

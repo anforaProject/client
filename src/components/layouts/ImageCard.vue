@@ -47,11 +47,7 @@
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
-                    <div class="level-right">
-=======
                     <div class="level-right" v-if="is_owner()">
->>>>>>> 5424ff5e1f718baeb9d30d08b8306337bbdabc4e
                         <div class="level-item has-text-centered">
                             <a @click="deleteStatus">
                                 <i class="material-icons">delete</i>
@@ -132,9 +128,9 @@
                     </p>
                     <p>{{image.message}}</p>
                 </div>
-        </div>
+            </div>
         
-    </div>
+        </div>
     </div>
 </template>
 
