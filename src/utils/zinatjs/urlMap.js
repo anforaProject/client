@@ -18,5 +18,6 @@ export default {
     'explore': '/api/v1/explore',
     'passwordReset': '/api/v1/reset-password',
     'follow': (id) => {return '/api/v1/accounts/' + id + '/follow'},
-    'unfollow': (id) => {return '/api/v1/accounts/' + id + '/unfollow'}
+    'unfollow': (id) => {return '/api/v1/accounts/' + id + '/unfollow'},
+    'notifications': '/api/v1/notifications'
 }

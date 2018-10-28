@@ -294,5 +294,15 @@ export default class Zinat{
     })
   }
 
+  retriveNotifications(token){
+    return axios({
+      url: this.BASE_URL + urls.notifications,
+      method: 'get',
+      headers:{
+        'Accept': 'application/json',
+        'Authorization': token,
+      }
+    })
+  }
 
 }
