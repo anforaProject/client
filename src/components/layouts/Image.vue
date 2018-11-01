@@ -58,7 +58,7 @@ export default {
       this.showModal = !this.showModal
     },
     displayModal(){
-      this.showModal = !this.showModal
+      this.$router.push({name:'statusPage', params:{id: this.image.id}})
     }
   }
 }

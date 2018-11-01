@@ -86,7 +86,7 @@ export default {
     },
 
     stream(){
-      var url = 'https://anfora.social'
+      var url = 'https://anfora.test'
       var source = new SSE(url + urls.streamingHome, {headers: {'Authorization': `${this.user.token}`}});
       let self = this;
       source.addEventListener('notification', function(e) {

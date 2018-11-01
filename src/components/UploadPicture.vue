@@ -4,8 +4,8 @@
     
     <div class="compose has-text-centered">
       <a class="button is-danger is-block is-bold" @click="performPost" :disabled="freeze">
-        <span v-if="freeze"class="compose">Uploading</span>
-	<span v-else="freeze"class="compose">Upload</span>
+        <span v-if="freeze" class="compose">Uploading</span>
+          <span v-else="" class="compose">Upload</span>
       </a>
     </div>
     
@@ -70,28 +70,28 @@ import zinatAPI from '../utils/zinatjs/serverConnection.js'
 export default {
     name: 'Upload',
     components: {
-	Layout,
+    Layout,
     },
     data(){
-	return{
-	    location:false,
-	    nsfw:false,
-	    publicImage: true,
-	    description: '',
-	    message: '',
-	    files:[],
-	    freeze: false
-	}
+    return{
+        location:false,
+        nsfw:false,
+        publicImage: true,
+        description: '',
+        message: '',
+        files:[],
+        freeze: false
+    }
     },
     computed:{
-	user(){
-	    return this.$store.getters['profiles/currentAccount']
-	}
+    user(){
+        return this.$store.getters['profiles/currentAccount']
+    }
     },
     methods:{
-	handleFilesUpload(){
-	    let uploadedFiles = this.$refs.files.files;
-	    /*
+    handleFilesUpload(){
+        let uploadedFiles = this.$refs.files.files;
+        /*
          Adds the uploaded file to the files array
        */
        for( var i = 0; i < uploadedFiles.length; i++ ){
@@ -99,47 +99,47 @@ export default {
        }
     },
 
-	photoSet(image){
-	    if(image){
-		this.image = image
-	    }
-	},  
-	performPost(){
-	    
-	    let data = {image: this.files[0], description: this.description}
-	    let token = this.user.token
-	    this.freeze = true
-	    zinatAPI.uploadMedia(data, token).then(
-		response =>{
-		    var data = {
-			"visibility": this.public,
-			"status": this.message,
-			"sensitive": this.nsfw,
-			"media_ids": response.data.id
-		    }
-		    zinatAPI.uploadStatus(data, token)
-			.then(() => {
-			    //console.log(response)
-			    //this.$router.push({name:'home'})
-			    this.$toast.open({
-				message: 'Image uploaded correctly!',
-				type: 'is-success'
-			    })
-			    
-			    this.$router.push("/home")
-			})
-			.catch(e => {
-			    console.log(e)
-			    this.$toast.open({
-				message: `oh no! We couldn't upload your image :(`,
-				type: 'is-danger'
-			    })
-			})
-		}
-	    )
+    photoSet(image){
+        if(image){
+        this.image = image
+        }
+    },  
+    performPost(){
+        
+        let data = {image: this.files[0], description: this.description}
+        let token = this.user.token
+        this.freeze = true
+        zinatAPI.uploadMedia(data, token).then(
+        response =>{
+            var data = {
+            "visibility": this.public,
+            "status": this.message,
+            "sensitive": this.nsfw,
+            "media_ids": response.data.id
+            }
+            zinatAPI.uploadStatus(data, token)
+            .then(() => {
+                //console.log(response)
+                //this.$router.push({name:'home'})
+                this.$toast.open({
+                message: 'Image uploaded correctly!',
+                type: 'is-success'
+                })
+                
+                this.$router.push("/home")
+            })
+            .catch(e => {
+                console.log(e)
+                this.$toast.open({
+                message: `oh no! We couldn't upload your image :(`,
+                type: 'is-danger'
+                })
+            })
+        }
+        )
 
-	    this.freeze = true
-	}
+        this.freeze = true
+    }
     }
 }
 </script>

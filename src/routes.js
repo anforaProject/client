@@ -19,7 +19,7 @@ import Terms from './components/legal/terms.vue'
 import More from './components/legal/more.vue'
 import PasswordReset from './components/PasswordReset.vue'
 import Notification from './components/Notifications.vue'
-
+import StatusPage from './components/photoPage.vue'
 /*
     Extends Vue to use Vue Router
 */
@@ -79,6 +79,11 @@ export default new VueRouter({
           name: 'about',
           component: Vue.component( 'About', About ),
           meta: { requiresAuth: false }
+        },
+        {
+          path: '/p/:id',
+          name: 'statusPage',
+          component: Vue.component( 'StatusPage', StatusPage ),
         },
         {
           path: '/login',

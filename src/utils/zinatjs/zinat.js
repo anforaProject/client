@@ -155,6 +155,16 @@ export default class Zinat{
     })
   }
 
+  retriveStatus(id){
+    return axios({
+      url: this.BASE_URL + urls.status(id),
+      method: 'get',
+      headers:{
+        'Accept': 'application/json',
+      }
+    })
+  }
+
   likeStatus(id, token){
     return axios({
       url: this.BASE_URL + urls.likeStatus(id),
