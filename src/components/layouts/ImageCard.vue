@@ -61,6 +61,15 @@
                         <strong>{{image.likes}} Likes</strong>
                     </p>
                     <p>{{image.message}}</p>
+
+                    <div v-for="com in comments">
+                        <strong>{{com.account.username}}</strong> {{com.message}} 
+                    </div>
+
+                    <div class="columns comment is-variable is-3">
+                        <input class="column is-11 input is-rounded" type="text" v-model='comment' placeholder="Rounded input">
+                        <a  v-on:click="postComment()" class="column is-1 send"><i class="material-icons">send</i></a>
+                    </div>
                 </div>
             </div>
             
@@ -143,6 +152,8 @@ export default {
   data(){
     return({
         playing: false,
+        comments: this.image.comments,
+        comment: ''
     })
   },
   computed:{
@@ -202,6 +213,23 @@ export default {
 
         is_owner(){
             return this.user.id === this.userProfile.id || false
+        },
+
+        postComment(){
+            let data = {
+                status: this.comment,
+                in_reply_to_id: this.image.id
+            }
+
+            zinatAPI.uploadComment(data, this.user.token)
+            .then(response =>{
+                this.comments.push(response.data)
+            })
+            .catch(e=>{
+                console.log(e)
+            })
+
+            this.comment = ''
         }
   }
 }
@@ -218,6 +246,14 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.send{
+    margin-top: -0.5em;
+}
+
+.comment{
+    padding-top: 1em;
 }
 
 

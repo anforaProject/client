@@ -1,7 +1,7 @@
 <template>
   <!-- Optimised for use on mobile sizes -->
-  <div v-if="profile">
-    <div class="columns is-mobile">
+  <div v-if="profile" class="profile">
+    <div class="columns is-fluid sidebar">
       <div class="column">
         <div class="image is-1by1 anfora-avatar">
           <img :src="profile.avatar" />
@@ -81,5 +81,9 @@
 <style lang="css">
 .anfora-avatar img{
     border-radius: 4px;
+}
+
+.sidebar{
+  height: 100%;
 }
 </style>
