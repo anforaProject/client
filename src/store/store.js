@@ -9,7 +9,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     modules:{
         profiles: Profile,
-	    relationships: Relationship
+        relationships: Relationship
     },
     plugins: [createPersistedState()]
 })
