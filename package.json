@@ -45,7 +45,10 @@
     "extends": [
       "plugin:vue/essential",
       "eslint:recommended"
-    ]
+    ],
+    "env": {
+      "node": true
+    }
   },
   "postcss": {
     "plugins": {
