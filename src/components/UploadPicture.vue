@@ -1,35 +1,30 @@
 <template id="mainView">
-<section class="columns is-fluid">
+<section class="columns container is-fluid">
   <div class="column is-2 aside hero is-fullheight upload-column">
     
     <div class="compose has-text-centered">
       <a class="button is-danger is-block is-bold" @click="performPost" :disabled="freeze" >
         <span v-if="freeze" class="compose">Uploading</span>
-          <span v-else="" class="compose">Upload</span>
+        <span v-else="" class="compose">Share</span>
       </a>
-
+      <br>
       <div>
-      <vue-dropzone ref="myVueDropzone" 
-        id="customdropzone" 
-        :options="dropzoneOptions"
-        v-on:vdropzone-file-added="attachListener"
-        >
-      </vue-dropzone>
-    </div>
+        <vue-dropzone ref="myVueDropzone" 
+          id="customdropzone" 
+          :options="dropzoneOptions"
+          v-on:vdropzone-file-added="attachListener"
+          >
+        </vue-dropzone>
+      </div>
     </div>
 
   </div>
-  <div class="column is-10 aside is-fullheight upload-column">
 
-    <div class="field">
-      <label class="label">Image</label>
-      <div class="file has-name">
-        <label class="file-label">
-          <input type="file" ref="files" value="">
-          
-        </label>
-      </div>
-    </div>
+  <div class="column is-5 is-offset-1 aside" v-if="previewing">
+    <Preview :previewing="previewing" :filter="files[selected_file].filter"></Preview>
+  </div>
+
+  <div class="column is-3 is-offset-1 aside is-fullheight upload-column">
     
     <div class="field">
       <label class="label">Message</label>
@@ -38,10 +33,10 @@
       </div>
     </div>
     
-    <div class="field">
+    <div class="field" v-if="selected_file !== null">
       <label class="label">Description of the image</label>
       <div class="control">
-        <textarea class="textarea" placeholder="Textarea" v-model="description"></textarea>
+        <textarea class="textarea" placeholder="Textarea" v-model="files[selected_file].description"></textarea>
       </div>
     </div>
     
@@ -65,6 +60,8 @@
         Make public
       </label>  
     </div>
+
+    
     
     
   </div>
@@ -82,25 +79,37 @@ import zinatAPI from '../utils/zinatjs/serverConnection.js'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
+import Preview from './pictures/preview.vue'
+
+/*
+  How this works.
+  -On the left panel you upload images. Then a event listener is added 
+  to every image. We store a hashmap with the filename -> {file, description}.
+  in the "files" objects. 
+  
+  -selected_file is the current file. What it changes is the big preview and 
+  the description model so you can change the description and apply filters
+*/
 
 
 export default {
     name: 'Upload',
     components: {
       Layout,
-      vueDropzone: vue2Dropzone
-
+      vueDropzone: vue2Dropzone,
+      Preview,
     },
     data(){
       return{
           location:false, // True if the user wants to store image location
           nsfw:false, // True if the image is nsfw
           publicImage: true, // True if the image should be public
-          description: '',
           message: '',
-          files:[], // Files stored to upload
+          selected_file: null,
+          files:{}, // Files stored to upload
           media_ids: [], // Array of media_ids returned by the server
           freeze: false,
+          previewing: null, // The base64 for the image that we are previewing
           dropzoneOptions: {
             url: 'https://httpbin.org/post',
             thumbnailWidth: 150,
@@ -152,18 +161,29 @@ export default {
 
       this.freeze = true
     },
+
+    swap_selected: function(file_name){
+      this.selected_file = file_name
+      
+      this.previewing = this.files[file_name].file.dataURL
+    },
+    
     attachListener(file) {
-      file.previewElement.addEventListener("click", function() {
-        alert("clicked")
-      })
-      let data = {image: file, description: ""}
-      let token = this.user.token
-      zinatAPI.uploadMedia(data, token).then(response=>{
-        this.media_ids.push(response.data.id)
-      })
+      let data = {file: file, description: "", filter:"cascade"}
+      this.files[file.name] = data
+      let self = this;
+      file.previewElement.addEventListener("click", function(){self.swap_selected(file.name)})
+
+      //let token = this.user.token
+      //zinatAPI.uploadMedia(data, token).then(response=>{
+      //  this.media_ids.push(response.data.id)
+      //})
+
+    },
+
 
     }
-    }
+
 }
 </script>
 
