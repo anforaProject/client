@@ -69,13 +69,11 @@ export default {
     
   },
   mounted(){
-    if(isLoggedIn()){
       this.stream();
-    }
   },
   methods:{
     isLoggedIn() {
-      return this.user !== null && this.user !== undefined
+      return (this.user !== null && this.user !== undefined) || false
     },
     logout(){
       logout();
@@ -86,14 +84,16 @@ export default {
     },
 
     stream(){
-      var url = process.env.VUE_APP_CLIENT_DOMAIN
-      var source = new SSE(url + urls.streamingHome, {headers: {'Authorization': `${this.user.token}`}});
-      let self = this;
-      source.addEventListener('notification', function(e) {
-        self.notifications += 1;
-        console.log(e)
-      });
-      source.stream();
+      if(this.isLoggedIn()){
+        var url = process.env.VUE_APP_CLIENT_DOMAIN
+        var source = new SSE(url + urls.streamingHome, {headers: {'Authorization': `${this.user.token}`}});
+        let self = this;
+        source.addEventListener('notification', function(e) {
+          self.notifications += 1;
+          console.log(e)
+        });
+        source.stream();
+      }
     }
 
   }
