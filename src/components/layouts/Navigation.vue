@@ -1,6 +1,6 @@
 <template lang="html">
 <div>
-<nav class="navbar is-transparent is-hidden-touch" v-if="user">
+<nav class="navbar container is-transparent is-hidden-touch" v-if="user">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
       <!--<img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28"> -->
@@ -22,17 +22,36 @@
     <div class="navbar-start">
       <router-link  class="navbar-item" to="/home" :title='$t("navigation.homeFeed")' ><i class="material-icons">home</i></router-link>
       <router-link  class="navbar-item" to="/explore" ><i class="material-icons">explore</i></router-link>
-      <router-link  class="navbar-item" v-if="user" :title='$t("navigation.profile")' :key="$route.fullPath" :to="{name:'profile', params:{id:user.id}}"><i class="material-icons">person</i></router-link>
-
     </div>
 
     <div class="navbar-end">
       <router-link  class="navbar-item" to="/notifications"  :title='$t("navigation.notifications")'><i class="material-icons">notifications</i></router-link>
       <a class="navbar-item" href="/upload"  ><i class="material-icons">cloud_upload</i></a>
-      <router-link  class="navbar-item" :title='$t("navigation.profile")' :to="{name:'settings'}"><i class="material-icons">settings</i></router-link>
-      <a class="navbar-item" href="#" :title='$t("navigation.logout")' @click="logout()"><i class="material-icons">power_settings_new</i></a>
+
+      <div class="navbar-item has-dropdown" v-bind:class="{ 'is-active' : dropActive}">
+        <a class="navbar-link" v-on:click="drop()" v-click-outside="hide">
+          <strong>{{this.user.display_name}}</strong>
+        </a>
+
+        <div class="navbar-dropdown">
+          <router-link  class="navbar-item" v-if="user" :title='$t("navigation.profile")' :key="$route.fullPath" :to="{name:'profile', params:{id:user.id}}"><i class="material-icons">person</i>Profile</router-link>
+          <router-link  class="navbar-item" :title='$t("navigation.profile")' :to="{name:'settings'}"><i class="material-icons">settings</i>Settings</router-link>
+          <a class="navbar-item" href="#" :title='$t("navigation.logout")' @click="logout()"><i class="material-icons">power_settings_new</i> Close session</a>
+
+
+          <hr class="navbar-divider">
+          <div class="navbar-item">
+            Version 0.0.1
+          </div>
+        </div>
+      </div>
+
     </div>
+
   </div>
+
+
+
 </nav>
 
 
@@ -50,15 +69,17 @@
 
 <script>
 
-import {logout, isLoggedIn} from '../../utils/auth';
+import {logout} from '../../utils/auth';
 import {SSE} from 'sse.js'
 import urls from '../../utils/zinatjs/urlMap.js'
+import ClickOutside from 'vue-click-outside'
 
 export default {
   name: 'Navigation',
   data(){
     return{
-      notifications: 1
+      notifications: 1,
+      dropActive: false
 
     }
   },
@@ -94,8 +115,18 @@ export default {
         });
         source.stream();
       }
-    }
+    },
 
+    drop(){
+      this.dropActive = !this.dropActive
+    },
+
+    hide(){
+      this.dropActive = false
+    }
+  },
+  directives: {
+      ClickOutside
   }
 }
 </script>
