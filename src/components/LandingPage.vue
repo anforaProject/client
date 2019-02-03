@@ -112,8 +112,4 @@
   overflow: hidden; 
   opacity: 0.9;
 }
-
-::-webkit-scrollbar { 
-    display: none; 
-}
 </style>

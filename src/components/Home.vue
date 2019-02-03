@@ -1,8 +1,7 @@
 <template id="mainView">
     <div class="columns" v-if="ready" id="container">
-      <div class="column is-4 is-offset-3  is-hidden-mobile">
+      <div class="column is-6 is-offset-3  is-hidden-mobile" v-if="timeline.length > 0">
           <ImageCard
-            v-if="timeline.length > 0"
             v-for="image in timeline"
             v-bind:key="image.id"
             v-bind:image="image"
@@ -10,9 +9,8 @@
           ></ImageCard>
       </div>
 
-      <div class="column is-12 is-hidden-desktop">
+      <div class="column is-12 is-hidden-desktop" v-if="timeline.length > 0">
           <ImageCard
-            v-if="timeline.length > 0"
             v-for="image in timeline"
             v-bind:key="image.id"
             v-bind:image="image"
@@ -20,9 +18,6 @@
           ></ImageCard>
       </div>
 
-      <div class="column is-3 is-offset 2 body-columns is-hidden-mobile" id="right">
-        This will be a cool column with stories and links. For now take this ❤
-      </div>
     </div>
     <div class="loading" v-else>
         Loading...
@@ -86,7 +81,4 @@ export default {
 </script>
 
 <style media="css">
-  ::-webkit-scrollbar {
-    display: none;
-  }
 </style>
