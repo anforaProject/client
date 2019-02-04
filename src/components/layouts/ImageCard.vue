@@ -1,6 +1,6 @@
 <template lang="html">
-    <div>
-        <div class="card home-card is-hidden-mobile">
+    <div  v-if="image.media_attachments[0]">
+        <div class="card home-card is-hidden-mobile pic">
             <div class="header">
                 <div class="media">
                     <div class="media-left">
@@ -11,15 +11,16 @@
                     <div class="media-content">
                         <div class="columns">
                             <div class="column is-half">
-                                <p class="title is-4"><router-link :to="{ name: 'profile', params: { id: userProfile.id }}">{{userProfile.name}}</router-link></p>
-                                <p class="subtitle is-6">@{{userProfile.username}}</p>
+                                <!--<p class=""><router-link :to="{ name: 'profile', params: { id: userProfile.id }}">{{userProfile.name}}</router-link></p>-->
+                                <p class=""><router-link :to="{ name: 'profile', params: { id: userProfile.id }}">@{{userProfile.username}}</router-link></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <br>
             <div class="card-image">
-                <figure class="image" v-if="image.media_attachments[0].type == 'image'">
+                <figure class="image" v-if="image.media_attachments[0].type === 'image'">
                     <img :src="image.media_attachments[0].url" alt="Placeholder image">  
                 </figure>
                 <figure v-else>
@@ -62,10 +63,10 @@
                     </p>
                     <p>{{image.message}}</p>
 
-                    <div v-for="com in comments">
+                    <div v-for="com in comments" v-bind:key="'com'">
                         <strong>{{com.account.username}}</strong> {{com.message}} 
                     </div>
-
+                    <br>
                     <div class="columns comment is-variable is-3">
                         <input class="column is-11 input is-rounded" type="text" v-model='comment' placeholder="Rounded input">
                         <a  v-on:click="postComment()" class="column is-1 send"><i class="material-icons">send</i></a>
@@ -75,7 +76,7 @@
             
         </div>
         <br>
-        <div class="home-card is-hidden-desktop">
+        <div class="home-card is-hidden-desktop pic">
             <div class="header">
                 <div class="media">
                     <div class="media-left">
@@ -165,7 +166,7 @@ export default {
         likeStatus(){
           this.image.favourited = true
           this.image.likes += 1
-          zinatAPI.likeStatus(this.image.id, this.user.token).catch(e=>{
+          zinatAPI.likeStatus(this.image.id, this.user.token).catch(()=>{
             this.$toast.open({
                 message: `oh no! We couldn't like the photo :(`,
                 type: 'is-danger'
@@ -178,7 +179,7 @@ export default {
         dislikeStatus(){
             this.image.favourited = false
             this.image.likes -= 1
-            zinatAPI.dislikeStatus(this.image.id, this.user.token).catch(e=>{
+            zinatAPI.dislikeStatus(this.image.id, this.user.token).catch(()=>{
                 this.$toast.open({
                     message: `oh no! We couldn't dislike the photo :(`,
                     type: 'is-danger'
@@ -254,6 +255,10 @@ export default {
 
 .comment{
     padding-top: 1em;
+}
+
+.pic{
+    max-height: 95%;
 }
 
 
