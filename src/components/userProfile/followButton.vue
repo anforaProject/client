@@ -40,7 +40,7 @@
     methods: {
       followuser(user){
         zinatAPI.followUser(this.user.token, user.id)
-        .then(response=>{
+        .then(()=>{
           this.profile.isFollowed = true
           this.rel.following=true
         })
@@ -51,7 +51,7 @@
 
       unFollowuser(user){
         zinatAPI.unFollowUser(this.user.token, user.id)
-        .then(response=>{
+        .then(()=>{
           this.profile.isFollowed = false
           this.rel.following = false
         })
