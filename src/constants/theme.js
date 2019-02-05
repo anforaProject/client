@@ -1,10 +1,14 @@
 export default {
     Light: {
-      name: 'preferences.appearance.theme.light',
+      name: 'Light Theme',
       key: 'light'
     },
     Dark: {
-      name: 'preferences.appearance.theme.dark',
+      name: 'Dark Theme',
       key: 'dark'
+    },
+    RedMoon: {
+      name: 'Red Moon',
+      key: 'redmoon'
     }
   }

@@ -1,11 +1,9 @@
-import {LightTheme, DarkTheme} from '../utils/theme.js'
-
 import Theme from '../constants/theme.js'
 
 const App = {
     namespaced: true,
     state:{
-        theme: DarkTheme,
+        theme: Theme.RedMoon.key,
         notify:{
             reply: true,
             reblog: true, 
@@ -22,17 +20,8 @@ const App = {
     actions:{
         updateTheme({commit}, appearence){
             const themeKey = appearence.key 
-            switch (themeKey){
-                case Theme.Light.key:
-                    commit('updateTheme', LightTheme)
-                    break 
-                case Theme.Dark.key:
-                    commit('updateTheme', DarkTheme)
-                    break
-                default:
-                    commit('updateTheme', DarkTheme)
-                    break
-            }
+            commit('updateTheme', themeKey)
+
         }
     },
     getters:{

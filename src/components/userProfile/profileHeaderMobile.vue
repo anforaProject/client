@@ -37,8 +37,9 @@
 </template>
 
 <script>
-import {logout, isLoggedIn} from '../../utils/auth';
+import {logout} from '../../utils/auth';
 import followButton from './followButton.vue'
+import zinatAPI from '../../utils/zinatjs/serverConnection.js'
 
 export default {
   props: {
@@ -61,7 +62,7 @@ export default {
 
     followuser(user){
       zinatAPI.followUser(this.user.token, user.id)
-      .then(response=>{
+      .then(()=>{
         this.user.isFollowed = true
       })
       .catch(e=>{
@@ -72,7 +73,7 @@ export default {
     unFollowuser(user){
       alert("Cl")
       zinatAPI.followUser(this.user.token, user.id)
-      .then(response=>{
+      .then(()=>{
         this.user.isFollowed = false
       })
       .catch(e=>{

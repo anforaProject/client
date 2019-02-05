@@ -26,14 +26,14 @@ router.beforeEach(function (to, from, next) {
 Vue.config.productionTip = false
 
 
-
+Vue.use(Buefy)
 sync(store, router) // done. Returns an unsync callback fn
 Vue.use(VeeValidate);
-Vue.use(Buefy)
+
 
 new Vue({
   router,
   store,
   i18n,
-  render: h => h(App)
+  render: h => h(App),
 }).$mount('#app')

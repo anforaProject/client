@@ -2,19 +2,15 @@
     <div  v-if="image.media_attachments[0]">
         <div class="card home-card is-hidden-mobile pic">
             <div class="header">
-                <div class="media">
-                    <div class="media-left">
+                <div class="image-header">
+                    <div class="image-header-pic">
                         <figure class="image is-48x48 image-circle">
                             <img :src="userProfile.avatar" alt="Placeholder image">
                         </figure>
                     </div>
-                    <div class="media-content">
-                        <div class="columns">
-                            <div class="column is-half">
-                                <!--<p class=""><router-link :to="{ name: 'profile', params: { id: userProfile.id }}">{{userProfile.name}}</router-link></p>-->
-                                <p class=""><router-link :to="{ name: 'profile', params: { id: userProfile.id }}">@{{userProfile.username}}</router-link></p>
-                            </div>
-                        </div>
+                    <div class="image-header-profile">
+                        <!--<p class=""><router-link :to="{ name: 'profile', params: { id: userProfile.id }}">{{userProfile.name}}</router-link></p>-->
+                        <p><router-link :to="{ name: 'profile', params: { id: userProfile.id }}">@{{userProfile.username}}</router-link></p>
                     </div>
                 </div>
             </div>
@@ -34,16 +30,16 @@
                     <div class="level-left">
                         <div class="level-item has-text-centered">
                             <a @click="dislikeStatus" v-if="image.favourited">
-                                <i class="material-icons">favorite</i>
+                                <i class="material-icons colored-icon">favorite</i>
                             </a>
                             <a @click="likeStatus" v-else>
-                                <i class="material-icons">favorite_border</i>
+                                <i class="material-icons colored-icon">favorite_border</i>
                             </a>
                         </div>
                         <div class="level-item has-text-centered">
                             <div>
                                 <a href="">
-                                    <i class="material-icons">chat_bubble_outline</i>
+                                    <i class="material-icons colored-icon">chat_bubble_outline</i>
                                 </a>
                             </div>
                         </div>
@@ -51,7 +47,7 @@
                     <div class="level-right" v-if="is_owner()">
                         <div class="level-item has-text-centered">
                             <a @click="deleteStatus">
-                                <i class="material-icons">delete</i>
+                                <i class="material-icons colored-icon">delete</i>
                             </a>
                         </div>
                     </div>
@@ -63,13 +59,13 @@
                     </p>
                     <p>{{image.message}}</p>
 
-                    <div v-for="com in comments" v-bind:key="'com'">
-                        <strong>{{com.account.username}}</strong> {{com.message}} 
+                    <div v-for="com in comments" v-bind:key="com.id">
+                        <strong>{{com.account.username}}</strong> <span>:    {{com.message}} </span>
                     </div>
                     <br>
                     <div class="columns comment is-variable is-3">
                         <input class="column is-11 input is-rounded" type="text" v-model='comment' placeholder="Rounded input">
-                        <a  v-on:click="postComment()" class="column is-1 send"><i class="material-icons">send</i></a>
+                        <a  v-on:click="postComment()" class="column is-1 send"><i class="material-icons colored-icon">send</i></a>
                     </div>
                 </div>
             </div>
@@ -262,4 +258,21 @@ export default {
 }
 
 
+</style>
+
+<style lang="scss" scoped>
+    .image-header{
+        display: flex;
+        align-items: center;
+    }
+
+    .image-header-pic{
+        margin: 1.5em 0 0 1.5em ;
+    }
+
+
+    .image-header-profile{
+        margin: 1em 0 0 0.5em ;
+        font-size: 18px;
+    }
 </style>
