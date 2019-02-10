@@ -49,8 +49,11 @@ export default class Zinat{
     f.append('public', data.visibility || true);
     f.append('status', data.status || '');
     f.append('sensitive', data.sensitive || false);
-    f.append('media_ids', data.media_ids);
-
+    console.log(data.media_ids, data.media_ids.length)
+    for(let i =0; i < data.media_ids.length; i++){
+      f.append('media_ids[' + i + ']', data.media_ids[i]);
+    }
+    
     return axios({
         url: this.BASE_URL + urls.uploadStatus,
         method: 'post',
@@ -93,7 +96,7 @@ export default class Zinat{
           headers:{
             'Accept': 'application/json',
             'Authorization': token,
-            'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+            'Content-Type': 'multipart/form-data'
           },
           data:f
         })
