@@ -19,15 +19,6 @@
         </p>
       </div>
     </div>
-    <div class="columns">
-      <div class="column">
-        <p>
-          <span class="subtitle">
-            <small>{{ profile.note }}</small>
-          </span>
-        </p>
-      </div>
-    </div>
   </div>
 </template>
 

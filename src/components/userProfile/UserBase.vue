@@ -1,6 +1,6 @@
 <template id="userView">
-    <div class="section">
-      <div class="container">
+    <div class="section hero is-fullheight">
+      <div class="container ">
         <div class="columns" v-if="profile">
           <div class="column is-one-third">
             <div class="is-hidden-mobile">
@@ -11,28 +11,42 @@
             </div>
           </div>
           <div class="column is-two-thirds">
-              <div class="columns">
-                <div class="column level is-mobile">
-                  <router-link :to="{ name: 'profile', params: { id: profile.id } }" class="level-item has-text-centered">
-                    <div>
-                      <p>{{ profile.statuses_count }}</p>
-                      <p>Statuses</p>
+
+              <b-tabs type="is-toggle" expanded>
+                  <b-tab-item label="Profile info" icon="google-photos">
+                    <p class="container is-fluid">
+                      <span class="subtitle">
+                        <small>{{ profile.note }}</small>
+                      </span>
+                    </p>
+                  </b-tab-item>
+                  <b-tab-item label="Numbers" icon="library-music">
+                    <div class="columns">
+                      <div class="column level is-mobile">
+                        <router-link :to="{ name: 'profile', params: { id: profile.id } }" class="level-item has-text-centered">
+                          <div>
+                            <p>{{ profile.statuses_count }}</p>
+                            <p>Statuses</p>
+                          </div>
+                        </router-link>
+                        <router-link :to="{ name: 'profile/following', params: { id: profile.id } }" class="level-item has-text-centered">
+                          <div>
+                            <p>{{ profile.following_count }}</p>
+                            <p>Following</p>
+                          </div>
+                        </router-link>
+                        <router-link :to="{ name: 'profile/followers', params: { id: profile.id } }" class="level-item has-text-centered">
+                          <div>
+                            <p>{{ profile.followers_count }}</p>
+                            <p>Followers</p>
+                          </div>
+                        </router-link>
+                        </div>
+
                     </div>
-                  </router-link>
-                  <router-link :to="{ name: 'profile/following', params: { id: profile.id } }" class="level-item has-text-centered">
-                    <div>
-                      <p>{{ profile.following_count }}</p>
-                      <p>Following</p>
-                    </div>
-                  </router-link>
-                  <router-link :to="{ name: 'profile/followers', params: { id: profile.id } }" class="level-item has-text-centered">
-                    <div>
-                      <p>{{ profile.followers_count }}</p>
-                      <p>Followers</p>
-                    </div>
-                  </router-link>
-              </div>
-            </div>
+                  </b-tab-item>
+              </b-tabs>
+              
 
             <div class="columns">
               <div class="column level is-mobile">

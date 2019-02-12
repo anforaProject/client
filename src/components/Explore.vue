@@ -1,55 +1,54 @@
 <template lang="html">
-    <div >
-        <div v-if="ready" >
-            <section class="container" >
-                <div v-for="profile in users" class="column is-one-third" :key="profile.id"  v-if="!isMe(profile)">
-                    <div class="panel is-centered" >
-                        <div class="card">
-                            <div class="card-content columns">
-                                <div class="column is-two-third">
-                                    <p class="title">
-                                    
-                                    <router-link :to="{ name: 'profile', params: { id: profile.id }}">{{profile.name}}</router-link>
-                                    </p>
-                                    <p class="subtitle">
-                                    @{{profile.username}}
-                                    </p>
-                                </div>
-                                <div class="column is-one-third">
-                                    <div class="image is-1by1 anfora-avatar">
-                                        <img :src="profile.avatar" />
-                                    </div>
-                                </div>  
-                            </div>
-                            <footer class="card-footer">
-                                <p class="card-footer-item">
-                                <span>
-                                    <followButton
-                                    v-bind:user="user"
-                                    v-bind:profile="profile">
-                                    </followButton>
-                                </span>
+    <div v-if="ready" id="users" class="container is-fluid" >
+        <section class="columns" >
+            <div v-for="profile in show_users" class="column is-one-third" :key="profile.id"  v-if="!isMe(profile)">
+                <div class="panel is-centered" >
+                    <div class="card">
+                        <div class="card-content columns">
+                            <div class="column is-two-third">
+                                <p class="title">
+                                
+                                <router-link :to="{ name: 'profile', params: { id: profile.id }}">{{profile.name}}</router-link>
                                 </p>
-                            </footer>
+                                <p class="subtitle">
+                                @{{profile.username}}
+                                </p>
+                            </div>
+                            <div class="column is-one-third">
+                                <div class="image is-1by1 anfora-avatar">
+                                    <img :src="profile.avatar" />
+                                </div>
+                            </div>  
                         </div>
+                        <footer class="card-footer">
+                            <p class="card-footer-item">
+                            <span>
+                                <followButton
+                                v-bind:user="user"
+                                v-bind:profile="profile">
+                                </followButton>
+                            </span>
+                            </p>
+                        </footer>
                     </div>
                 </div>
-            </section>
-            <section class="columns">
-                <div v-for="image in images" class="column is-one-third" :key="image.id">
+            </div>
+        </section>
+        <section v-for="index in images.length/3" :key="index">
+            <div class="columns">
+                <div v-for="image in images.slice( (index-1)*3, (index-1)*3+3)" class="grid column is-one-third" :key="image.id">
                     <div class="panel">
                         <imageMinature
                         v-bind:image="image"
                         ></imageMinature>
                     </div>
-      </div>
-            </section>  
-        </div>
+                </div>
+            </div>
+        </section>  
     </div>
 </template>
 
 <script>
-import {login} from '../utils/auth';
 import imageMinature from './layouts/Image.vue'
 import zinatAPI from '../utils/zinatjs/serverConnection.js'
 import followButton from './userProfile/followButton.vue'
@@ -62,7 +61,8 @@ export default {
         return{
             ready: false,
             images: [],
-            users:[]
+            users:[],
+            show_users: []
         }
     },
     mounted(){
@@ -82,6 +82,7 @@ export default {
                 //this.ready = true 
                 this.images = this.images.concat(response.data.statuses)
                 this.users = this.users.concat(response.data.users)
+                this.show_users = this.users.slice(0,3)
                 resolve()
                 })
             })
@@ -97,5 +98,15 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss" scoped>
+
+.grid{
+    display: flex;
+    justify-content: center;
+}
+
+#users{
+    margin-top:2em;
+}
 </style>
+

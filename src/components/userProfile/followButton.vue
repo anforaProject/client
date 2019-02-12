@@ -9,13 +9,19 @@
   import zinatAPI from '../../utils/zinatjs/serverConnection.js'
   import { mapGetters } from "vuex"
   export default {
-    props:['user', 'profile'],
+    props:['user', 'profile', 'following'],
     computed: {
       // mix the getters into computed with object spread operator
       ...mapGetters('relationships', ['getRelation'])
     },
     mounted(){
         let rel = undefined
+
+        if (this.following){
+          rel = this.following
+          this.rel = rel
+          return 
+        }
 
         if(rel === undefined){
           zinatAPI.retriveRelationship(this.user.token,this.profile.id)
@@ -34,7 +40,7 @@
     },
     data() {
       return {
-        rel:undefined
+        rel:undefined,
       };
     },
     methods: {
