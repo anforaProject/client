@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="{'dark': theme === 'dark', 'dark': theme==='redmoon'}">
+  <div id="app" :class="{'dark': theme === 'dark', 'redmoon': theme==='redmoon'}">
     <router-view></router-view>
   </div>
 </template>
@@ -17,6 +17,24 @@ export default {
     ...mapGetters({
         theme: 'preferences/getTheme'
     })
+
+  },
+
+  watch:{
+    'theme': function (newVal) {
+      if(newVal==='redmoon'){
+        document.body.style.backgroundColor = "#020003"
+        document.getElementsByTagName('html').style.backgroundColor = "#020003"
+      }
+      else if(newVal==='dark'){
+        document.body.style.backgroundColor = "#313543"
+        document.getElementsByTagName('html').style.backgroundColor = "#313543"
+      }
+      else if(newVal==='light'){
+        document.body.style.backgroundColor = "#fff"
+        document.getElementsByTagName('html').style.backgroundColor = "fff"
+      }
+    },
   }
 }
 
@@ -45,6 +63,9 @@ export default {
   //$background: #282c37;
   //html{background-color: #282c37;}
 
+  i, .icon {
+    color: #fff;
+  }
   .dark{
       background-color: $dark-background;
       color: #fff;
@@ -84,9 +105,10 @@ export default {
   }
 
   .redmoon{
+      
       background-color: $redmoon-background;
       color: #fff;
-
+      
       nav {
         background-color: $redmoon-background;
 
@@ -106,6 +128,12 @@ export default {
       a{
         color: $redmoon-element;
       }
+
+
+      h1,h2,h3,h4,h5,h6 {
+        color: #8899a6;
+      }
+
 
       p {
         color: $dark-text;
@@ -127,6 +155,10 @@ export default {
 
       .colored-icon{
         color: $redmoon-element;
+      }
+
+      i, .icon{
+        color: #fff;
       }
 
       .navbar-link::after{
