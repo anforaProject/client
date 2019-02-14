@@ -134,7 +134,7 @@ export default {
         this.$store.dispatch('preferences/updateTheme', Appearence.RedMoon)
         this.darkMode = true
       }else{
-        this.$store.dispatch('preferences/updateTheme', Appearence.Light)
+        this.$store.dispatch('preferences/updateTheme', Appearence.Dark)
         this.darkMode = false
       }
 
