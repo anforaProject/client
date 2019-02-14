@@ -17,7 +17,7 @@
             <br>
             <div class="card-image">
                 <figure class="image" v-if="image.media_attachments[0].type === 'image'">
-                    <img :src="image.media_attachments[0].url" alt="Placeholder image">  
+                    <img :src="image.media_attachments[0].url" :alt="image.media_attachments[0].description">  
                 </figure>
                 <figure v-else>
                     <video ref="video" @click="playVideo()" controls loop>
@@ -57,7 +57,7 @@
                     <p>
                         <strong>{{image.likes}} Likes</strong>
                     </p>
-                    <p>{{image.message}}</p>
+                    <p v-html="image.message"></p>
 
                     <div v-for="com in comments" v-bind:key="com.id">
                         <strong>{{com.account.username}}</strong> <span>:    {{com.message}} </span>
