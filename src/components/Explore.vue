@@ -1,7 +1,7 @@
 <template lang="html">
-    <div v-if="ready" id="users" class="container is-fluid" >
+    <div v-if="ready" id="users" class="container is-fluid is-fullheight" >
         <section class="columns" >
-            <div v-for="profile in show_users" class="column is-one-third" :key="profile.id"  v-if="!isMe(profile)">
+            <div v-for="(profile, index) in show_users" class="column is-one-third" :key="index"  v-if="!isMe(profile)">
                 <div class="panel is-centered" >
                     <div class="card">
                         <div class="card-content columns">
@@ -34,13 +34,18 @@
                 </div>
             </div>
         </section>
-        <section v-for="index in images.length/3" :key="index">
-            <div class="columns">
+        <section v-for="index in images.length" :key="index">
+            <div class="columns is-fullheight">
                 <div v-for="image in images.slice( (index-1)*3, (index-1)*3+3)" class="grid column is-one-third" :key="image.id">
                     <div class="panel">
                         <imageMinature
                         v-bind:image="image"
                         ></imageMinature>
+                    </div>
+                </div>
+
+                <div v-if="images.slice( (index-1)*3, (index-1)*3+3).length < 3">
+                    <div v-for="item in Array(3 - images.slice( (index-1)*3, (index-1)*3+3).length).keys()" class="grid column is-one-third" :key="'n' + item">
                     </div>
                 </div>
             </div>
@@ -62,11 +67,19 @@ export default {
             ready: false,
             images: [],
             users:[],
-            show_users: []
+            show_users: [],
+            nimages: 0
         }
     },
     mounted(){
-        this.setImages().then( () =>this.ready=true)
+        this.setImages().then( () =>{
+            this.ready=true
+            this.nimages = this.images.length / 3
+            
+            if (this.images.length % 3 != 0){
+                this.nimages += 1;
+            }
+        })
     },
     computed:{
         user(){
