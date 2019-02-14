@@ -180,7 +180,7 @@ export default {
         }
     },  
 
-    async uploadMedia(){
+    uploadMedia(){
       let token = this.user.token
       let self = this
 
@@ -212,7 +212,7 @@ export default {
       this.freeze = true
 
       // Upload the media_files
-      self = this
+      let self = this
 
 
       this.uploadMedia().then(()=>{
