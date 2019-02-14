@@ -120,9 +120,15 @@ export default {
           background-color: $redmoon-background;
         }
 
-        .navbar-brand > a.navbar-item:hover{
-          background-color: $redmoon-background;
-        }
+
+      }
+
+      .navbar-dropdown{
+        background-color: $redmoon-background;
+      }
+
+      a.navbar-item:hover{
+          background-color: $dark-background;
       }
 
       a{
@@ -150,7 +156,7 @@ export default {
       .card{
         background-color: $redmoon-card-background;
         border-color: #fff;
-        border-radius: 18px;
+        border-radius: 4px;
       }
 
       .colored-icon{

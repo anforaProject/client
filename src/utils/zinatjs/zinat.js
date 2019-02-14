@@ -11,6 +11,17 @@ export default class Zinat{
     return this.TOKEN || getAccessToken()
   }
 
+  registrations(){
+    return axios({
+      method: 'get',
+      url: this.BASE_URL + '/api/instance/registrations',
+      headers:{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+  }
+
   getAuthToken(auth_info){
     return axios({
         url: this.BASE_URL + urls.auth,
