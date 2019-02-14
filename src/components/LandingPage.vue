@@ -21,7 +21,7 @@
         </div>
 
         <div class="column is-4 is-offset-2">
-          <div class="box">
+          <div class="box" v-if="ropen">
                 <div class="field">
                     <div class="control">
                         <input class="input is-large" v-validate="'required|alpha_num'" type="text" name="username" v-model="data.username" placeholder="Username" autofocus="">
@@ -77,8 +77,16 @@
     data(){
       return{
         loading: true,
-        data: {}
+        data:{},
+        ropen: false,
       }
+    },
+    mounted(){
+      zinatAPI.registrations().then(result=>{
+        console.log(result)
+        if (result.data["Open"] == true)
+          this.ropen = true
+      })
     },
     methods:{
       register(){
