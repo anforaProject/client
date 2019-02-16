@@ -1,5 +1,5 @@
 # client
-Client for zinat server
+Client for Anfora server
 
 ## Used in this project
 
