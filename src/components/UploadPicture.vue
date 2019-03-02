@@ -1,123 +1,79 @@
 <template id="mainView">
-<div>
+<v-container grid-list-md text-xs-center>
+ <v-stepper v-model="step">
+    <v-stepper-header>
+      <v-stepper-step :complete="step > 1" step="1">Name of step 1</v-stepper-step>
 
-<div class="step-header">
-  <div class="perv-step"><a class="button" @click="prevStep()">Previous</a></div>
-  <div class="next-step"><a class="button" @click="nextStep()">Next</a></div>
-</div>
+      <v-divider></v-divider>
 
-<section v-if="step==1" class="is-fullheight hero" id="first-step">
-    <div class="upload">
-          <b-field>
-            <b-upload v-model="drop_area"
-                multiple
-                drag-drop
-                v-on:input="attachListener()">
-                <section class="section">
-                    <div class="content has-text-centered">
-                        <p>
-                            <b-icon
-                                icon="upload"
-                                size="is-large"
-                                class="upload-icon">
-                            </b-icon>
-                        </p>
-                        <p>Drop your files here or click to upload</p>
-                    </div>
-                </section>
-            </b-upload>
-        </b-field>
+      <v-stepper-step :complete="step > 2" step="2">Name of step 2</v-stepper-step>
 
-        <div class="tags">
-            <div v-for="(file, index) in drop_area"
-                :key="index"
-                class="tag is-primary" >
-                {{file.name}}
-                <button class="delete is-small"
-                    type="button"
-                    @click="deleteDropFile(index)">
-                </button>
-            </div>
-        </div>
-    </div>
-</section>
+      <v-divider></v-divider>
 
-<section v-if="step==2" class="columns container is-fluid">
-  <div class="column is-2 aside hero is-fullheight upload-column">
-    
-    <div class="compose has-text-centered">
-      <div v-for="(image, index) in files" v-bind:key="index">
-        <img class="preview" @click="swap_selected(image.name)" :src="image.prev">
-      </div>
-    </div>
+      <v-stepper-step step="3">Name of step 3</v-stepper-step>
+    </v-stepper-header>
 
-  </div>
+    <v-stepper-items>
+      <v-stepper-content step="1">
+        <v-card
+          class="mb-5"
+          color="grey lighten-1"
+          height="200px"
+        ></v-card>
 
-  <div class="column is-5 is-offset-1 aside" v-if="previewing">
-    <Preview :previewing="previewing" :filter="files[selected_file].filter"></Preview>
-  </div>
+        <v-btn
+          color="primary"
+          @click="step = 2"
+        >
+          Continue
+        </v-btn>
 
-  <div class="column is-3 is-offset-1  aside is-fullheight upload-column">
-    
-    <div class="field" v-if="selected_file !== null">
-      <label class="label">Description of the image</label>
-      <div class="control">
-        <textarea class="textarea" placeholder="Textarea" v-model="files[selected_file].description"></textarea>
-      </div>
-    </div>
-    
-    <div class="field">
-      <label class="checkbox">
-        <input type="checkbox" id="checkbox" v-model="location">
-        Share location
-      </label>  
-    </div>
-    
-    <div class="field">
-      <label class="checkbox">
-        <input type="checkbox" id="checkbox" v-model="nsfw">
-        NSFW content
-      </label>  
-    </div>
-    
-  </div>
-</section>
+      </v-stepper-content>
 
-<section v-if="step==3" class="is-fluid">
+      <v-stepper-content step="2">
+        <v-card
+          class="mb-5"
+          color="grey lighten-1"
+          height="200px"
+        ></v-card>
 
-      <div class="columns">
-        
-        <div class="column is-3 is-offset 3">
-                <div class="field">
-                <label class="checkbox">
-                  <input type="checkbox" id="checkbox" v-model="publicImage">
-                  Make public
-                </label>  
-        </div>
+        <v-btn
+          color="primary"
+          @click="step = 3"
+        >
+          Continue
+        </v-btn>
 
-        <div class="field">
-          <label class="label">Message</label>
-          <div class="control">
-            <textarea class="textarea" v-model="message" placeholder="Textarea"></textarea>
-          </div>
-        </div>
+        <v-btn flat
+          @click="step = 1"
+        >
+          Previous
+        </v-btn>
+      </v-stepper-content>
 
+      <v-stepper-content step="3">
+        <v-card
+          class="mb-5"
+          color="grey lighten-1"
+          height="200px"
+        ></v-card>
 
+        <v-btn flat
+          @click="step = 2"
+        >
+          Previous
+        </v-btn>
+        <v-btn
+          color="primary"
+          @click="step = 1"
+        >
+          Continue
+        </v-btn>
 
-        </div>
-
-        <div class="column is-2 is-offset-5">
-            <a class="button is-danger is-block is-bold" @click="performPost" :disabled="freeze" >
-              <span v-if="freeze" class="compose">Uploading</span>
-              <span v-else="" class="compose">Share</span>
-            </a>
-        </div>
-      </div>
-    
-
-    
-</section>
-</div>
+      </v-stepper-content>
+    </v-stepper-items>
+  </v-stepper>
+</v-container>
 </template>
 
 <script type="text/javascript">
@@ -154,6 +110,7 @@ export default {
           selected_file: null,
           files:{}, // Files stored to upload,
           drop_area: [],
+          public: true, 
           media_ids: [], // Array of media_ids returned by the server
           freeze: false,
           previewing: null, // The base64 for the image that we are previewing
@@ -164,7 +121,7 @@ export default {
             headers: { "My-Awesome-Header": "header value" },
           },
           step:1,
-          uploaded: false
+          uploaded: false,
       }
     },
     computed:{
@@ -194,6 +151,7 @@ export default {
 
           zinatAPI.uploadMedia(data, token).then(response=>{
             self.media_ids.push(response.data.id)
+            resolve()
           })
           .catch(e=>{
             self.freeze = false
@@ -202,9 +160,22 @@ export default {
           })
         }
 
-        resolve()
+        
       })
 
+    },
+
+    add_media(){ 
+      let self = this 
+
+      return new Promise(function(resolve, reject){
+        let md = []
+        for (let i = 0; i < self.media_ids.length; i++){
+          md.push(self.media_ids[i])
+        }
+        resolve(md)
+      })
+      
     },
 
     performPost(){
@@ -216,35 +187,34 @@ export default {
 
 
       this.uploadMedia().then(()=>{
-        let md = []
-        for (let i = 0; i < self.media_ids.length; i++){
-          md.push(self.media_ids[i])
-        }
-        var data = {
-          "visibility": self.public,
-          "status": self.message,
-          "sensitive": self.nsfw,
-          "media_ids": md
-        }
-        zinatAPI.uploadStatus(data, token)
-        .then(() => {
-            //console.log(response)
-            //this.$router.push({name:'home'})
-            self.$toast.open({
-            message: 'Image uploaded correctly!',
-            type: 'is-success'
-            })
-            
-            self.$router.push("/home")
+        self.add_media().then(md =>{
+          var data = {
+            "visibility": self.public,
+            "status": self.message,
+            "sensitive": self.nsfw,
+            "media_ids": md
+          }
+          zinatAPI.uploadStatus(data, token)
+          .then(() => {
+              //console.log(response)
+              //this.$router.push({name:'home'})
+              self.$toast.open({
+              message: 'Image uploaded correctly!',
+              type: 'is-success'
+              })
+              
+              self.$router.push("/home")
+          })
+          .catch(e => {
+              console.log(e)
+              self.$toast.open({
+              message: `oh no! We couldn't upload your image :(`,
+              type: 'is-danger'
+              })
+              self.freeze = false
+          })
         })
-        .catch(e => {
-            console.log(e)
-            self.$toast.open({
-            message: `oh no! We couldn't upload your image :(`,
-            type: 'is-danger'
-            })
-            self.freeze = false
-        })
+
       })
     },
 
@@ -311,35 +281,5 @@ export default {
 </script>
 
 <style media="screen" scoped>
-
-.step-header{
-  display: flex;
-  justify-content: space-around;
-}
-
-.upload{
-  display: flex;
-  align-self: center;
-  flex-direction: column;
-}
-
-.upload-column{
-    padding-top: 4em;
-}
-
-.mdi-upload{
-  color:red !important;
-}
-
-#customdropzone{
-  display: flex;
-  align-self: center;
-  text-align: center;
-}
-
-#first-step{
-  display:flex;
-}
-
 
 </style>

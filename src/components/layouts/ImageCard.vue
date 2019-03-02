@@ -1,162 +1,90 @@
 <template lang="html">
-    <div  v-if="image.media_attachments[0]">
-        <div class="card home-card is-hidden-mobile pic">
-            <div class="header">
-                <div class="image-header">
-                    <div class="image-header-pic">
-                        <figure class="image is-48x48 image-circle">
-                            <img :src="userProfile.avatar" alt="Placeholder image">
-                        </figure>
-                    </div>
-                    <div class="image-header-profile">
-                        <!--<p class=""><router-link :to="{ name: 'profile', params: { id: userProfile.id }}">{{userProfile.name}}</router-link></p>-->
-                        <p><router-link :to="{ name: 'profile', params: { id: userProfile.id }}">@{{userProfile.username}}</router-link></p>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div class="card-image">
-                <figure class="image" v-if="image.media_attachments[0].type === 'image'">
-                    <img :src="image.media_attachments[0].url" :alt="image.media_attachments[0].description">  
-                </figure>
-                <figure v-else>
-                    <video ref="video" @click="playVideo()" controls loop>
-                        <source  :src="image.media_attachments[0].url"  type="video/mp4">
-                    </video>  
-                </figure>
-            </div>
-            <div class="card-content">
-                <div class="level is-mobile">
-                    <div class="level-left">
-                        <div class="level-item has-text-centered">
-                            <a @click="dislikeStatus" v-if="image.favourited">
-                                <i class="material-icons colored-icon">favorite</i>
-                            </a>
-                            <a @click="likeStatus" v-else>
-                                <i class="material-icons colored-icon">favorite_border</i>
-                            </a>
-                        </div>
-                        <div class="level-item has-text-centered">
-                            <div>
-                                <a href="">
-                                    <i class="material-icons colored-icon">chat_bubble_outline</i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="level-right" v-if="is_owner()">
-                        <div class="level-item has-text-centered">
-                            <a @click="deleteStatus">
-                                <i class="material-icons colored-icon">delete</i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content">
-                    <p>
-                        <strong>{{image.likes}} Likes</strong>
-                    </p>
-                    <p v-html="image.message"></p>
-
-                    <div v-for="com in comments" v-bind:key="com.id">
-                        <strong>{{com.account.username}}</strong> <span>:    {{com.message}} </span>
-                    </div>
-                    <br>
-                    <div class="columns comment is-variable is-3">
-                        <input class="column is-11 input is-rounded" type="text" v-model='comment' placeholder="Rounded input">
-                        <a  v-on:click="postComment()" class="column is-1 send"><i class="material-icons colored-icon">send</i></a>
-                    </div>
-                </div>
-            </div>
+    <div class="home-card" v-if="image.media_attachments.length !== 0">
+        <v-card >
             
-        </div>
-        <br>
-        <div class="home-card is-hidden-desktop pic">
-            <div class="header">
-                <div class="media">
-                    <div class="media-left">
-                        <figure class="image is-48x48 image-circle">
-                            <img :src="userProfile.avatar" alt="Placeholder image">
-                        </figure>
-                    </div>
-                    <div class="media-content">
-                        <div class="columns">
-                            <div class="column is-half">
-                                <p class="title is-4">{{userProfile.name}}</p>
-                                <p class="subtitle is-6">@{{userProfile.username}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-image ">
-                <figure class="image" v-if="image.media_attachments[0].type == 'image'">
-                    <img :src="image.media_attachments[0].url" alt="Placeholder image">  
-                </figure>
-                <figure v-else>
-                    <video ref="video" @click="playVideo()" controls loop>
-                        <source  :src="image.media_attachments[0].url"  type="video/mp4">
-                    </video>  
-                </figure>
-            </div>
-            <div class="card-content">
-                <div class="level is-mobile">
-                    <div class="level-left">
-                        <div class="level-item has-text-centered">
-                            <a @click="dislikeStatus" v-if="image.favourited">
-                                <i class="material-icons">favorite</i>
-                            </a>
-                            <a @click="likeStatus" v-else>
-                                <i class="material-icons">favorite_border</i>
-                            </a>
-                        </div>
-                        <div class="level-item has-text-centered">
-                            <div>
-                                <a href="">
-                                    <i class="material-icons">chat_bubble_outline</i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="level-right" v-if="is_owner">
-                        <div class="level-item has-text-centered">
-                            <a @click="deleteStatus">
-                                <i class="material-icons">delete</i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <v-layout                
+                align-content-start
+            >
+                <v-flex>
+                    <v-avatar>
+                        <img
+                            :src="image.account.avatar"
+                            :alt="image.account.username"
+                        >
+                    </v-avatar>
 
-                <div class="content">
-                    <p>
-                        <strong>{{image.likes}} Likes</strong>
-                    </p>
-                    <p>{{image.message}}</p>
-                </div>
-            </div>
-        
-        </div>
+                    
+
+                </v-flex>
+            </v-layout>
+
+            <Carousel :media_data="image.media_attachments"/>
+
+            <v-card-actions>
+                <v-spacer></v-spacer>
+
+
+                <v-btn icon v-if="image.favourited" @click="dislikeStatus">
+                <v-icon>favorite</v-icon>
+                </v-btn>
+                <v-btn icon v-else @click="likeStatus">
+                <v-icon >favorite_border</v-icon>
+                </v-btn>
+
+                <v-btn icon dark v-on:click="dialog = !dialog">
+                <v-icon>chat_bubble_outline</v-icon>
+                </v-btn>
+
+                <v-dialog v-model="dialog" scrollable>
+                    <v-card>
+                        <v-card-title>Comments</v-card-title>
+                        <v-divider></v-divider>
+                        <v-card-text>
+                        <p v-for="(comment, i) in image.comments" :key="i">
+                            @{{comment.account.username}}: {{comment.message}}
+                        </p>
+                        </v-card-text>
+                        <v-divider></v-divider>
+                        <v-card-actions>
+                        <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
+                        <v-btn color="blue darken-1" flat @click="dialog = false">Save</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+
+
+                <v-btn icon v-if="is_owner" @click="deleteStatus">
+                <v-icon>delete</v-icon>
+                </v-btn>
+            </v-card-actions>
+        </v-card>
     </div>
 </template>
 
 <script type="text/javascript">
 import zinatAPI from '../../utils/zinatjs/serverConnection.js'
+import Carousel from './carousel.vue'
 
 export default {
   name: "imageModal",
   props:['image', "userProfile"],
+  components:{
+      Carousel
+  },
   data(){
     return({
         playing: false,
         comments: this.image.comments,
-        comment: ''
+        comment: '',
+        dialog: false,
+        dialogm1: '',
+        carouselHeight: 0,
     })
   },
   computed:{
     user(){
         return this.$store.getters['profiles/currentAccount']  
-    }
+    },
   },
   methods:{
         likeStatus(){
@@ -261,18 +189,7 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-    .image-header{
-        display: flex;
-        align-items: center;
-    }
-
-    .image-header-pic{
-        margin: 1.5em 0 0 1.5em ;
-    }
-
-
-    .image-header-profile{
-        margin: 1em 0 0 0.5em ;
-        font-size: 18px;
+    .home-card{
+        margin-bottom: 2em;
     }
 </style>

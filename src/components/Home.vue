@@ -1,28 +1,12 @@
 <template id="mainView">
-    <div class="columns" v-if="ready" id="container">
-      <div class="column is-6 is-offset-3  is-hidden-mobile" v-if="timeline.length > 0">
-          <ImageCard
-            v-for="(image, index) in timeline"
-            v-bind:key="index"
-            v-bind:image="image"
-            v-bind:userProfile="image.account"
-          ></ImageCard>
-      </div>
-
-      <div class="column is-12 is-hidden-desktop" v-if="timeline.length > 0">
-          <ImageCard
-            v-for="(image, index) in timeline"
-            v-bind:key="index"
-            v-bind:image="image"
-            v-bind:userProfile="image.account"
-          ></ImageCard>
-      </div>
-
-    </div>
-    <div class="loading" v-else>
-        Loading...
-    </div>
-
+  <v-container>
+  <ImageCard
+    v-for="(image, index) in timeline"
+    v-bind:key="index"
+    v-bind:image="image"
+    v-bind:userProfile="image.account"
+  ></ImageCard>
+  </v-container>
 </template>
 
 <script type="text/javascript">

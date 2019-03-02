@@ -13,7 +13,10 @@ import { sync } from 'vuex-router-sync'
 import i18n from './translations/i18n.js'
 
 //Css Bulma
-import Buefy from 'buefy'
+//import Buefy from 'buefy'
+
+
+import Vuetify from 'vuetify'
 
 //Validators
 import VeeValidate from 'vee-validate';
@@ -26,10 +29,10 @@ router.beforeEach(function (to, from, next) {
 Vue.config.productionTip = false
 
 
-Vue.use(Buefy)
+//Vue.use(Buefy)
+Vue.use(Vuetify)
 sync(store, router) // done. Returns an unsync callback fn
 Vue.use(VeeValidate);
-
 
 new Vue({
   router,

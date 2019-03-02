@@ -1,5 +1,6 @@
 <template>
-  <div class="content container">
+<v-container>
+     
     <h2>Privacy Policy</h2>
     
     <h3>What information do we collect?</h3>
@@ -87,7 +88,7 @@
     <p>This document is CC-BY-SA. It was last updated September 10, 2018.</p>
 
     <p>Originally adapted from the Mastodon terms on <a href="https://mastodon.social/terms">mastodon.social</a>.</p>
-  </div>
+</v-container>
 </template>
 
 <script>
