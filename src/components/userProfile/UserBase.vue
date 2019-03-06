@@ -1,5 +1,9 @@
 <template id="userView">
-    <div class="section hero is-fullheight">
+
+<v-container>
+</v-container>
+
+<!--     <div class="section hero is-fullheight">
       <div class="container ">
         <div class="columns" v-if="profile">
           <div class="column is-one-third">
@@ -53,12 +57,11 @@
                 <router-view :profile="profile"></router-view>
               </div>
             </div>
-            <!--  -->
           </div>
         </div>
       </div>
-    </div>
-  </template>
+    </div> -->
+</template>
 
 <script type="text/javascript">
 

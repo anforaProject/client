@@ -40,8 +40,8 @@
     <!-- end toolbar -->
 
 
-    <v-content>
-      <v-container fill-height :class="{'px-0': $vuetify.breakpoint.xsOnly }">
+    <v-content> 
+      <v-container fluid fill-height :class="{'px-0': $vuetify.breakpoint.xsOnly }">
         <router-view></router-view>
       </v-container>
     </v-content>

@@ -59,7 +59,7 @@ export default class Zinat{
 
     f.append('public', data.visibility || true);
     f.append('status', data.status || '');
-    f.append('sensitive', data.sensitive || false);
+    f.append('sensitive', false);
     console.log(data.media_ids, data.media_ids.length)
     for(let i =0; i < data.media_ids.length; i++){
       f.append('media_ids[' + i + ']', data.media_ids[i]);

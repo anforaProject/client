@@ -1,5 +1,5 @@
 <template id="mainView">
-<v-container grid-list-md text-xs-center>
+<v-container fluid>
  <v-stepper v-model="step">
     <v-stepper-header>
       <v-stepper-step :complete="step > 1" step="1">Name of step 1</v-stepper-step>
@@ -15,11 +15,10 @@
 
     <v-stepper-items>
       <v-stepper-content step="1">
-        <v-card
-          class="mb-5"
-          color="grey lighten-1"
-          height="200px"
-        ></v-card>
+        <input type="file" :accept="accept" :multiple="multiple" :disabled="disabled"
+           ref="fileInput" @change="onFileChange">
+
+        <v-divider></v-divider>
 
         <v-btn
           color="primary"
@@ -30,13 +29,28 @@
 
       </v-stepper-content>
 
-      <v-stepper-content step="2">
-        <v-card
-          class="mb-5"
-          color="grey lighten-1"
-          height="200px"
-        ></v-card>
-
+      <v-stepper-content step="2" grid-list-md>
+        <v-layout row wrap>
+          <v-flex xs4>
+            <v-img  v-for="(image, index) in files" v-bind:key="index" class="preview" @click="swap_selected(image.name)" :src="image.prev" width="40%"></v-img>
+          </v-flex>
+          <v-flex xs4>
+            <v-img v-if="previewing" :src="previewing" width="80%"></v-img>
+          </v-flex>
+          <v-flex xs4>
+            <v-text-field v-if="previewing"
+              v-model="files[selected_file].description"
+              color="blue darken-2"
+              label="Image description"
+            ></v-text-field>
+          </v-flex>
+        </v-layout>
+        
+        <v-btn flat
+          @click="step = 1"
+        >
+          Previous
+        </v-btn>
         <v-btn
           color="primary"
           @click="step = 3"
@@ -44,11 +58,7 @@
           Continue
         </v-btn>
 
-        <v-btn flat
-          @click="step = 1"
-        >
-          Previous
-        </v-btn>
+
       </v-stepper-content>
 
       <v-stepper-content step="3">
@@ -65,9 +75,9 @@
         </v-btn>
         <v-btn
           color="primary"
-          @click="step = 1"
+          @click="performPost()"
         >
-          Continue
+          Upload
         </v-btn>
 
       </v-stepper-content>
@@ -120,8 +130,13 @@ export default {
             maxFilesize: 10,
             headers: { "My-Awesome-Header": "header value" },
           },
+
+
           step:1,
           uploaded: false,
+          multiple: true,
+          disabled: false,
+          accept:'*'
       }
     },
     computed:{
@@ -151,7 +166,7 @@ export default {
 
           zinatAPI.uploadMedia(data, token).then(response=>{
             self.media_ids.push(response.data.id)
-            resolve()
+            
           })
           .catch(e=>{
             self.freeze = false
@@ -160,9 +175,24 @@ export default {
           })
         }
 
+        while(this.media_ids.length !== this.files.length){
+          console.log(this.media_ids.length , this.files.length)
+        }
+        resolve()
+
         
       })
 
+    },
+
+    
+    sleep(milliseconds) {
+      var start = new Date().getTime();
+      for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds){
+          break;
+        }
+      }
     },
 
     add_media(){ 
@@ -232,29 +262,6 @@ export default {
         reader.onerror = error => reject(error);
       });
     },
-    
-    attachListener() {
-          
-
-      let drop = this.drop_area
-      for(let i = 0; i < drop.length; i++){
-        if (this.files[drop[i].name] === undefined ){
-          this.getBase64(drop[i]).then( pr => {
-
-            let data = {name: drop[i].name, file: drop[i], description: "", filter:"cascade", prev: pr}
-            this.files[data.name] = data
-          })
-
-        }  
-      }
-
-      //let data = {file: this.drop_area[i].File, description: "", filter:"cascade"}
-      //let token = this.user.token
-      //zinatAPI.uploadMedia(data, token).then(response=>{
-      //  this.media_ids.push(response.data.id)
-      //})
-
-    },
 
     deleteDropFile(index) {
         let name = this.drop_area[index].name
@@ -274,7 +281,44 @@ export default {
       this.step -= 1;
       if (this.step < 1)
         this.step = 1;
-    }
+    },
+
+    // ---------------------
+    // Triggered when the user uploads something
+    // ---------------------
+
+    getFormData (files) {
+      const forms = []
+      for (const file of files) {
+        const form = new FormData()
+        form.append('data', file, file.name)
+        forms.push(form)
+      }
+      return forms
+    },
+
+    onFileChange ($event) {
+        const files = $event.target.files || $event.dataTransfer.files
+        const form = this.getFormData(files)
+        if (files) {
+          if (files.length > 0) {
+
+            for(let i = 0; i < files.length; i++){
+              let file = files[i]
+              if (this.files[file.name] === undefined ){
+                this.getBase64(file).then( pr => {
+
+                  let data = {name: file.name, file: file, description: "", filter:"cascade", prev: pr}
+                  this.files[file.name] = data
+                })
+
+              }  
+            }
+          }
+        } else {
+          this.filename = $event.target.value.split('\\').pop()
+        }
+      }
   }
 
 }

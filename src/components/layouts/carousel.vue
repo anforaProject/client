@@ -1,8 +1,8 @@
 <template lang="html">
 <div>
-  <v-img :src='current.url' :alt='current.description'></v-img>
+  <v-img class="image" :src='current.url' :alt='current.description'></v-img>
   <v-spacer></v-spacer>
-  <div id="arrow" class="text-xs-center" v-if="this.size>1">
+  <div id="arrow" class="text-xs-center" v-if="size>1">
     <v-icon v-on:click="prev()">chevron_left</v-icon>
     <v-icon v-on:click="next()">chevron_right</v-icon>
   </div>
@@ -29,12 +29,12 @@ export default {
   },
   methods:{
     prev(){
-      this.current_id = (this.current_id -1 + this.size) % size
+      this.current_id = (this.current_id -1 + this.size) % this.size
       this.current = this.media_data[this.current_id]
     },
 
     next(){
-      this.current_id = (this.current_id +1)% size
+      this.current_id = (this.current_id +1)% this.size
       this.current = this.media_data[this.current_id]
     }
   }
@@ -46,6 +46,10 @@ export default {
 
 #arrow > i{
   font-size: 4em !important;
+}
+
+.v-responsive{
+  max-height: 100vh;
 }
 
 </style>
