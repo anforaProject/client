@@ -20,7 +20,7 @@
 
             <!-- <Carousel :media_data="image.media_attachments"/> -->
             <tiny-slider :mouse-drag="true" :loop="false" items="2" gutter="20">
-                <div v-for="(index, image) in image.media_attachments">
+                <div v-for="(image, index) in image.media_attachments" :key="index">
                     <img :src="image.url">
                 </div>
             </tiny-slider>
