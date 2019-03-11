@@ -21,6 +21,10 @@ import Vuetify from 'vuetify'
 //Validators
 import VeeValidate from 'vee-validate';
 
+// Image carousel
+import VueTinySlider from 'vue-tiny-slider';
+
+
 router.beforeEach(function (to, from, next) {
     window.scrollTo(0, 0);
     next();
@@ -38,5 +42,8 @@ new Vue({
   router,
   store,
   i18n,
+  components: {
+    'tiny-slider': VueTinySlider
+  },
   render: h => h(App),
 }).$mount('#app')

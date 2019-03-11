@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="home-card" v-if="image.media_attachments.length !== 0">
+    <div class="home-card ma-0" v-if="image.media_attachments.length !== 0">
         <v-card >
             
             <v-layout                
@@ -18,7 +18,12 @@
                 </v-flex>
             </v-layout>
 
-            <Carousel :media_data="image.media_attachments"/>
+            <!-- <Carousel :media_data="image.media_attachments"/> -->
+            <tiny-slider :mouse-drag="true" :loop="false" items="2" gutter="20">
+                <div v-for="(index, image) in image.media_attachments">
+                    <img :src="image.url">
+                </div>
+            </tiny-slider>
 
             <v-card-actions>
                 <v-spacer></v-spacer>
