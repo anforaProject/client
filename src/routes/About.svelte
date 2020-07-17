@@ -1,5 +1,5 @@
 <script>
-let pagename = "About page";
+let pagename="About page";
 </script>
 
 <main>
